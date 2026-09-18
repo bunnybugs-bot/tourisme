@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Restaurants à Thiès — Tourisme Sénégal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+<style>
+:root {
+  --orange: #E8730A;
+  --orange-light: #F59B3B;
+  --orange-pale: #FDF0E0;
+  --green: #2D6A4F;
+  --cream: #FAF7F0;
+  --sand: #E8D5B7;
+  --dark: #0F1923;
+  --charcoal: #1C2B39;
+  --text: #2C3E50;
+  --text-muted: #8A9BB0;
+  --white: #FFFFFF;
+  --nav-h: 68px;
+  --border: rgba(232,213,183,0.5);
+  --shadow: 0 2px 20px rgba(15,25,35,0.07);
+  --shadow-lg: 0 16px 56px rgba(15,25,35,0.18);
+  --radius: 20px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'Montserrat',sans-serif;
+  background:var(--cream); color:var(--text);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+}
+
+/* ── NAV ── */
+nav {
+  position:sticky; top:0; z-index:100;
+  height:var(--nav-h); display:flex; align-items:center; padding:0 2.5rem; gap:1rem;
+  background:rgba(250,247,240,0.92); backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid var(--border);
+}
+.nav-back {
+  display:flex; align-items:center; gap:0.6rem;
+  color:var(--text-muted); text-decoration:none;
+  font-size:0.78rem; font-weight:600; letter-spacing:0.3px;
+  text-transform:uppercase; transition:color 0.2s;
+}
+.nav-back:hover { color:var(--orange); }
+.nav-divider { color:var(--sand); }
+.nav-title { font-family:'Playfair Display',serif; font-size:1rem; color:var(--dark); font-weight:700; }
+.nav-count {
+  margin-left:auto; font-size:0.75rem; color:var(--text-muted);
+  background:var(--orange-pale); border:1px solid rgba(232,115,10,0.15);
+  padding:0.3rem 0.85rem; border-radius:20px; font-weight:600;
+}
+
+/* ── HEADER ── */
+.page-header {
+  background:var(--dark); padding:4rem 2.5rem 3rem;
+  position:relative; overflow:hidden;
+}
+.page-header::before {
+  content:''; position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 70% 90% at 85% 55%, rgba(232,115,10,0.2) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 70% at 5% 20%, rgba(45,106,79,0.15) 0%, transparent 60%);
+}
+.page-header::after {
+  content:''; position:absolute; inset:0;
+  background-image:repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(255,255,255,0.012) 40px, rgba(255,255,255,0.012) 80px);
+}
+.page-header-inner { max-width:1200px; margin:0 auto; position:relative; z-index:2; }
+.breadcrumb {
+  display:flex; align-items:center; gap:0.5rem;
+  font-size:0.72rem; color:rgba(255,255,255,0.4);
+  text-transform:uppercase; letter-spacing:1.5px; margin-bottom:1.2rem;
+}
+.breadcrumb span { color:var(--orange); }
+.page-header h1 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,5vw,3.2rem); color:white;
+  line-height:1.15; margin-bottom:0.6rem; font-weight:900;
+}
+.page-header h1 em { font-style:italic; color:var(--orange-light); }
+.page-header p { color:rgba(255,255,255,0.5); font-size:0.88rem; max-width:500px; line-height:1.7; }
+
+/* source badge */
+.source-badges { display:flex; gap:0.6rem; margin-top:1rem; }
+.source-badge {
+  display:flex; align-items:center; gap:0.4rem;
+  background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15);
+  color:rgba(255,255,255,0.6); border-radius:20px;
+  padding:0.3rem 0.8rem; font-size:0.7rem; font-weight:600;
+}
+.source-badge i { font-size:0.65rem; color:var(--orange-light); }
+
+.header-filters-bar {
+  margin-top:2.5rem; display:flex; gap:0.6rem; flex-wrap:wrap; align-items:center;
+}
+.hfb-pill {
+  display:flex; align-items:center; gap:0.5rem;
+  border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.06);
+  color:rgba(255,255,255,0.7); border-radius:50px;
+  padding:0.55rem 1.1rem; font-size:0.78rem; font-weight:600;
+  cursor:pointer; transition:all 0.25s; font-family:'Montserrat',sans-serif;
+}
+.hfb-pill i { font-size:0.72rem; }
+.hfb-pill:hover { background:rgba(255,255,255,0.12); color:white; }
+.hfb-pill.active { background:var(--orange); border-color:var(--orange); color:white; box-shadow:0 4px 16px rgba(232,115,10,0.4); }
+
+.btn-filters {
+  margin-left:auto; display:flex; align-items:center; gap:0.55rem;
+  background:white; border:none; border-radius:50px; padding:0.6rem 1.3rem;
+  font-size:0.78rem; font-weight:700; color:var(--dark);
+  cursor:pointer; transition:all 0.25s; font-family:'Montserrat',sans-serif;
+  box-shadow:0 4px 20px rgba(0,0,0,0.2);
+}
+.btn-filters:hover { transform:translateY(-1px); box-shadow:0 6px 28px rgba(0,0,0,0.25); }
+.filter-badge {
+  background:var(--orange); color:white; width:18px; height:18px;
+  border-radius:50%; font-size:0.65rem; display:flex;
+  align-items:center; justify-content:center; font-weight:800;
+}
+
+/* ── MAIN ── */
+.main { max-width:1200px; margin:0 auto; padding:2.5rem 2rem; }
+.results-header {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:1rem; flex-wrap:wrap; gap:1rem;
+}
+.results-title { font-size:0.82rem; color:var(--text-muted); font-weight:500; }
+.results-title strong { color:var(--dark); font-weight:700; }
+.sort-select {
+  border:1px solid var(--border); border-radius:10px;
+  padding:0.5rem 1rem; font-size:0.8rem; font-family:'Montserrat',sans-serif;
+  color:var(--text); background:white; cursor:pointer; font-weight:500;
+}
+
+/* Active filter tags */
+.active-filters { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.5rem; }
+.active-filter-tag {
+  display:flex; align-items:center; gap:0.4rem;
+  background:var(--dark); color:white; border-radius:20px;
+  padding:0.35rem 0.85rem; font-size:0.72rem; font-weight:600;
+  animation:tagIn 0.2s ease;
+}
+@keyframes tagIn { from{opacity:0;transform:scale(0.8)} to{opacity:1;transform:scale(1)} }
+.active-filter-tag button {
+  background:none; border:none; color:rgba(255,255,255,0.5);
+  cursor:pointer; font-size:0.65rem; padding:0; margin-left:2px;
+  display:flex; align-items:center; transition:color 0.2s;
+}
+.active-filter-tag button:hover { color:white; }
+
+/* ── RESTAURANT GRID ── */
+.resto-grid {
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(340px,1fr));
+  gap:1.8rem;
+}
+
+.resto-card {
+  background:white; border-radius:var(--radius);
+  overflow:hidden; box-shadow:var(--shadow);
+  transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s;
+  cursor:pointer; position:relative;
+  opacity:0; animation:cardIn 0.5s ease forwards;
+}
+.resto-card:nth-child(1)  { animation-delay:.05s }
+.resto-card:nth-child(2)  { animation-delay:.10s }
+.resto-card:nth-child(3)  { animation-delay:.15s }
+.resto-card:nth-child(4)  { animation-delay:.20s }
+.resto-card:nth-child(5)  { animation-delay:.25s }
+.resto-card:nth-child(6)  { animation-delay:.30s }
+.resto-card:nth-child(7)  { animation-delay:.35s }
+.resto-card:nth-child(8)  { animation-delay:.40s }
+.resto-card:nth-child(9)  { animation-delay:.45s }
+.resto-card:nth-child(10) { animation-delay:.50s }
+.resto-card:nth-child(11) { animation-delay:.55s }
+.resto-card:nth-child(12) { animation-delay:.60s }
+@keyframes cardIn { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+.resto-card.hidden { display:none; }
+.resto-card:hover { transform:translateY(-6px); box-shadow:var(--shadow-lg); }
+
+/* Image zone */
+.resto-img {
+  height:190px; position:relative; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+}
+.resto-img::after {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(to bottom, transparent 35%, rgba(0,0,0,0.5) 100%);
+}
+.resto-img i {
+  font-size:4rem; color:rgba(255,255,255,0.55);
+  position:relative; z-index:1; transition:transform 0.4s;
+}
+.resto-card:hover .resto-img i { transform:scale(1.1); }
+.resto-card:hover .resto-img { filter:brightness(1.08); }
+
+.resto-img-label {
+  position:absolute; bottom:12px; left:14px; z-index:2;
+  background:rgba(255,255,255,0.15); backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,0.25); color:white;
+  font-size:0.68rem; font-weight:700; padding:0.28rem 0.7rem;
+  border-radius:20px; letter-spacing:0.8px; text-transform:uppercase;
+}
+.resto-badge {
+  position:absolute; top:14px; left:14px; z-index:2;
+  background:var(--orange); color:white; font-size:0.65rem; font-weight:800;
+  padding:0.3rem 0.7rem; border-radius:6px; letter-spacing:0.4px;
+  text-transform:uppercase; box-shadow:0 4px 12px rgba(232,115,10,0.5);
+}
+.resto-wishlist {
+  position:absolute; top:12px; right:12px; z-index:2;
+  background:rgba(255,255,255,0.9); backdrop-filter:blur(6px);
+  border:none; border-radius:50%; width:34px; height:34px;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; box-shadow:0 2px 12px rgba(0,0,0,0.15); transition:all 0.2s;
+}
+.resto-wishlist:hover { transform:scale(1.12); background:white; }
+.resto-wishlist i { color:#ccc; font-size:0.85rem; transition:color 0.2s; }
+.resto-wishlist.active i { color:#E74C3C; }
+
+/* Body */
+.resto-body { padding:1.4rem 1.4rem 1.2rem; }
+.resto-meta { display:flex; align-items:center; gap:0.6rem; margin-bottom:0.5rem; flex-wrap:wrap; }
+.resto-cuisine {
+  font-size:0.68rem; color:var(--orange);
+  text-transform:uppercase; letter-spacing:1px; font-weight:700;
+}
+.budget-tag {
+  font-size:0.68rem; font-weight:700; color:var(--green);
+  background:rgba(45,106,79,0.1); padding:0.18rem 0.5rem;
+  border-radius:6px; letter-spacing:0.3px;
+}
+
+.resto-name {
+  font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:700;
+  color:var(--dark); margin-bottom:0.4rem; line-height:1.3; transition:color 0.2s;
+}
+.resto-card:hover .resto-name { color:var(--orange); }
+
+.resto-location {
+  font-size:0.75rem; color:var(--text-muted);
+  display:flex; align-items:center; gap:0.35rem;
+  margin-bottom:0.9rem; font-weight:500;
+}
+.resto-location i { color:var(--orange); font-size:0.68rem; }
+
+.resto-desc {
+  font-size:0.78rem; color:var(--text-muted); line-height:1.6;
+  margin-bottom:1rem; font-weight:400;
+}
+
+/* Tags */
+.resto-tags { display:flex; gap:0.35rem; flex-wrap:wrap; margin-bottom:1.2rem; }
+.resto-tag {
+  display:flex; align-items:center; gap:0.3rem;
+  background:var(--cream); border-radius:6px;
+  padding:0.28rem 0.6rem; font-size:0.68rem; color:var(--text); font-weight:600;
+}
+.resto-tag i { font-size:0.62rem; color:var(--orange); }
+
+/* Footer */
+.resto-footer {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1rem 0 0; border-top:1px solid rgba(232,213,183,0.5);
+}
+.resto-rating { display:flex; align-items:center; gap:0.5rem; }
+.rating-score {
+  background:var(--dark); color:white;
+  font-size:0.82rem; font-weight:800; padding:0.28rem 0.6rem;
+  border-radius:8px; letter-spacing:-0.3px;
+}
+.rating-score.top { background:var(--orange); }
+.rating-label { font-size:0.7rem; color:var(--text-muted); font-weight:500; }
+.rating-label.no-avis { font-style:italic; }
+
+.resto-price { text-align:right; }
+.price-range-display {
+  font-family:'Playfair Display',serif; font-size:1rem;
+  font-weight:700; color:var(--dark); letter-spacing:-0.3px;
+}
+.price-label { font-size:0.68rem; color:var(--text-muted); font-weight:500; }
+
+/* CTA */
+.resto-cta { margin-top:1rem; display:flex; gap:0.5rem; }
+.btn-detail {
+  flex:1; padding:0.65rem; border-radius:10px;
+  border:1.5px solid var(--border); background:transparent;
+  font-size:0.76rem; font-weight:600; color:var(--text);
+  cursor:pointer; transition:all 0.2s; font-family:'Montserrat',sans-serif;
+  display:flex; align-items:center; justify-content:center; gap:0.35rem;
+}
+.btn-detail:hover { border-color:var(--dark); color:var(--dark); background:var(--cream); }
+.btn-reserve {
+  flex:1.4; padding:0.65rem; border-radius:10px;
+  border:none; background:var(--dark);
+  font-size:0.76rem; font-weight:700; color:white;
+  cursor:pointer; transition:all 0.25s; font-family:'Montserrat',sans-serif;
+  display:flex; align-items:center; justify-content:center; gap:0.35rem;
+}
+.btn-reserve:hover { background:var(--orange); box-shadow:0 4px 16px rgba(232,115,10,0.4); }
+
+/* ── EMPTY STATE ── */
+.empty-state { text-align:center; padding:5rem 2rem; display:none; }
+.empty-state.show { display:block; }
+.empty-state i { font-size:2.5rem; color:var(--sand); margin-bottom:1rem; display:block; }
+.empty-state h3 { font-family:'Playfair Display',serif; color:var(--dark); margin-bottom:0.5rem; font-size:1.3rem; }
+.empty-state p { color:var(--text-muted); font-size:0.85rem; }
+
+/* ── FILTER MODAL ── */
+.modal-overlay {
+  position:fixed; inset:0; z-index:200;
+  background:rgba(15,25,35,0.6); backdrop-filter:blur(6px);
+  opacity:0; pointer-events:none; transition:opacity 0.3s;
+}
+.modal-overlay.open { opacity:1; pointer-events:all; }
+.filter-modal {
+  position:fixed; right:0; top:0; bottom:0; z-index:201;
+  width:min(500px,100vw); background:white;
+  display:flex; flex-direction:column;
+  transform:translateX(110%); transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  box-shadow:-12px 0 60px rgba(15,25,35,0.2);
+}
+.filter-modal.open { transform:translateX(0); }
+.modal-header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.4rem 1.8rem; border-bottom:1px solid var(--border); flex-shrink:0;
+}
+.modal-header h2 {
+  font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700; color:var(--dark);
+  display:flex; align-items:center; gap:0.6rem;
+}
+.modal-header h2 i { font-size:0.9rem; color:var(--orange); }
+.modal-close {
+  background:var(--cream); border:none; cursor:pointer; width:36px; height:36px;
+  border-radius:50%; display:flex; align-items:center; justify-content:center;
+  color:var(--text); transition:all 0.2s; font-size:0.9rem;
+}
+.modal-close:hover { background:var(--sand); }
+.modal-body { flex:1; overflow-y:auto; padding:1.8rem; }
+.modal-body::-webkit-scrollbar { width:4px; }
+.modal-body::-webkit-scrollbar-thumb { background:var(--sand); border-radius:4px; }
+.modal-footer {
+  padding:1.2rem 1.8rem; border-top:1px solid var(--border);
+  display:flex; align-items:center; justify-content:space-between;
+  flex-shrink:0; background:var(--cream);
+}
+.btn-reset {
+  background:none; border:none; font-family:'Montserrat',sans-serif;
+  font-size:0.82rem; font-weight:700; color:var(--text-muted);
+  cursor:pointer; padding:0.5rem; text-decoration:underline; transition:color 0.2s;
+}
+.btn-reset:hover { color:var(--dark); }
+.btn-apply {
+  background:var(--dark); color:white; border:none; padding:0.8rem 2rem;
+  border-radius:10px; font-family:'Montserrat',sans-serif;
+  font-size:0.85rem; font-weight:700; cursor:pointer; transition:all 0.25s;
+}
+.btn-apply:hover { background:var(--orange); box-shadow:0 4px 20px rgba(232,115,10,0.4); }
+
+/* Filter sections */
+.filter-section { margin-bottom:2rem; padding-bottom:2rem; border-bottom:1px solid var(--border); }
+.filter-section:last-child { border-bottom:none; }
+.filter-section h3 {
+  font-family:'Playfair Display',serif; font-size:1rem; font-weight:700;
+  color:var(--dark); margin-bottom:1rem;
+}
+
+/* Chips & pills shared */
+.chip-group { display:flex; flex-wrap:wrap; gap:0.5rem; }
+.chip {
+  display:flex; align-items:center; gap:0.4rem;
+  padding:0.5rem 0.9rem; border-radius:10px;
+  border:1.5px solid var(--border); background:white;
+  font-size:0.78rem; font-weight:600; cursor:pointer; transition:all 0.2s;
+  font-family:'Montserrat',sans-serif; color:var(--text);
+}
+.chip i { font-size:0.75rem; color:var(--text-muted); transition:color 0.2s; }
+.chip:hover { border-color:var(--text-muted); }
+.chip.active { border-color:var(--dark); background:var(--dark); color:white; }
+.chip.active i { color:var(--orange-light); }
+
+/* Budget slider */
+.budget-pills { display:flex; gap:0.5rem; flex-wrap:wrap; }
+.budget-pill {
+  padding:0.5rem 1rem; border-radius:10px;
+  border:1.5px solid var(--border); background:white;
+  font-size:0.8rem; font-weight:600; cursor:pointer; transition:all 0.2s;
+  font-family:'Montserrat',sans-serif; color:var(--text);
+}
+.budget-pill.active { border-color:var(--dark); background:var(--dark); color:white; }
+
+/* Rating filter */
+.rating-options { display:flex; flex-direction:column; gap:0.5rem; }
+.rating-option {
+  display:flex; align-items:center; gap:0.8rem;
+  padding:0.7rem 0.9rem; border-radius:10px;
+  border:1.5px solid var(--border); background:white;
+  cursor:pointer; transition:all 0.2s;
+}
+.rating-option:hover { border-color:var(--text-muted); }
+.rating-option.active { border-color:var(--dark); background:var(--cream); }
+.rating-option .stars i { font-size:0.65rem; color:#F59B3B; }
+.rating-option span { font-size:0.8rem; font-weight:600; color:var(--text); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="n_index.html" class="nav-back">
+    <i class="fa-solid fa-arrow-left"></i> Retour
+  </a>
+  <span class="nav-divider">/</span>
+  <span class="nav-title">Restaurants — Région de Thiès</span>
+  <span class="nav-count" id="navCount">15 restaurants</span>
+</nav>
+
+<!-- HEADER -->
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb">
+      Région de Thiès <i class="fa-solid fa-chevron-right" style="font-size:0.6rem"></i>
+      <span>Gastronomie</span>
+    </div>
+    <h1>Où manger dans la <em>région de Thiès</em> ?</h1>
+    <p>De la cuisine sénégalaise traditionnelle aux saveurs internationales — des adresses sélectionnées dans les 3 départements pour votre séjour.</p>
+    <div class="source-badges">
+      <span class="source-badge"><i class="fa-solid fa-circle-check"></i> TripAdvisor</span>
+      <span class="source-badge"><i class="fa-solid fa-circle-check"></i> Petit Futé</span>
+    </div>
+
+    <div class="header-filters-bar dept-filters-bar">
+      <button class="hfb-pill dept-pill active" onclick="quickFilterDept(this,'all')">
+        <i class="fa-solid fa-map-location-dot"></i> Toute la région
+      </button>
+      <button class="hfb-pill dept-pill" onclick="quickFilterDept(this,'thies')">
+        <i class="fa-solid fa-building-columns"></i> Thiès
+      </button>
+      <button class="hfb-pill dept-pill" onclick="quickFilterDept(this,'mbour')">
+        <i class="fa-solid fa-umbrella-beach"></i> Mbour
+      </button>
+      <button class="hfb-pill dept-pill" onclick="quickFilterDept(this,'tivaouane')">
+        <i class="fa-solid fa-mosque"></i> Tivaouane
+      </button>
+    </div>
+
+    <div class="header-filters-bar type-filters-bar">
+      <button class="hfb-pill active" data-quick="tous" onclick="quickFilter(this,'tous')">
+        <i class="fa-solid fa-border-all"></i> Tous
+      </button>
+      <button class="hfb-pill" data-quick="africaine" onclick="quickFilter(this,'africaine')">
+        <i class="fa-solid fa-bowl-rice"></i> Africaine
+      </button>
+      <button class="hfb-pill" data-quick="internationale" onclick="quickFilter(this,'internationale')">
+        <i class="fa-solid fa-earth-africa"></i> Internationale
+      </button>
+      <button class="hfb-pill" data-quick="rapide" onclick="quickFilter(this,'rapide')">
+        <i class="fa-solid fa-burger"></i> Rapide
+      </button>
+      <button class="hfb-pill" data-quick="cafe" onclick="quickFilter(this,'cafe')">
+        <i class="fa-solid fa-mug-hot"></i> Cafés
+      </button>
+      <button class="hfb-pill" data-quick="gastronomique" onclick="quickFilter(this,'gastronomique')">
+        <i class="fa-solid fa-star"></i> Gastronomique
+      </button>
+      <button class="btn-filters" onclick="openModal()">
+        <i class="fa-solid fa-sliders"></i> Filtres
+        <span class="filter-badge" id="filterBadge" style="display:none">0</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="results-header">
+    <p class="results-title"><strong id="resultCount">15</strong> restaurants trouvés dans la région</p>
+    <select class="sort-select" onchange="sortRestos(this.value)">
+      <option value="recommended">Recommandés</option>
+      <option value="rating">Mieux notés</option>
+      <option value="price-asc">Budget croissant</option>
+      <option value="price-desc">Budget décroissant</option>
+      <option value="avis">Plus d'avis</option>
+    </select>
+  </div>
+
+  <div class="active-filters" id="activeFilters"></div>
+
+  <div class="resto-grid" id="restoGrid">
+
+    <!-- 1. Café du Rail ⭐ 4.9 -->
+    <div class="resto-card"
+      data-dept="thies"
+      data-cuisine="africaine internationale café"
+      data-etablissement="cafe"
+      data-budget="2"
+      data-rating="4.9"
+      data-avis="71"
+      data-zone="emblematique"
+      data-type="restaurant">
+      <div class="resto-img" style="background:linear-gradient(135deg,#1a1a2e,#4a3728)">
+        <i class="fa-solid fa-train"></i>
+        <span class="resto-img-label">Café & Restaurant</span>
+        <div class="resto-badge">⭐ N°1 Thiès</div>
+      </div>
+      <button class="resto-wishlist"><i class="fa-regular fa-heart"></i></button>
+      <div class="resto-body">
+        <div class="resto-meta">
+          <span class="resto-cuisine">Italienne · Africaine</span>
+          <span class="budget-tag">€€</span>
+        </div>
+        <h3 class="resto-name">Café du Rail</h3>
+        <p class="resto-location"><i class="fa-solid fa-location-dot"></i> Gare de Thiès — lieu emblématique</p>
+        <p class="resto-desc">Paninis, pizzas et spécialités africaines dans un cadre ferroviaire unique. L'adresse la plus appréciée des voyageurs à Thiès.</p>
+        <div class="resto-tags">
+          <span class="resto-tag"><i class="fa-solid fa-pizza-slice"></i> Pizzas</span>
+          <span class="resto-tag"><i class="fa-solid fa-bread-slice"></i> Paninis</span>
+          <span class="resto-tag"><i class="fa-solid fa-mug-hot"></i> Café</span>
+          <span class="resto-tag"><i class="fa-solid fa-train"></i> Vue gare</span>
+        </div>
+        <div class="resto-footer">
+          <div class="resto-rating">
+            <span class="rating-score top">4.9</span>
+            <span class="rating-label">Exceptionnel · 71 avis</span>
+          </div>
+          <div class="resto-price">
+            <div class="price-range-display">2 000–5 000</div>
+            <div class="price-label">FCFA / pers.</div>
+          </div>
+        </div>
+        <div class="resto-cta">
+          <button class="btn-detail" onclick="window.open('https://www.tripadvisor.fr/Restaurant_Review-g811261-d12345678-Reviews-Cafe_du_Rail.html','_blank')">
+            <i class="fa-solid fa-circle-info"></i> Détails
+          </button>
+          <button class="btn-reserve"><i class="fa-solid fa-calendar-check"></i> Réserver</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. La Table des Gourmets ⭐ 5.0 -->
+    <div class="resto-card"
+      data-dept="thies"
+      data-cuisine="gastronomique française"
+      data-budget="4"
+      data-rating="5.0"
+      data-avis="2"
+      data-zone="centre"
+      data-type="restaurant">
+      <div class="resto-img" style="background:linear-gradient(135deg,#2C1810,#8B4513)">
+        <i class="fa-solid fa-utensils"></i>
+        <span class="resto-img-label">Gastronomique</span>
+        <div class="resto-badge">Nouveau · 5.0</div>
+      </div>
+      <button class="resto-wishlist"><i class="fa-regular fa-heart"></i></button>
+      <div class="resto-body">
+        <div class="resto-meta">
+          <span class="resto-cuisine">Gastronomique</span>
+          <span class="budget-tag">€€€€</span>
+        </div>
+        <h3 class="resto-name">La Table des Gourmets</h3>
+        <p class="resto-location"><i class="fa-solid fa-location-dot"></i> Centre-ville, Thiès</p>
+        <p class="resto-desc">Nouvelle adresse gastronomique notée 5/5. Cuisine raffinée, présentation soignée — l'expérience fine dining de Thiès.</p>
+        <div class="resto-tags">
+          <span class="resto-tag"><i class="fa-solid fa-crown"></i> Raffiné</span>
+          <span class="resto-tag"><i class="fa-solid fa-wine-glass"></i> Carte des vins</span>
+          <span class="resto-tag"><i class="fa-solid fa-star"></i> 5.0/5</span>
+        </div>
+        <div class="resto-footer">
+          <div class="resto-rating">
+            <span class="rating-score top">5.0</span>
+            <span class="rating-label">Parfait · 2 avis</span>
+          </div>
+          <div class="resto-price">
+            <div class="price-range-display">10 000+</div>
+            <div class="price-label">FCFA / pers.</div>
+          </div>
+        </div>
+        <div class="resto-cta">
+          <button class="btn-detail"><i class="fa-solid fa-circle-info"></i> Détails</button>
+          <button class="btn-reserve"><i class="fa-solid fa-calendar-check"></i> Réserver</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Massa Massa ⭐ 4.3 -->
+    <div class="resto-card"
+      data-dept="thies"
+      data-cuisine="africaine française"
+      data-budget="2"
+      data-rating="4.3"
+      data-avis="43"
+      data-zone="centre"
+      data-type="restaurant">
+      <div class="resto-img" style="background:linear-gradient(135deg,#C0392B,#E67E22)">
+        <i class="fa-solid fa-bowl-rice"></i>
+        <span class="resto-img-label">Restaurant</span>
+      </div>
+      <button class="resto-wishlist"><i class="fa-regular fa-heart"></i></button>
+      <div class="resto-body">
+        <div class="resto-meta">
+          <span class="resto-cuisine">Française · Africaine</span>
+          <span class="budget-tag">€€</span>
+        </div>
+        <h3 class="resto-name">Massa Massa</h3>
+        <p class="resto-location"><i class="fa-solid fa-location-dot"></i> Centre-ville, Thiès</p>
+        <p class="resto-desc">Plats simples et efficaces, bonne réputation locale. Idéal pour un déjeuner de qualité sans se ruiner.</p>
+        <div class="resto-tags">
+          <span class="resto-tag"><i class="fa-solid fa-leaf"></i> Cuisine locale</span>
+          <span class="resto-tag"><i class="fa-solid fa-thumbs-up"></i> Fiable</span>
+        </div>
+        <div class="resto-footer">
+          <div class="resto-rating">
+            <span class="rating-score">4.3</span>
+            <span class="rating-label">Excellent · 43 avis</span>
+          </div>
+          <div class="resto-price">
+            <div class="price-range-display">2 000–6 000</div>
+            <div class="price-label">FCFA / pers.</div>
+          </div>
+        </div>
+        <div class="resto-cta">
+          <button class="btn-detail"><i class="fa-solid fa-circle-info"></i> Détails</button>
+          <button class="btn-reserve"><i class="fa-solid fa-calendar-check"></i> Réserver</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Le Pamanda ⭐ 4.3 -->
+    <div class="resto-card"
+      data-dept="thies"
+      data-cuisine="internationale"
+      data-budget="2"
+      data-rating="4.3"
+      data-avis="24"
+      data-zone="peripherie"
+      data-type="restaurant">
+      <div class="resto-img" style="background:linear-gradient(135deg,#1B4F72,#2980B9)">
+        <i class="fa-solid fa-pizza-slice"></i>
+        <span class="resto-img-label">Restaurant</span>
+      </div>
+      <button class="resto-wishlist"><i class="fa-regular fa-heart"></i></button>
+      <div class="resto-body">
+        <div class="resto-meta">
+          <span class="resto-cuisine">Internationale</span>
+          <span class="budget-tag">€€</span>
+        </div>
+        <h3 class="resto-name">Le Pamanda</h3>
+        <p class="resto-location"><i class="fa-solid fa-location-dot"></i> À 6 min du centre-ville</p>
+        <p class="resto-desc">Pizzas maison et cuisine internationale dans un cadre moderne. Accueil chaleureux, ambiance détendue.</p>
+        <div class="resto-tags">
+          <span class="resto-tag"><i class="fa-solid fa-pizza-slice"></i> Pizzas</span>
+          <span class="resto-tag"><i class="fa-solid fa-couch"></i> Cadre moderne</span>
+          <span class="resto-tag"><i class="fa-solid fa-heart"></i> Accueil</span>
+        </div>
+        <div class="resto-footer">
+          <div class="resto-rating">
+            <span class="rating-score">4.3</span>
+            <span class="rating-label">Excellent · 24 avis</span>
+          </div>
+          <div class="resto-price">
+            <div class="price-range-display">3 000–7 000</div>
+            <div class="price-label">FCFA / pers.</div>
+          </div>
+        </div>
+        <div class="resto-cta">
+          <button class="btn-detail"><i class="fa-solid fa-circle-info"></i> Détails</button>
+          <button class="btn-reserve"><i class="fa-solid fa-calendar-check"></i> Réserver</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Chez Gilau ⭐ 5.0 -->
+    <div class="resto-card"
+      data-dept="thies"
+      data-cuisine="française rapide"
+      data-budget="1"
+      data-rating="5.0"
+      data-avis="1"
+      data-zone="centre"
+      data-type="rapide">
+      <div class="resto-img" style="background:linear-gradient(135deg,#27AE60,#1B7A3E)">
+        <i class="fa-solid fa-bread-slice"></i>
+        <span class="resto-img-label">Snack</span>
+      </div>
+      <button class="resto-wishlist"><i class="fa-regular fa-heart"></i></button>
+      <div class="resto-body">
+        <div class="resto-meta">
+          <span class="resto-cuisine">Française · Snack</span>
+          <span class="budget-tag">€</span>
+        </div>
+        <h3 class="resto-name">Chez Gilau</h3>
+        <p class="resto-location"><i class="fa-solid fa-location-dot"></i> Centre-ville, Thiès</p>
+        <p class="resto-desc">Sandwichs copieux et généreux, idéal pour un repas rapide et savoureux. Note parfaite pour sa simplicité efficace.</p>
+        <div class="resto-tags">
+          <span class="resto-tag"><i class="fa-solid fa-bread-slice"></i> Sandwichs</span>
+          <span class="resto-tag"><i class="fa-solid fa-bolt"></i> Rapide</span>
+          <span class="resto-tag"><i class="fa-solid fa-tag"></i> Abordable</span>
+        </div>
+        <div class="resto-footer">
+          <div class="resto-rating">
+            <span class="rating-score top">5.0</span>
+            <span class="rating-label">Parfait · 1 avis</span>
+          </div>
+          <div class="resto-price">
+            <div class="price-range-display">500–2 000</div>
+            <div class="price-label">FCFA / pers.</div>
+          </div>
+        </div>
+        <div class="resto-cta">
+          <button class="btn-detail"><i class="fa-solid fa-circle-info"></i> Détails</button>
+          <button class="btn-reserve"><i class="fa-solid fa-calendar-check"></i> Y aller</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Le Croissant Magique ⭐ 3.3 -->
+    <div class="resto-card"
+      data-dept="thies"
+      data-cuisine="africaine européenne café"
+      data-etablissement="cafe"
+      data-budget="1"
+      data-rating="3.3"
+      data-avis="44"
+      data-zone="centre"
+      data-type="restaurant">
+      <div class="resto-img" style="background:linear-gradient(135deg,#E8730A,#F59B3B)">
+        <i class="fa-solid fa-mug-hot"></i>
+        <span class="resto-img-label">Café & Hôtel</span>
+      </div>
+      <button class="resto-wishlist"><i class="fa-regular fa-heart"></i></button>
+      <div class="resto-body">
+        <div class="resto-meta">
+          <span class="resto-cuisine">Africaine · Européenne</span>
+          <span class="budget-tag">€</span>
+        </div>
+        <h3 class="resto-name">Le Croissant Magique</h3>
+        <p class="resto-location"><i class="fa-solid fa-location-dot"></i> Centre-ville — Hôtel du même nom</p>
+        <p class="resto-desc">Petit-déjeuner et cuisine familiale dans l'hôtel éponyme. Pratique pour les résidents, cuisine simple et honnête.</p>
+        <div class="resto-tags">
+          <span class="resto-tag"><i class="fa-solid fa-sun"></i> Petit-déjeuner</span>
+          <span class="resto-tag"><i class="fa-solid fa-people-group"></i> Familial</span>
+          <span class="resto-tag"><i class="fa-solid fa-hotel"></i> Hôtel</span>
+        </div>
+        <div class="resto-footer">
+          <div class="resto-rating">
+            <span class="rating-score">3.3</span>
+            <span class="rating-label">Bien · 44 avis</span>
+          </div>
+          <div class="resto-price">
+            <div class="price-range-display">1 000–3 500</div>
+            <div class="price-label">FCFA / pers.</div>
+          </div>
+        </div>
+        <div class="resto-cta">
+          <button class="btn-detail"><i class="fa-solid fa-circle-info"></i> Détails</button>
+          <button class="btn-reserve"><i class="fa-solid fa-calendar-check"></i> Réserver</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. Les Délices ⭐ 3.2 -->
+    <div class="resto-card"
+      data-dept="thies"
+      data-cuisine="française internationale café"
+      data-etablissement="cafe"
+      data-budget="2"
+      data-rating="3.2"
+      data-avis="16"
+      data-zone="centre"
+      data-type="restaurant">
+      <div class="resto-img" style="background:linear-gradient(135deg,#6C5CE7,#A29BFE)">
+        <i class="fa-solid fa-plate-wheat"></i>
+        <span class="resto-img-label">Cafétéria</span>
+      </div>
+      <button class="resto-wishlist"><i class="fa-regular fa-heart"></i></button>
+      <div class="resto-body">
+        <div class="resto-meta">
+          <span class="resto-cuisine">Française · Internationale</span>
+          <span class="budget-tag">€€</span>
+        </div>
+        <h3 class="resto-name">Les Délices</h3>
+        <p class="resto-location"><i class="fa-solid fa-location-dot"></i> Centre-ville, Thiès</p>
+        <p class="resto-desc">Cafétéria aux plats variés, le yassa y est particulièrement apprécié. Bon rapport qualité / prix pour les habitués.</p>
+        <div class="resto-tags">
+          <span class="resto-tag"><i class="fa-solid fa-bowl-food"></i> Yassa</span>
+          <span class="resto-tag"><i class="fa-solid fa-list"></i> Carte variée</span>
+        </div>
+        <div class="resto-footer">
+          <div class="resto-rating">
+            <span class="rating-score">3.2</span>
+            <span class="rating-label">Bien · 16 avis</span>
+          </div>
+          <div class="resto-price">
+            <div class="price-range-display">2 000–5 000</div>
+            <div class="price-label">FCFA / pers.</div>
+          </div>
+        </div>
+        <div class="resto-cta">
+          <button class="btn-detail"><i class="fa-solid fa-circle-info"></i> Détails</button>
+          <button class="btn-reserve"><i class="fa-solid fa-calendar-check"></i> Réserver</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. Big Faim Complexe ⭐ 2.6 -->
+    <div class="resto-card"
+      data-dept="thies"
+      data-cuisine="africaine rapide"
+      data-budget="1"
+      data-rating="2.6"
+      data-avis="17"
+      data-zone="centre"
+      data-type="rapide">
+      <div class="resto-img" style="background:linear-gradient(135deg,#2D6A4F,#52B788)">
+        <i class="fa-solid fa-drumstick-bite"></i>
+        <span class="resto-img-label">Restauration rapide</span>
+      </div>
+      <button class="resto-wishlist"><i class="fa-regular fa-heart"></i></button>
+      <div class="resto-body">
+        <div class="resto-meta">
+          <span class="resto-cuisine">Africaine</span>
+          <span class="budget-tag">€</span>
+        </div>
+        <h3 class="resto-name">Big Faim Complexe</h3>
+        <p class="resto-location"><i class="fa-solid fa-location-dot"></i> Complexe hôtelier Big Faim</p>
+        <p class="resto-desc">Restauration rapide et repas abordables. Pratique pour un repas économique, annexe du complexe hôtelier.</p>
+        <div class="resto-tags">
+          <span class="resto-tag"><i class="fa-solid fa-bolt"></i> Rapide</span>
+          <span class="resto-tag"><i class="fa-solid fa-tag"></i> Économique</span>
+        </div>
+        <div class="resto-footer">
+          <div class="resto-rating">
+            <span class="rating-score">2.6</span>
+            <span class="rating-label">Passable · 17 avis</span>
+          </div>
+          <div class="resto-price">
+            <div class="price-range-display">500–2 500</div>
+            <div class="price-label">FCFA / pers.</div>
+          </div>
+        </div>
+        <div class="resto-cta">
+          <button class="btn-detail"><i class="fa-solid fa-circle-info"></i> Détails</button>
+          <button class="btn-reserve"><i class="fa-solid fa-calendar-check"></i> Y aller</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. Saveur du Cayor -->
+    <div class="resto-card"
+      data-dept="thies"
+      data-cuisine="africaine"
+      data-budget="2"
+      data-rating="0"
+      data-avis="0"
+      data-zone="peripherie"
+      data-type="restaurant">
+      <div class="resto-img" style="background:linear-gradient(135deg,#7D3C98,#C39BD3)">
+        <i class="fa-solid fa-fire-flame-curved"></i>
+        <span class="resto-img-label">Grillades</span>
+      </div>
+      <button class="resto-wishlist"><i class="fa-regular fa-heart"></i></button>
+      <div class="resto-body">
+        <div class="resto-meta">
+          <span class="resto-cuisine">Africaine · Grillades</span>
+          <span class="budget-tag">€€</span>
+        </div>
+        <h3 class="resto-name">Saveur du Cayor</h3>
+        <p class="resto-location"><i class="fa-solid fa-location-dot"></i> Périphérie de Thiès</p>
+        <p class="resto-desc">Spécialité grillades et cuisine traditionnelle sénégalaise. Une adresse authentique pour découvrir les saveurs du Cayor.</p>
+        <div class="resto-tags">
+          <span class="resto-tag"><i class="fa-solid fa-fire"></i> Grillades</span>
+          <span class="resto-tag"><i class="fa-solid fa-seedling"></i> Traditionnel</span>
+        </div>
+        <div class="resto-footer">
+          <div class="resto-rating">
+            <span class="rating-label no-avis">Pas encore d'avis</span>
+          </div>
+          <div class="resto-price">
+            <div class="price-range-display">3 000–8 000</div>
+            <div class="price-label">FCFA / pers.</div>
+          </div>
+        </div>
+        <div class="resto-cta">
+          <button class="btn-detail"><i class="fa-solid fa-circle-info"></i> Détails</button>
+          <button class="btn-reserve"><i class="fa-solid fa-calendar-check"></i> Y aller</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10. Le Murex -->
+    <div class="resto-card"
+      data-dept="thies"
+      data-cuisine="africaine"
+      data-budget="1"
+      data-rating="0"
+      data-avis="0"
+      data-zone="peripherie"
+      data-type="restaurant">
+      <div class="resto-img" style="background:linear-gradient(135deg,#0F4C75,#1B6CA8)">
+        <i class="fa-solid fa-fish"></i>
+        <span class="resto-img-label">Restaurant local</span>
+      </div>
+      <button class="resto-wishlist"><i class="fa-regular fa-heart"></i></button>
+      <div class="resto-body">
+        <div class="resto-meta">
+          <span class="resto-cuisine">Africaine</span>
+          <span class="budget-tag">€</span>
+        </div>
+        <h3 class="resto-name">Le Murex</h3>
+        <p class="resto-location"><i class="fa-solid fa-location-dot"></i> Thiès</p>
+        <p class="resto-desc">Cuisine locale authentique dans une ambiance simple et conviviale. Une expérience de la gastronomie de quartier.</p>
+        <div class="resto-tags">
+          <span class="resto-tag"><i class="fa-solid fa-home"></i> Ambiance locale</span>
+          <span class="resto-tag"><i class="fa-solid fa-tag"></i> Abordable</span>
+        </div>
+        <div class="resto-footer">
+          <div class="resto-rating">
+            <span class="rating-label no-avis">Pas encore d'avis</span>
+          </div>
+          <div class="resto-price">
+            <div class="price-range-display">500–2 000</div>
+            <div class="price-label">FCFA / pers.</div>
+          </div>
+        </div>
+        <div class="resto-cta">
+          <button class="btn-detail"><i class="fa-solid fa-circle-info"></i> Détails</button>
+          <button class="btn-reserve"><i class="fa-solid fa-calendar-check"></i> Y aller</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 11. La Place Restaurant -->
+    <div class="resto-card"
+      data-dept="thies"
+      data-cuisine="africaine"
+      data-budget="1"
+      data-rating="0"
+      data-avis="0"
+      data-zone="centre"
+      data-type="restaurant">
+      <div class="resto-img" style="background:linear-gradient(135deg,#B7410E,#D4691E)">
+        <i class="fa-solid fa-store"></i>
+        <span class="resto-img-label">Restaurant</span>
+      </div>
+      <button class="resto-wishlist"><i class="fa-regular fa-heart"></i></button>
+      <div class="resto-body">
+        <div class="resto-meta">
+          <span class="resto-cuisine">Africaine</span>
+          <span class="budget-tag">€</span>
+        </div>
+        <h3 class="resto-name">La Place Restaurant</h3>
+        <p class="resto-location"><i class="fa-solid fa-location-dot"></i> Centre de Thiès</p>
+        <p class="resto-desc">Ambiance locale authentique, peu d'avis en ligne mais une clientèle locale fidèle. À découvrir pour une expérience vraie.</p>
+        <div class="resto-tags">
+          <span class="resto-tag"><i class="fa-solid fa-users"></i> Clientèle locale</span>
+          <span class="resto-tag"><i class="fa-solid fa-landmark"></i> Authentique</span>
+        </div>
+        <div class="resto-footer">
+          <div class="resto-rating">
+            <span class="rating-label no-avis">Peu d'avis en ligne</span>
+          </div>
+          <div class="resto-price">
+            <div class="price-range-display">1 000–3 000</div>
+            <div class="price-label">FCFA / pers.</div>
+          </div>
+        </div>
+        <div class="resto-cta">
+          <button class="btn-detail"><i class="fa-solid fa-circle-info"></i> Détails</button>
+          <button class="btn-reserve"><i class="fa-solid fa-calendar-check"></i> Y aller</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 12. Sam's Restaurant -->
+    <div class="resto-card"
+      data-dept="thies"
+      data-cuisine="internationale rapide"
+      data-budget="1"
+      data-rating="0"
+      data-avis="0"
+      data-zone="centre"
+      data-type="rapide">
+      <div class="resto-img" style="background:linear-gradient(135deg,#1C2B39,#2E4057)">
+        <i class="fa-solid fa-burger"></i>
+        <span class="resto-img-label">Fast-food</span>
+      </div>
+      <button class="resto-wishlist"><i class="fa-regular fa-heart"></i></button>
+      <div class="resto-body">
+        <div class="resto-meta">
+          <span class="resto-cuisine">Cuisine du monde</span>
+          <span class="budget-tag">€</span>
+        </div>
+        <h3 class="resto-name">Sam's Restaurant</h3>
+        <p class="resto-location"><i class="fa-solid fa-location-dot"></i> Centre-ville, Thiès</p>
+        <p class="resto-desc">Fast-food en plein centre-ville, pratique pour un repas rapide entre deux visites. Cuisine du monde variée.</p>
+        <div class="resto-tags">
+          <span class="resto-tag"><i class="fa-solid fa-bolt"></i> Fast-food</span>
+          <span class="resto-tag"><i class="fa-solid fa-map-pin"></i> Centre-ville</span>
+        </div>
+        <div class="resto-footer">
+          <div class="resto-rating">
+            <span class="rating-label no-avis">Pas encore d'avis</span>
+          </div>
+          <div class="resto-price">
+            <div class="price-range-display">500–2 000</div>
+            <div class="price-label">FCFA / pers.</div>
+          </div>
+        </div>
+        <div class="resto-cta">
+          <button class="btn-detail"><i class="fa-solid fa-circle-info"></i> Détails</button>
+          <button class="btn-reserve"><i class="fa-solid fa-calendar-check"></i> Y aller</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- 13. Péché Mignon -->
+    <div class="resto-card"
+      data-dept="thies"
+      data-cuisine="pâtisserie café"
+      data-etablissement="patisserie"
+      data-budget="1"
+      data-rating="0"
+      data-avis="0"
+      data-zone="centre"
+      data-type="cafe">
+      <div class="resto-img" style="background:linear-gradient(135deg,#8B1A4A,#D4517A)">
+        <i class="fa-solid fa-cake-candles"></i>
+        <span class="resto-img-label">Pâtisserie</span>
+        <div class="resto-badge">Référence locale</div>
+      </div>
+      <button class="resto-wishlist"><i class="fa-regular fa-heart"></i></button>
+      <div class="resto-body">
+        <div class="resto-meta">
+          <span class="resto-cuisine">Pâtisserie · Glaces</span>
+          <span class="budget-tag">€</span>
+        </div>
+        <h3 class="resto-name">Péché Mignon</h3>
+        <p class="resto-location"><i class="fa-solid fa-location-dot"></i> Centre-ville — facile d'accès</p>
+        <p class="resto-desc">La référence locale pour les douceurs à Thiès. Pâtisseries, viennoiseries, glaces artisanales et snacks dans une ambiance moderne et familiale.</p>
+        <div class="resto-tags">
+          <span class="resto-tag"><i class="fa-solid fa-cake-candles"></i> Pâtisseries</span>
+          <span class="resto-tag"><i class="fa-solid fa-ice-cream"></i> Glaces artisanales</span>
+          <span class="resto-tag"><i class="fa-solid fa-croissant"></i> Viennoiseries</span>
+          <span class="resto-tag"><i class="fa-solid fa-family"></i> Familial</span>
+        </div>
+        <div class="resto-footer">
+          <div class="resto-rating">
+            <span class="rating-label no-avis">Référence locale — très apprécié</span>
+          </div>
+          <div class="resto-price">
+            <div class="price-range-display">500–3 000</div>
+            <div class="price-label">FCFA / pers.</div>
+          </div>
+        </div>
+        <div class="resto-cta">
+          <button class="btn-detail"><i class="fa-solid fa-circle-info"></i> Détails</button>
+          <button class="btn-reserve"><i class="fa-solid fa-calendar-check"></i> Y aller</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 14. La Terrasse de Saly (Mbour) -->
+    <div class="resto-card"
+      data-dept="mbour"
+      data-cuisine="fruits-de-mer internationale"
+      data-etablissement="restaurant"
+      data-budget="3"
+      data-rating="4.6"
+      data-avis="0"
+      data-zone="mbour"
+      data-type="restaurant">
+      <div class="resto-img" style="background:linear-gradient(135deg,#F39C12,#F5B041)">
+        <i class="fa-solid fa-shrimp"></i>
+        <span class="resto-img-label">Fruits de mer</span>
+      </div>
+      <button class="resto-wishlist"><i class="fa-regular fa-heart"></i></button>
+      <div class="resto-body">
+        <div class="resto-meta">
+          <span class="resto-cuisine">Fruits de mer</span>
+          <span class="budget-tag">€€€</span>
+        </div>
+        <h3 class="resto-name">La Terrasse de Saly</h3>
+        <p class="resto-location"><i class="fa-solid fa-location-dot"></i> Saly Portudal, Mbour</p>
+        <p class="resto-desc">Poissons et fruits de mer grillés servis face à l'océan, dans une ambiance décontractée typique de la Petite Côte.</p>
+        <div class="resto-tags">
+          <span class="resto-tag"><i class="fa-solid fa-fish"></i> Poisson grillé</span>
+          <span class="resto-tag"><i class="fa-solid fa-umbrella-beach"></i> Vue mer</span>
+        </div>
+        <div class="resto-footer">
+          <div class="resto-rating">
+            <span class="rating-score">4.6</span>
+            <span class="rating-label">Excellent</span>
+          </div>
+          <div class="resto-price">
+            <div class="price-range-display">4 000–8 000</div>
+            <div class="price-label">FCFA / pers.</div>
+          </div>
+        </div>
+        <div class="resto-cta">
+          <button class="btn-detail"><i class="fa-solid fa-circle-info"></i> Détails</button>
+          <button class="btn-reserve"><i class="fa-solid fa-calendar-check"></i> Y aller</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 15. Chez Sokhna (Tivaouane) -->
+    <div class="resto-card"
+      data-dept="tivaouane"
+      data-cuisine="africaine traditionnelle"
+      data-etablissement="restaurant"
+      data-budget="1"
+      data-rating="4.4"
+      data-avis="0"
+      data-zone="tivaouane"
+      data-type="restaurant">
+      <div class="resto-img" style="background:linear-gradient(135deg,#1B4F30,#2E8B57)">
+        <i class="fa-solid fa-bowl-food"></i>
+        <span class="resto-img-label">Cuisine traditionnelle</span>
+      </div>
+      <button class="resto-wishlist"><i class="fa-regular fa-heart"></i></button>
+      <div class="resto-body">
+        <div class="resto-meta">
+          <span class="resto-cuisine">Traditionnelle sénégalaise</span>
+          <span class="budget-tag">€</span>
+        </div>
+        <h3 class="resto-name">Chez Sokhna</h3>
+        <p class="resto-location"><i class="fa-solid fa-location-dot"></i> Centre-ville, Tivaouane</p>
+        <p class="resto-desc">Table familiale servant plats traditionnels et thé à la menthe, très fréquentée par les pèlerins de passage lors du Gamou.</p>
+        <div class="resto-tags">
+          <span class="resto-tag"><i class="fa-solid fa-mug-hot"></i> Thé à la menthe</span>
+          <span class="resto-tag"><i class="fa-solid fa-mosque"></i> Proche zawiya</span>
+        </div>
+        <div class="resto-footer">
+          <div class="resto-rating">
+            <span class="rating-score">4.4</span>
+            <span class="rating-label">Très bien</span>
+          </div>
+          <div class="resto-price">
+            <div class="price-range-display">1 500–2 500</div>
+            <div class="price-label">FCFA / pers.</div>
+          </div>
+        </div>
+        <div class="resto-cta">
+          <button class="btn-detail"><i class="fa-solid fa-circle-info"></i> Détails</button>
+          <button class="btn-reserve"><i class="fa-solid fa-calendar-check"></i> Y aller</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /resto-grid -->
+
+  <div class="empty-state" id="emptyState">
+    <i class="fa-solid fa-utensils"></i>
+    <h3>Aucun restaurant trouvé</h3>
+    <p>Essayez d'élargir vos filtres pour voir plus d'adresses.</p>
+  </div>
+</div>
+
+<!-- OVERLAY -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal()"></div>
+
+<!-- FILTER MODAL -->
+<div class="filter-modal" id="filterModal">
+  <div class="modal-header">
+    <h2><i class="fa-solid fa-sliders"></i> Filtres</h2>
+    <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="modal-body">
+
+    <!-- Type de cuisine -->
+    <div class="filter-section">
+      <h3>Type de cuisine</h3>
+      <div class="chip-group">
+        <button class="chip" data-filter="cuisine" data-val="africaine" onclick="toggleChip(this)">
+          <i class="fa-solid fa-bowl-rice"></i> Africaine
+        </button>
+        <button class="chip" data-filter="cuisine" data-val="française" onclick="toggleChip(this)">
+          <i class="fa-solid fa-bread-slice"></i> Française
+        </button>
+        <button class="chip" data-filter="cuisine" data-val="internationale" onclick="toggleChip(this)">
+          <i class="fa-solid fa-earth-africa"></i> Internationale
+        </button>
+        <button class="chip" data-filter="cuisine" data-val="gastronomique" onclick="toggleChip(this)">
+          <i class="fa-solid fa-star"></i> Gastronomique
+        </button>
+        <button class="chip" data-filter="cuisine" data-val="rapide" onclick="toggleChip(this)">
+          <i class="fa-solid fa-burger"></i> Rapide / Snack
+        </button>
+        <button class="chip" data-filter="cuisine" data-val="grillades" onclick="toggleChip(this)">
+          <i class="fa-solid fa-fire"></i> Grillades
+        </button>
+      </div>
+    </div>
+
+    <!-- Budget -->
+    <div class="filter-section">
+      <h3>Budget</h3>
+      <div class="budget-pills">
+        <button class="budget-pill active" data-budget="0" onclick="selectBudget(this)">Tous</button>
+        <button class="budget-pill" data-budget="1" onclick="selectBudget(this)">€ — Abordable<br><small style="font-weight:400;font-size:0.7rem">&lt; 2 500 FCFA</small></button>
+        <button class="budget-pill" data-budget="2" onclick="selectBudget(this)">€€ — Moyen<br><small style="font-weight:400;font-size:0.7rem">2 500–6 000 FCFA</small></button>
+        <button class="budget-pill" data-budget="4" onclick="selectBudget(this)">€€€€ — Gastronomique<br><small style="font-weight:400;font-size:0.7rem">> 10 000 FCFA</small></button>
+      </div>
+    </div>
+
+    <!-- Note minimale -->
+    <div class="filter-section">
+      <h3>Note minimale</h3>
+      <div class="rating-options">
+        <div class="rating-option active" data-min-rating="0" onclick="selectRating(this)">
+          <span>Tous les restaurants</span>
+        </div>
+        <div class="rating-option" data-min-rating="4" onclick="selectRating(this)">
+          <div class="stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+          <span>4.0 et plus</span>
+        </div>
+        <div class="rating-option" data-min-rating="4.3" onclick="selectRating(this)">
+          <div class="stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+          </div>
+          <span>4.3 et plus — Excellent</span>
+        </div>
+        <div class="rating-option" data-min-rating="4.9" onclick="selectRating(this)">
+          <div class="stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <span>4.9+ — Exceptionnel</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Localisation -->
+    <div class="filter-section">
+      <h3>Localisation</h3>
+      <div class="chip-group">
+        <button class="chip" data-filter="zone" data-val="centre" onclick="toggleChip(this)">
+          <i class="fa-solid fa-building"></i> Centre-ville
+        </button>
+        <button class="chip" data-filter="zone" data-val="emblematique" onclick="toggleChip(this)">
+          <i class="fa-solid fa-landmark"></i> Site emblématique
+        </button>
+        <button class="chip" data-filter="zone" data-val="peripherie" onclick="toggleChip(this)">
+          <i class="fa-solid fa-tree"></i> Périphérie
+        </button>
+      </div>
+    </div>
+
+
+    <!-- Type d'établissement -->
+    <div class="filter-section">
+      <h3>Type d'établissement</h3>
+      <div class="chip-group">
+        <button class="chip" data-filter="etablissement" data-val="restaurant" onclick="toggleChip(this)">
+          <i class="fa-solid fa-utensils"></i> Restaurant
+        </button>
+        <button class="chip" data-filter="etablissement" data-val="cafe" onclick="toggleChip(this)">
+          <i class="fa-solid fa-mug-hot"></i> Café
+        </button>
+        <button class="chip" data-filter="etablissement" data-val="patisserie" onclick="toggleChip(this)">
+          <i class="fa-solid fa-cake-candles"></i> Pâtisserie
+        </button>
+        <button class="chip" data-filter="etablissement" data-val="rapide" onclick="toggleChip(this)">
+          <i class="fa-solid fa-burger"></i> Fast-food
+        </button>
+        <button class="chip" data-filter="etablissement" data-val="gastronomique" onclick="toggleChip(this)">
+          <i class="fa-solid fa-star"></i> Gastronomique
+        </button>
+      </div>
+    </div>
+
+    <!-- Options -->
+    <div class="filter-section">
+      <h3>Options</h3>
+      <div class="chip-group">
+        <button class="chip" data-filter="option" data-val="avec-avis" onclick="toggleChip(this)">
+          <i class="fa-solid fa-comment"></i> Avec avis
+        </button>
+        <button class="chip" data-filter="option" data-val="top-note" onclick="toggleChip(this)">
+          <i class="fa-solid fa-trophy"></i> Note ≥ 4.3
+        </button>
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn-reset" onclick="resetFilters()">Tout effacer</button>
+    <button class="btn-apply" onclick="applyFilters()">
+      Afficher <span id="applyCount">13</span> restaurants
+    </button>
+  </div>
+</div>
+
+<script>
+const state = {
+  dept: 'all',
+  cuisines: new Set(),
+  etablissements: new Set(),
+  budget: 0,
+  minRating: 0,
+  zones: new Set(),
+  options: new Set(),
+  quickType: 'tous',
+};
+
+function openModal()  { document.getElementById('modalOverlay').classList.add('open'); document.getElementById('filterModal').classList.add('open'); document.body.style.overflow='hidden'; updateApplyCount(); }
+function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); document.getElementById('filterModal').classList.remove('open'); document.body.style.overflow=''; }
+
+function quickFilterDept(el, dept) {
+  state.dept = dept;
+  document.querySelectorAll('.dept-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  applyFilters();
+}
+
+function quickFilter(el, type) {
+  state.quickType = type;
+  document.querySelectorAll('.type-filters-bar .hfb-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  applyFilters();
+}
+
+function toggleChip(el) {
+  const filter = el.dataset.filter, val = el.dataset.val;
+  const map = { cuisine: state.cuisines, zone: state.zones, option: state.options, etablissement: state.etablissements };
+  const set = map[filter];
+  if (!set) return;
+  if (set.has(val)) { set.delete(val); el.classList.remove('active'); }
+  else { set.add(val); el.classList.add('active'); }
+  updateApplyCount();
+}
+
+function selectBudget(el) {
+  document.querySelectorAll('.budget-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  state.budget = +el.dataset.budget;
+  updateApplyCount();
+}
+
+function selectRating(el) {
+  document.querySelectorAll('.rating-option').forEach(o => o.classList.remove('active'));
+  el.classList.add('active');
+  state.minRating = +el.dataset.minRating;
+  updateApplyCount();
+}
+
+function cardMatches(card) {
+  const dept    = card.dataset.dept || '';
+  const cuisine = card.dataset.cuisine || '';
+  const budget  = +card.dataset.budget;
+  const rating  = +card.dataset.rating;
+  const avis    = +card.dataset.avis;
+  const zone    = card.dataset.zone || '';
+  const type    = card.dataset.type || '';
+
+  // Department
+  if (state.dept !== 'all' && dept !== state.dept) return false;
+
+  // Quick filter
+  if (state.quickType !== 'tous') {
+    const isMatch = cuisine.includes(state.quickType) || type === state.quickType ||
+      (card.dataset.etablissement || '').includes(state.quickType);
+    if (!isMatch) return false;
+  }
+  // Cuisine chips (OR logic)
+  if (state.cuisines.size > 0) {
+    let ok = false;
+    state.cuisines.forEach(c => { if (cuisine.includes(c) || type.includes(c)) ok = true; });
+    if (!ok) return false;
+  }
+  // Budget
+  if (state.budget > 0 && budget !== state.budget) return false;
+  // Min rating (cards with 0 = no rating, exclude unless minRating is 0)
+  if (state.minRating > 0) {
+    if (rating === 0 || rating < state.minRating) return false;
+  }
+  // Établissement type
+  if (state.etablissements.size > 0) {
+    const cardEtab = card.dataset.etablissement || card.dataset.type || '';
+    let ok = false;
+    state.etablissements.forEach(e => { if (cardEtab.includes(e)) ok = true; });
+    if (!ok) return false;
+  }
+  // Zones
+  if (state.zones.size > 0 && !state.zones.has(zone)) return false;
+  // Options
+  if (state.options.has('avec-avis') && avis === 0) return false;
+  if (state.options.has('top-note') && (rating === 0 || rating < 4.3)) return false;
+
+  return true;
+}
+
+function applyFilters() {
+  const cards = document.querySelectorAll('.resto-card');
+  let visible = 0;
+  cards.forEach(card => {
+    const show = cardMatches(card);
+    card.classList.toggle('hidden', !show);
+    if (show) visible++;
+  });
+  document.getElementById('resultCount').textContent = visible;
+  document.getElementById('navCount').textContent = visible + ' restaurant' + (visible !== 1 ? 's' : '');
+  document.getElementById('emptyState').classList.toggle('show', visible === 0);
+
+  const resultsTitle = document.querySelector('.results-title');
+  if (resultsTitle) {
+    const deptLabel = state.dept === 'all' ? 'dans la région'
+      : state.dept === 'thies' ? 'à Thiès'
+      : state.dept === 'mbour' ? 'à Mbour'
+      : 'à Tivaouane';
+    resultsTitle.innerHTML = `<strong id="resultCount">${visible}</strong> restaurant${visible !== 1 ? 's' : ''} trouvé${visible !== 1 ? 's' : ''} ${deptLabel}`;
+  }
+
+  updateActiveTags();
+  updateFilterBadge();
+  closeModal();
+}
+
+function resetFilters() {
+  state.cuisines.clear(); state.zones.clear(); state.options.clear(); state.etablissements.clear();
+  state.budget = 0; state.minRating = 0; state.quickType = 'tous';
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.budget-pill').forEach(p => p.classList.toggle('active', p.dataset.budget === '0'));
+  document.querySelectorAll('.rating-option').forEach(o => o.classList.toggle('active', o.dataset.minRating === '0'));
+  document.querySelectorAll('.type-filters-bar .hfb-pill').forEach(p => p.classList.toggle('active', p.dataset.quick === 'tous'));
+  updateApplyCount();
+  applyFilters();
+}
+
+function sortRestos(by) {
+  const grid = document.getElementById('restoGrid');
+  const cards = [...grid.querySelectorAll('.resto-card')];
+  const order = { recommended: [0], 'price-asc': ['budget','asc'], 'price-desc': ['budget','desc'], rating: ['rating','desc'], avis: ['avis','desc'] };
+  cards.sort((a, b) => {
+    if (by === 'price-asc')  return +a.dataset.budget - +b.dataset.budget;
+    if (by === 'price-desc') return +b.dataset.budget - +a.dataset.budget;
+    if (by === 'rating')     return +b.dataset.rating - +a.dataset.rating;
+    if (by === 'avis')       return +b.dataset.avis   - +a.dataset.avis;
+    return 0;
+  });
+  cards.forEach(c => grid.appendChild(c));
+}
+
+function updateApplyCount() {
+  const cards = document.querySelectorAll('.resto-card');
+  let count = 0;
+  cards.forEach(card => { if (cardMatches(card)) count++; });
+  document.getElementById('applyCount').textContent = count;
+}
+
+function updateFilterBadge() {
+  let count = state.cuisines.size + state.zones.size + state.options.size + state.etablissements.size;
+  if (state.budget > 0) count++;
+  if (state.minRating > 0) count++;
+  const badge = document.getElementById('filterBadge');
+  badge.textContent = count;
+  badge.style.display = count > 0 ? 'flex' : 'none';
+}
+
+function updateActiveTags() {
+  const container = document.getElementById('activeFilters');
+  container.innerHTML = '';
+  const add = (label, fn) => {
+    const tag = document.createElement('div');
+    tag.className = 'active-filter-tag';
+    tag.innerHTML = `${label} <button onclick="${fn}"><i class="fa-solid fa-xmark"></i></button>`;
+    container.appendChild(tag);
+  };
+  state.cuisines.forEach(c => add(c.charAt(0).toUpperCase()+c.slice(1), `removeTag('cuisine','${c}')`));
+  state.etablissements.forEach(e => add(e.charAt(0).toUpperCase()+e.slice(1), `removeTag('etablissement','${e}')`));
+  state.zones.forEach(z => add(z.charAt(0).toUpperCase()+z.slice(1), `removeTag('zone','${z}')`));
+  state.options.forEach(o => add(o, `removeTag('option','${o}')`));
+  if (state.budget > 0) add(['','€','€€','€€€','€€€€'][state.budget]+' budget', "removeTag('budget')");
+  if (state.minRating > 0) add('Note ≥ '+state.minRating, "removeTag('rating')");
+}
+
+function removeTag(type, val) {
+  if (type==='cuisine') { state.cuisines.delete(val); document.querySelector(`[data-filter="cuisine"][data-val="${val}"]`)?.classList.remove('active'); }
+  if (type==='etablissement') { state.etablissements.delete(val); document.querySelector(`[data-filter="etablissement"][data-val="${val}"]`)?.classList.remove('active'); }
+  if (type==='zone')    { state.zones.delete(val);    document.querySelector(`[data-filter="zone"][data-val="${val}"]`)?.classList.remove('active'); }
+  if (type==='option')  { state.options.delete(val);  document.querySelector(`[data-filter="option"][data-val="${val}"]`)?.classList.remove('active'); }
+  if (type==='budget')  { state.budget=0; document.querySelectorAll('.budget-pill').forEach(p=>p.classList.toggle('active',p.dataset.budget==='0')); }
+  if (type==='rating')  { state.minRating=0; document.querySelectorAll('.rating-option').forEach(o=>o.classList.toggle('active',o.dataset.minRating==='0')); }
+  applyFilters();
+}
+
+// Wishlist
+document.querySelectorAll('.resto-wishlist').forEach(btn => {
+  btn.addEventListener('click', e => { e.stopPropagation(); btn.classList.toggle('active'); });
+});
+</script>
+</body>
+</html>

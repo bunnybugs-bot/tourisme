@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hébergements à Thiès — Tourisme Sénégal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+<style>
+:root {
+  --orange: #E8730A;
+  --orange-light: #F59B3B;
+  --orange-pale: #FDF0E0;
+  --green: #2D6A4F;
+  --cream: #FAF7F0;
+  --sand: #E8D5B7;
+  --dark: #0F1923;
+  --charcoal: #1C2B39;
+  --text: #2C3E50;
+  --text-muted: #8A9BB0;
+  --white: #FFFFFF;
+  --nav-h: 68px;
+  --border: rgba(232,213,183,0.5);
+  --shadow: 0 2px 20px rgba(15,25,35,0.07);
+  --shadow-lg: 0 16px 56px rgba(15,25,35,0.18);
+  --radius: 20px;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  font-family:'Montserrat',sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  /* subtle noise texture */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+}
+
+/* ── NAV ───────────────────────────────────────────────── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  height: var(--nav-h);
+  display: flex; align-items: center; padding: 0 2.5rem; gap: 1rem;
+  background: rgba(250,247,240,0.92);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--border);
+}
+.nav-back {
+  display: flex; align-items: center; gap: 0.6rem;
+  color: var(--text-muted); text-decoration: none;
+  font-size: 0.78rem; font-weight: 600;
+  letter-spacing: 0.3px; transition: color 0.2s;
+  text-transform: uppercase;
+}
+.nav-back:hover { color: var(--orange); }
+.nav-back i { font-size: 0.72rem; }
+.nav-divider { color: var(--sand); }
+.nav-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; color: var(--dark); font-weight: 700;
+}
+.nav-count {
+  margin-left: auto;
+  font-size: 0.75rem; color: var(--text-muted);
+  background: var(--orange-pale); border: 1px solid rgba(232,115,10,0.15);
+  padding: 0.3rem 0.85rem; border-radius: 20px; font-weight: 600;
+}
+
+/* ── PAGE HEADER ────────────────────────────────────────── */
+.page-header {
+  background: var(--dark);
+  padding: 4rem 2.5rem 3rem;
+  position: relative; overflow: hidden;
+}
+/* decorative geometric pattern */
+.page-header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 90% at 90% 60%, rgba(232,115,10,0.18) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 60% at 10% 30%, rgba(45,106,79,0.12) 0%, transparent 60%);
+}
+.page-header::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 40px,
+    rgba(255,255,255,0.012) 40px,
+    rgba(255,255,255,0.012) 80px
+  );
+}
+.page-header-inner {
+  max-width: 1200px; margin: 0 auto;
+  position: relative; z-index: 2;
+}
+.breadcrumb {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.72rem; color: rgba(255,255,255,0.4);
+  text-transform: uppercase; letter-spacing: 1.5px;
+  margin-bottom: 1.2rem;
+}
+.breadcrumb span { color: var(--orange); }
+.page-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  color: white; line-height: 1.15;
+  margin-bottom: 0.6rem;
+  font-weight: 900;
+}
+.page-header h1 em {
+  font-style: italic; color: var(--orange-light);
+}
+.page-header p {
+  color: rgba(255,255,255,0.5);
+  font-size: 0.88rem; max-width: 480px;
+  line-height: 1.7;
+}
+
+.header-filters-bar {
+  margin-top: 2.5rem;
+  display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center;
+}
+.hfb-pill {
+  display: flex; align-items: center; gap: 0.5rem;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.7);
+  border-radius: 50px; padding: 0.55rem 1.1rem;
+  font-size: 0.78rem; font-weight: 600;
+  cursor: pointer; transition: all 0.25s;
+  letter-spacing: 0.2px; font-family: 'Montserrat', sans-serif;
+}
+.hfb-pill i { font-size: 0.72rem; }
+.hfb-pill:hover { background: rgba(255,255,255,0.12); color: white; }
+.hfb-pill.active {
+  background: var(--orange); border-color: var(--orange);
+  color: white; box-shadow: 0 4px 16px rgba(232,115,10,0.4);
+}
+.btn-filters {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 0.55rem;
+  background: white; border: none; border-radius: 50px;
+  padding: 0.6rem 1.3rem;
+  font-size: 0.78rem; font-weight: 700;
+  color: var(--dark); cursor: pointer;
+  transition: all 0.25s; font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+.btn-filters:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(0,0,0,0.25); }
+.filter-badge {
+  background: var(--orange); color: white;
+  width: 18px; height: 18px; border-radius: 50%;
+  font-size: 0.65rem; display: flex; align-items: center;
+  justify-content: center; font-weight: 800;
+}
+
+/* ── MAIN ───────────────────────────────────────────────── */
+.main { max-width: 1200px; margin: 0 auto; padding: 2.5rem 2rem; }
+
+.results-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;
+}
+.results-title {
+  font-size: 0.82rem; color: var(--text-muted); font-weight: 500;
+}
+.results-title strong { color: var(--dark); font-weight: 700; }
+
+.sort-select {
+  border: 1px solid var(--border); border-radius: 10px;
+  padding: 0.5rem 1rem; font-size: 0.8rem;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--text); background: white; cursor: pointer;
+  font-weight: 500; outline: none;
+}
+.sort-select:focus { border-color: var(--orange); }
+
+/* ── ACTIVE FILTER TAGS ─────────────────────────────────── */
+.active-filters { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.active-filter-tag {
+  display: flex; align-items: center; gap: 0.4rem;
+  background: var(--dark); color: white;
+  border-radius: 20px; padding: 0.35rem 0.85rem;
+  font-size: 0.72rem; font-weight: 600;
+  animation: tagIn 0.2s ease;
+}
+@keyframes tagIn { from { opacity:0; transform: scale(0.8); } to { opacity:1; transform: scale(1); } }
+.active-filter-tag button {
+  background: none; border: none; color: rgba(255,255,255,0.5);
+  cursor: pointer; font-size: 0.65rem; padding: 0;
+  margin-left: 2px; display: flex; align-items: center;
+  transition: color 0.2s;
+}
+.active-filter-tag button:hover { color: white; }
+
+/* ── HOTEL GRID ─────────────────────────────────────────── */
+.hotel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.8rem;
+}
+
+.hotel-card {
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  /* staggered entrance */
+  opacity: 0;
+  animation: cardIn 0.5s ease forwards;
+}
+.hotel-card:nth-child(1)  { animation-delay: 0.05s; }
+.hotel-card:nth-child(2)  { animation-delay: 0.10s; }
+.hotel-card:nth-child(3)  { animation-delay: 0.15s; }
+.hotel-card:nth-child(4)  { animation-delay: 0.20s; }
+.hotel-card:nth-child(5)  { animation-delay: 0.25s; }
+.hotel-card:nth-child(6)  { animation-delay: 0.30s; }
+.hotel-card:nth-child(7)  { animation-delay: 0.35s; }
+.hotel-card:nth-child(8)  { animation-delay: 0.40s; }
+.hotel-card:nth-child(9)  { animation-delay: 0.45s; }
+.hotel-card:nth-child(10) { animation-delay: 0.50s; }
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hotel-card.hidden { display: none; }
+.hotel-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Image zone */
+.hotel-img {
+  height: 210px;
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+/* subtle gradient animation on hover */
+.hotel-card:hover .hotel-img { filter: brightness(1.08); }
+.hotel-img::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.45) 100%);
+}
+.hotel-img i {
+  font-size: 4rem;
+  color: rgba(255,255,255,0.55);
+  position: relative; z-index: 1;
+  transition: transform 0.4s ease;
+}
+.hotel-card:hover .hotel-img i { transform: scale(1.1); }
+
+.hotel-img-label {
+  position: absolute; bottom: 12px; left: 14px; z-index: 2;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: white; font-size: 0.68rem; font-weight: 700;
+  padding: 0.28rem 0.7rem; border-radius: 20px;
+  letter-spacing: 0.8px; text-transform: uppercase;
+}
+.hotel-badge {
+  position: absolute; top: 14px; left: 14px; z-index: 2;
+  background: var(--orange);
+  color: white; font-size: 0.65rem; font-weight: 800;
+  padding: 0.3rem 0.7rem; border-radius: 6px;
+  letter-spacing: 0.4px; text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(232,115,10,0.5);
+}
+
+/* Wishlist */
+.hotel-wishlist {
+  position: absolute; top: 12px; right: 12px; z-index: 2;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(6px);
+  border: none; border-radius: 50%;
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  transition: transform 0.2s, background 0.2s;
+}
+.hotel-wishlist:hover { transform: scale(1.12); background: white; }
+.hotel-wishlist i { color: #ccc; font-size: 0.85rem; transition: color 0.2s; }
+.hotel-wishlist.active i { color: #E74C3C; }
+
+/* Body */
+.hotel-body { padding: 1.4rem 1.4rem 1.2rem; }
+
+.hotel-meta {
+  display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.5rem;
+}
+.hotel-type {
+  font-size: 0.68rem; color: var(--orange);
+  text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+}
+.hotel-stars { display: flex; gap: 2px; }
+.hotel-stars i { font-size: 0.6rem; color: #F59B3B; }
+
+.hotel-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem; font-weight: 700; color: var(--dark);
+  margin-bottom: 0.4rem; line-height: 1.3;
+  transition: color 0.2s;
+}
+.hotel-card:hover .hotel-name { color: var(--orange); }
+
+.hotel-location {
+  font-size: 0.75rem; color: var(--text-muted);
+  display: flex; align-items: center; gap: 0.35rem;
+  margin-bottom: 1rem; font-weight: 500;
+}
+.hotel-location i { color: var(--orange); font-size: 0.68rem; }
+
+/* Amenity tags */
+.hotel-amenities { display: flex; gap: 0.35rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+.amenity-tag {
+  display: flex; align-items: center; gap: 0.3rem;
+  background: var(--cream);
+  border-radius: 6px; padding: 0.28rem 0.6rem;
+  font-size: 0.68rem; color: var(--text); font-weight: 600;
+}
+.amenity-tag i { font-size: 0.62rem; color: var(--orange); }
+
+/* Footer */
+.hotel-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 0 0; border-top: 1px solid rgba(232,213,183,0.5);
+}
+.hotel-rating { display: flex; align-items: center; gap: 0.5rem; }
+.rating-score {
+  background: var(--dark); color: white;
+  font-size: 0.82rem; font-weight: 800;
+  padding: 0.28rem 0.6rem; border-radius: 8px;
+  letter-spacing: -0.3px;
+}
+.rating-label { font-size: 0.7rem; color: var(--text-muted); font-weight: 500; }
+
+.hotel-price { text-align: right; }
+.price-amount {
+  font-size: 1.1rem; font-weight: 800; color: var(--dark);
+  font-family: 'Playfair Display', serif;
+  letter-spacing: -0.5px;
+}
+.price-amount span { font-size: 0.7rem; font-weight: 600; color: var(--text-muted); font-family: 'Montserrat', sans-serif; }
+.price-per { font-size: 0.68rem; color: var(--text-muted); font-weight: 500; }
+
+/* CTA buttons */
+.hotel-cta { margin-top: 1rem; display: flex; gap: 0.5rem; }
+.btn-detail {
+  flex: 1; padding: 0.65rem; border-radius: 10px;
+  border: 1.5px solid var(--border); background: transparent;
+  font-size: 0.76rem; font-weight: 600; color: var(--text);
+  cursor: pointer; transition: all 0.2s; font-family: 'Montserrat', sans-serif;
+  display: flex; align-items: center; justify-content: center; gap: 0.35rem;
+}
+.btn-detail:hover { border-color: var(--dark); color: var(--dark); background: var(--cream); }
+.btn-reserve {
+  flex: 1.4; padding: 0.65rem; border-radius: 10px;
+  border: none; background: var(--dark);
+  font-size: 0.76rem; font-weight: 700; color: white;
+  cursor: pointer; transition: all 0.25s; font-family: 'Montserrat', sans-serif;
+  display: flex; align-items: center; justify-content: center; gap: 0.35rem;
+  letter-spacing: 0.2px;
+}
+.btn-reserve:hover { background: var(--orange); box-shadow: 0 4px 16px rgba(232,115,10,0.4); }
+
+/* ── EMPTY STATE ─────────────────────────────────────────── */
+.empty-state { text-align: center; padding: 5rem 2rem; display: none; }
+.empty-state.show { display: block; }
+.empty-state i { font-size: 2.5rem; color: var(--sand); margin-bottom: 1rem; display: block; }
+.empty-state h3 { font-family: 'Playfair Display', serif; color: var(--dark); margin-bottom: 0.5rem; font-size: 1.3rem; }
+.empty-state p { color: var(--text-muted); font-size: 0.85rem; }
+
+/* ── FILTER MODAL ───────────────────────────────────────── */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(15,25,35,0.6);
+  backdrop-filter: blur(6px);
+  opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+
+.filter-modal {
+  position: fixed; right: 0; top: 0; bottom: 0; z-index: 201;
+  width: min(500px, 100vw); background: white;
+  display: flex; flex-direction: column;
+  transform: translateX(110%);
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: -12px 0 60px rgba(15,25,35,0.2);
+}
+.filter-modal.open { transform: translateX(0); }
+
+.modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.4rem 1.8rem; border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.modal-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem; font-weight: 700; color: var(--dark);
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.modal-header h2 i { font-size: 0.9rem; color: var(--orange); }
+.modal-close {
+  background: var(--cream); border: none; cursor: pointer;
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text); transition: all 0.2s; font-size: 0.9rem;
+}
+.modal-close:hover { background: var(--sand); }
+
+.modal-body { flex: 1; overflow-y: auto; padding: 1.8rem; }
+.modal-body::-webkit-scrollbar { width: 4px; }
+.modal-body::-webkit-scrollbar-track { background: transparent; }
+.modal-body::-webkit-scrollbar-thumb { background: var(--sand); border-radius: 4px; }
+
+.modal-footer {
+  padding: 1.2rem 1.8rem; border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0; background: var(--cream);
+}
+.btn-reset {
+  background: none; border: none; font-family: 'Montserrat', sans-serif;
+  font-size: 0.82rem; font-weight: 700; color: var(--text-muted);
+  cursor: pointer; padding: 0.5rem; transition: color 0.2s;
+  text-decoration: underline;
+}
+.btn-reset:hover { color: var(--dark); }
+.btn-apply {
+  background: var(--dark); color: white; border: none;
+  padding: 0.8rem 2rem; border-radius: 10px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem; font-weight: 700;
+  cursor: pointer; transition: all 0.25s;
+  letter-spacing: 0.2px;
+}
+.btn-apply:hover { background: var(--orange); box-shadow: 0 4px 20px rgba(232,115,10,0.4); }
+
+/* Filter sections */
+.filter-section {
+  margin-bottom: 2rem; padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+.filter-section:last-child { border-bottom: none; }
+.filter-section h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; font-weight: 700; color: var(--dark);
+  margin-bottom: 1rem;
+}
+
+/* Type pills */
+.type-pills { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.type-pill {
+  padding: 0.5rem 1.1rem; border-radius: 10px;
+  border: 1.5px solid var(--border); background: white;
+  font-size: 0.8rem; font-weight: 600; cursor: pointer;
+  transition: all 0.2s; font-family: 'Montserrat', sans-serif;
+  color: var(--text);
+}
+.type-pill:hover { border-color: var(--text-muted); }
+.type-pill.active { border-color: var(--dark); background: var(--dark); color: white; }
+
+/* Price histogram */
+.price-histogram {
+  height: 64px; display: flex; align-items: flex-end; gap: 2px;
+  margin-bottom: 0.5rem; padding: 0 2px;
+}
+.hist-bar {
+  flex: 1; border-radius: 3px 3px 0 0;
+  background: var(--sand); transition: background 0.3s; min-width: 3px;
+}
+.hist-bar.in-range { background: var(--orange); }
+
+.range-track {
+  position: relative; height: 3px; background: var(--sand);
+  border-radius: 2px; margin: 0.75rem 0 1.5rem;
+}
+.range-fill { position: absolute; height: 100%; background: var(--dark); border-radius: 2px; top: 0; }
+.range-input {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 100%; height: 3px; background: transparent;
+  -webkit-appearance: none; pointer-events: none; left: 0;
+}
+.range-input::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 22px; height: 22px;
+  border-radius: 50%; background: white;
+  border: 2.5px solid var(--dark); cursor: pointer;
+  pointer-events: all;
+  box-shadow: 0 2px 10px rgba(15,25,35,0.2);
+  transition: border-color 0.2s, transform 0.2s;
+}
+.range-input::-webkit-slider-thumb:hover { border-color: var(--orange); transform: scale(1.1); }
+
+.range-inputs { display: flex; gap: 1rem; }
+.range-input-box {
+  flex: 1; border: 1.5px solid var(--border); border-radius: 10px;
+  padding: 0.7rem 1rem; background: var(--cream);
+}
+.range-input-box label { display: block; font-size: 0.65rem; color: var(--text-muted); margin-bottom: 0.25rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.range-input-box span { font-size: 0.88rem; font-weight: 700; color: var(--dark); }
+
+/* Counters */
+.counter-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.85rem 0; border-bottom: 1px solid var(--border);
+}
+.counter-row:last-child { border-bottom: none; }
+.counter-label { font-size: 0.85rem; color: var(--text); font-weight: 500; }
+.counter-controls { display: flex; align-items: center; gap: 1rem; }
+.counter-btn {
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: white;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s; font-size: 1rem; color: var(--text);
+}
+.counter-btn:hover:not(:disabled) { border-color: var(--dark); }
+.counter-btn:disabled { opacity: 0.25; cursor: not-allowed; }
+.counter-val { font-size: 0.88rem; font-weight: 700; min-width: 32px; text-align: center; color: var(--dark); }
+
+/* Amenity chips */
+.amenity-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.amenity-chip {
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.5rem 0.9rem; border-radius: 10px;
+  border: 1.5px solid var(--border); background: white;
+  font-size: 0.78rem; cursor: pointer; transition: all 0.2s;
+  font-family: 'Montserrat', sans-serif; color: var(--text); font-weight: 600;
+}
+.amenity-chip i { font-size: 0.78rem; color: var(--text-muted); transition: color 0.2s; }
+.amenity-chip:hover { border-color: var(--text-muted); }
+.amenity-chip.active {
+  border-color: var(--dark); background: var(--dark); color: white;
+}
+.amenity-chip.active i { color: var(--orange-light); }
+
+/* Property cards */
+.property-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+.property-card {
+  border: 1.5px solid var(--border); border-radius: 12px;
+  padding: 0.9rem; cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; gap: 0.7rem;
+  font-family: 'Montserrat', sans-serif;
+}
+.property-card:hover { border-color: var(--text-muted); background: var(--cream); }
+.property-card.active { border-color: var(--dark); background: var(--dark); }
+.property-card i { font-size: 1rem; color: var(--text-muted); transition: color 0.2s; }
+.property-card.active i { color: var(--orange-light); }
+.property-card span { font-size: 0.8rem; font-weight: 600; color: var(--text); transition: color 0.2s; }
+.property-card.active span { color: white; }
+
+/* Option chips */
+.option-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.option-chip {
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.55rem 1rem; border-radius: 10px;
+  border: 1.5px solid var(--border); background: white;
+  font-size: 0.78rem; cursor: pointer; transition: all 0.2s;
+  font-family: 'Montserrat', sans-serif; color: var(--text); font-weight: 600;
+}
+.option-chip i { font-size: 0.8rem; color: var(--text-muted); }
+.option-chip.active { border-color: var(--dark); background: var(--dark); color: white; }
+.option-chip.active i { color: var(--orange-light); }
+
+/* Price labels */
+.price-range-labels {
+  display: flex; justify-content: space-between;
+  font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.4rem; font-weight: 500;
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="n_index.html" class="nav-back">
+    <i class="fa-solid fa-arrow-left"></i> Retour
+  </a>
+  <span class="nav-divider">/</span>
+  <span class="nav-title">Hébergements — Région de Thiès</span>
+  <span class="nav-count" id="navCount">12 établissements</span>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-inner">
+    <h1>Où dormir dans la <span>région de Thiès</span> ?</h1>
+    <p>864 réceptifs hôteliers recensés sur les 3 départements — hôtels, maisons d'hôtes et résidences sélectionnés pour votre séjour</p>
+
+    <div class="header-filters-bar dept-filters-bar">
+      <button class="hfb-pill dept-pill active" onclick="quickFilterDept('all', this)">
+        <i class="fa-solid fa-map-location-dot"></i> Toute la région
+      </button>
+      <button class="hfb-pill dept-pill" onclick="quickFilterDept('thies', this)">
+        <i class="fa-solid fa-building-columns"></i> Thiès
+      </button>
+      <button class="hfb-pill dept-pill" onclick="quickFilterDept('mbour', this)">
+        <i class="fa-solid fa-umbrella-beach"></i> Mbour
+      </button>
+      <button class="hfb-pill dept-pill" onclick="quickFilterDept('tivaouane', this)">
+        <i class="fa-solid fa-mosque"></i> Tivaouane
+      </button>
+    </div>
+
+    <div class="header-filters-bar type-filters-bar">
+      <button class="hfb-pill active" onclick="quickFilter('tous')">
+        <i class="fa-solid fa-border-all"></i> Tous
+      </button>
+      <button class="hfb-pill" onclick="quickFilter('hotel')">
+        <i class="fa-solid fa-hotel"></i> Hôtels
+      </button>
+      <button class="hfb-pill" onclick="quickFilter('maison')">
+        <i class="fa-solid fa-house-chimney"></i> Maisons d'hôtes
+      </button>
+      <button class="hfb-pill" onclick="quickFilter('residence')">
+        <i class="fa-solid fa-building"></i> Résidences
+      </button>
+      <button class="btn-filters" onclick="openModal()">
+        <i class="fa-solid fa-sliders"></i>
+        Filtres
+        <span class="filter-badge" id="filterBadge" style="display:none">0</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="results-header">
+    <p class="results-title">
+      <strong id="resultCount">12</strong> établissements trouvés dans la région
+    </p>
+    <select class="sort-select" onchange="sortHotels(this.value)">
+      <option value="recommended">Recommandés</option>
+      <option value="price-asc">Prix croissant</option>
+      <option value="price-desc">Prix décroissant</option>
+      <option value="rating">Mieux notés</option>
+    </select>
+  </div>
+
+  <div class="active-filters" id="activeFilters"></div>
+
+  <div class="hotel-grid" id="hotelGrid">
+
+    <!-- 1. Le Grand Hôtel de Thiès -->
+    <div class="hotel-card"
+      data-dept="thies"
+      data-type="hotel"
+      data-price="35000"
+      data-rating="4.2"
+      data-stars="4"
+      data-amenities="wifi,restaurant,parking,clim,piscine"
+      data-chambres="1"
+      data-lits="1">
+      <div class="hotel-img" style="background:linear-gradient(135deg,#1B4F72,#2E86AB)">
+        <i class="fa-solid fa-hotel"></i>
+        <span class="hotel-img-label">4 Étoiles</span>
+        <div class="hotel-badge">Meilleur de Thiès</div>
+      </div>
+      <div class="hotel-body">
+        <div class="hotel-meta">
+          <span class="hotel-type">Hôtel</span>
+          <div class="hotel-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+        </div>
+        <h3 class="hotel-name">Le Grand Hôtel de Thiès</h3>
+        <p class="hotel-location"><i class="fa-solid fa-location-dot"></i> Centre-ville, Av. Léopold Sédar Senghor</p>
+        <div class="hotel-amenities">
+          <span class="amenity-tag"><i class="fa-solid fa-wifi"></i> Wi-Fi</span>
+          <span class="amenity-tag"><i class="fa-solid fa-utensils"></i> Restaurant</span>
+          <span class="amenity-tag"><i class="fa-solid fa-square-parking"></i> Parking</span>
+          <span class="amenity-tag"><i class="fa-solid fa-snowflake"></i> Clim</span>
+          <span class="amenity-tag"><i class="fa-solid fa-swimming-pool"></i> Piscine</span>
+        </div>
+        <div class="hotel-footer">
+          <div class="hotel-rating">
+            <span class="rating-score">4.2</span>
+            <span class="rating-label">Très bien · 12 avis</span>
+          </div>
+          <div class="hotel-price">
+            <div class="price-amount">35 000 <span>FCFA</span></div>
+            <div class="price-per">/ nuit</div>
+          </div>
+        </div>
+        <div class="hotel-cta">
+          <button class="btn-detail" onclick="window.open('https://www.tripadvisor.fr/Hotel_Review-g811261-d17498941-Reviews-Le_Grand_Hotel_de_Thies.html','_blank')">
+            <i class="fa-solid fa-circle-info"></i> Détails
+          </button>
+          <button class="btn-reserve">
+            <i class="fa-solid fa-calendar-check"></i> Réserver
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Big Faim Hotel -->
+    <div class="hotel-card"
+      data-dept="thies"
+      data-type="hotel"
+      data-price="15000"
+      data-rating="4.4"
+      data-stars="3"
+      data-amenities="wifi,restaurant,parking,clim,piscine,pdej"
+      data-chambres="1"
+      data-lits="1">
+      <div class="hotel-img" style="background:linear-gradient(135deg,#27AE60,#1B7A3E)">
+        <i class="fa-solid fa-hotel"></i>
+        <span class="hotel-img-label">3 Étoiles</span>
+      </div>
+      <div class="hotel-body">
+        <div class="hotel-meta">
+          <span class="hotel-type">Hôtel</span>
+          <div class="hotel-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+        </div>
+        <h3 class="hotel-name">Big Faim Hôtel</h3>
+        <p class="hotel-location"><i class="fa-solid fa-location-dot"></i> Quartier central, Thiès</p>
+        <div class="hotel-amenities">
+          <span class="amenity-tag"><i class="fa-solid fa-wifi"></i> Wi-Fi</span>
+          <span class="amenity-tag"><i class="fa-solid fa-swimming-pool"></i> Piscine</span>
+          <span class="amenity-tag"><i class="fa-solid fa-mug-hot"></i> Petit-déj</span>
+          <span class="amenity-tag"><i class="fa-solid fa-snowflake"></i> Clim</span>
+        </div>
+        <div class="hotel-footer">
+          <div class="hotel-rating">
+            <span class="rating-score">4.4</span>
+            <span class="rating-label">Excellent · 89 avis</span>
+          </div>
+          <div class="hotel-price">
+            <div class="price-amount">15 000 <span>FCFA</span></div>
+            <div class="price-per">/ nuit</div>
+          </div>
+        </div>
+        <div class="hotel-cta">
+          <button class="btn-detail" onclick="window.open('https://www.tripadvisor.com/Hotel_Review-g811261-d7055074-Reviews-Big_Faim_Hotel.html','_blank')">
+            <i class="fa-solid fa-circle-info"></i> Détails
+          </button>
+          <button class="btn-reserve">
+            <i class="fa-solid fa-calendar-check"></i> Réserver
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Résidence Ngary -->
+    <div class="hotel-card"
+      data-dept="thies"
+      data-type="hotel"
+      data-price="22000"
+      data-rating="4.7"
+      data-stars="3"
+      data-amenities="wifi,parking,clim,piscine,fitness,bar"
+      data-chambres="1"
+      data-lits="1">
+      <div class="hotel-img" style="background:linear-gradient(135deg,#6C3483,#A569BD)">
+        <i class="fa-solid fa-hotel"></i>
+        <span class="hotel-img-label">3 Étoiles</span>
+        <div class="hotel-badge">Coup de cœur</div>
+      </div>
+      <div class="hotel-body">
+        <div class="hotel-meta">
+          <span class="hotel-type">Hôtel</span>
+          <div class="hotel-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+        </div>
+        <h3 class="hotel-name">Hôtel Résidence Ngary</h3>
+        <p class="hotel-location"><i class="fa-solid fa-location-dot"></i> Quartier résidentiel, Thiès</p>
+        <div class="hotel-amenities">
+          <span class="amenity-tag"><i class="fa-solid fa-wifi"></i> Wi-Fi</span>
+          <span class="amenity-tag"><i class="fa-solid fa-swimming-pool"></i> Piscine</span>
+          <span class="amenity-tag"><i class="fa-solid fa-dumbbell"></i> Fitness</span>
+          <span class="amenity-tag"><i class="fa-solid fa-martini-glass"></i> Bar</span>
+        </div>
+        <div class="hotel-footer">
+          <div class="hotel-rating">
+            <span class="rating-score">4.7</span>
+            <span class="rating-label">Exceptionnel · 63 avis</span>
+          </div>
+          <div class="hotel-price">
+            <div class="price-amount">22 000 <span>FCFA</span></div>
+            <div class="price-per">/ nuit</div>
+          </div>
+        </div>
+        <div class="hotel-cta">
+          <button class="btn-detail" onclick="window.open('https://www.booking.com/hotel/sn/residence-ngary.html','_blank')">
+            <i class="fa-solid fa-circle-info"></i> Détails
+          </button>
+          <button class="btn-reserve">
+            <i class="fa-solid fa-calendar-check"></i> Réserver
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Résidence Blue Hôtel -->
+    <div class="hotel-card"
+      data-dept="thies"
+      data-type="residence"
+      data-price="18000"
+      data-rating="4.5"
+      data-stars="3"
+      data-amenities="wifi,parking,clim,restaurant"
+      data-chambres="1"
+      data-lits="1">
+      <div class="hotel-img" style="background:linear-gradient(135deg,#2980B9,#6DD5FA)">
+        <i class="fa-solid fa-building"></i>
+        <span class="hotel-img-label">Résidence</span>
+      </div>
+      <div class="hotel-body">
+        <div class="hotel-meta">
+          <span class="hotel-type">Résidence</span>
+          <div class="hotel-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+        </div>
+        <h3 class="hotel-name">Résidence Blue Hôtel</h3>
+        <p class="hotel-location"><i class="fa-solid fa-location-dot"></i> Quartier calme, Thiès Nord</p>
+        <div class="hotel-amenities">
+          <span class="amenity-tag"><i class="fa-solid fa-wifi"></i> Wi-Fi</span>
+          <span class="amenity-tag"><i class="fa-solid fa-snowflake"></i> Clim</span>
+          <span class="amenity-tag"><i class="fa-solid fa-square-parking"></i> Parking</span>
+          <span class="amenity-tag"><i class="fa-solid fa-utensils"></i> Restaurant</span>
+        </div>
+        <div class="hotel-footer">
+          <div class="hotel-rating">
+            <span class="rating-score">4.5</span>
+            <span class="rating-label">Excellent · 47 avis</span>
+          </div>
+          <div class="hotel-price">
+            <div class="price-amount">18 000 <span>FCFA</span></div>
+            <div class="price-per">/ nuit</div>
+          </div>
+        </div>
+        <div class="hotel-cta">
+          <button class="btn-detail">
+            <i class="fa-solid fa-circle-info"></i> Détails
+          </button>
+          <button class="btn-reserve">
+            <i class="fa-solid fa-calendar-check"></i> Réserver
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Hôtel Le Square -->
+    <div class="hotel-card"
+      data-dept="thies"
+      data-type="hotel"
+      data-price="12000"
+      data-rating="4.3"
+      data-stars="2"
+      data-amenities="wifi,clim,restaurant"
+      data-chambres="1"
+      data-lits="1">
+      <div class="hotel-img" style="background:linear-gradient(135deg,#C0392B,#E74C3C)">
+        <i class="fa-solid fa-hotel"></i>
+        <span class="hotel-img-label">2 Étoiles</span>
+      </div>
+      <div class="hotel-body">
+        <div class="hotel-meta">
+          <span class="hotel-type">Hôtel</span>
+          <div class="hotel-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+        </div>
+        <h3 class="hotel-name">Hôtel Le Square</h3>
+        <p class="hotel-location"><i class="fa-solid fa-location-dot"></i> Centre-ville, Thiès</p>
+        <div class="hotel-amenities">
+          <span class="amenity-tag"><i class="fa-solid fa-wifi"></i> Wi-Fi</span>
+          <span class="amenity-tag"><i class="fa-solid fa-snowflake"></i> Clim</span>
+          <span class="amenity-tag"><i class="fa-solid fa-utensils"></i> Restaurant</span>
+        </div>
+        <div class="hotel-footer">
+          <div class="hotel-rating">
+            <span class="rating-score">4.3</span>
+            <span class="rating-label">Très bien · 38 avis</span>
+          </div>
+          <div class="hotel-price">
+            <div class="price-amount">12 000 <span>FCFA</span></div>
+            <div class="price-per">/ nuit</div>
+          </div>
+        </div>
+        <div class="hotel-cta">
+          <button class="btn-detail">
+            <i class="fa-solid fa-circle-info"></i> Détails
+          </button>
+          <button class="btn-reserve">
+            <i class="fa-solid fa-calendar-check"></i> Réserver
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Résidence Senghor -->
+    <div class="hotel-card"
+      data-dept="thies"
+      data-type="maison"
+      data-price="9000"
+      data-rating="4.1"
+      data-stars="2"
+      data-amenities="wifi,parking,clim"
+      data-chambres="1"
+      data-lits="1">
+      <div class="hotel-img" style="background:linear-gradient(135deg,#E8730A,#F59B3B)">
+        <i class="fa-solid fa-house-chimney"></i>
+        <span class="hotel-img-label">Maison d'hôtes</span>
+      </div>
+      <div class="hotel-body">
+        <div class="hotel-meta">
+          <span class="hotel-type">Maison d'hôtes</span>
+          <div class="hotel-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+        </div>
+        <h3 class="hotel-name">Résidence Senghor</h3>
+        <p class="hotel-location"><i class="fa-solid fa-location-dot"></i> Quartier Médina, Thiès</p>
+        <div class="hotel-amenities">
+          <span class="amenity-tag"><i class="fa-solid fa-wifi"></i> Wi-Fi</span>
+          <span class="amenity-tag"><i class="fa-solid fa-snowflake"></i> Clim</span>
+          <span class="amenity-tag"><i class="fa-solid fa-square-parking"></i> Parking</span>
+        </div>
+        <div class="hotel-footer">
+          <div class="hotel-rating">
+            <span class="rating-score">4.1</span>
+            <span class="rating-label">Très bien · 22 avis</span>
+          </div>
+          <div class="hotel-price">
+            <div class="price-amount">9 000 <span>FCFA</span></div>
+            <div class="price-per">/ nuit</div>
+          </div>
+        </div>
+        <div class="hotel-cta">
+          <button class="btn-detail">
+            <i class="fa-solid fa-circle-info"></i> Détails
+          </button>
+          <button class="btn-reserve">
+            <i class="fa-solid fa-calendar-check"></i> Réserver
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. Résidences PRIMIS -->
+    <div class="hotel-card"
+      data-dept="thies"
+      data-type="residence"
+      data-price="10000"
+      data-rating="4.0"
+      data-stars="2"
+      data-amenities="wifi,parking,clim,cuisine"
+      data-chambres="1"
+      data-lits="2">
+      <div class="hotel-img" style="background:linear-gradient(135deg,#2D6A4F,#52B788)">
+        <i class="fa-solid fa-building"></i>
+        <span class="hotel-img-label">Résidence</span>
+      </div>
+      <div class="hotel-body">
+        <div class="hotel-meta">
+          <span class="hotel-type">Résidence</span>
+          <div class="hotel-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+        </div>
+        <h3 class="hotel-name">Résidences PRIMIS Thiès</h3>
+        <p class="hotel-location"><i class="fa-solid fa-location-dot"></i> ZAC Nguinth, Thiès</p>
+        <div class="hotel-amenities">
+          <span class="amenity-tag"><i class="fa-solid fa-wifi"></i> Wi-Fi</span>
+          <span class="amenity-tag"><i class="fa-solid fa-kitchen-set"></i> Cuisine</span>
+          <span class="amenity-tag"><i class="fa-solid fa-snowflake"></i> Clim</span>
+          <span class="amenity-tag"><i class="fa-solid fa-square-parking"></i> Parking</span>
+        </div>
+        <div class="hotel-footer">
+          <div class="hotel-rating">
+            <span class="rating-score">4.0</span>
+            <span class="rating-label">Très bien · 18 avis</span>
+          </div>
+          <div class="hotel-price">
+            <div class="price-amount">10 000 <span>FCFA</span></div>
+            <div class="price-per">/ nuit</div>
+          </div>
+        </div>
+        <div class="hotel-cta">
+          <button class="btn-detail">
+            <i class="fa-solid fa-circle-info"></i> Détails
+          </button>
+          <button class="btn-reserve">
+            <i class="fa-solid fa-calendar-check"></i> Réserver
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. La Fandenoise Lodge -->
+    <div class="hotel-card"
+      data-dept="thies"
+      data-type="maison"
+      data-price="16000"
+      data-rating="4.6"
+      data-stars="3"
+      data-amenities="wifi,parking,clim,piscine,jardin"
+      data-chambres="2"
+      data-lits="2">
+      <div class="hotel-img" style="background:linear-gradient(135deg,#1C3A2A,#2D6A4F)">
+        <i class="fa-solid fa-house-chimney"></i>
+        <span class="hotel-img-label">Lodge</span>
+        <div class="hotel-badge">Vue jardin</div>
+      </div>
+      <div class="hotel-body">
+        <div class="hotel-meta">
+          <span class="hotel-type">Lodge / Maison d'hôtes</span>
+          <div class="hotel-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+        </div>
+        <h3 class="hotel-name">La Fandenoise Lodge</h3>
+        <p class="hotel-location"><i class="fa-solid fa-location-dot"></i> Thiès périphérie, cadre verdoyant</p>
+        <div class="hotel-amenities">
+          <span class="amenity-tag"><i class="fa-solid fa-wifi"></i> Wi-Fi</span>
+          <span class="amenity-tag"><i class="fa-solid fa-swimming-pool"></i> Piscine</span>
+          <span class="amenity-tag"><i class="fa-solid fa-tree"></i> Jardin</span>
+          <span class="amenity-tag"><i class="fa-solid fa-square-parking"></i> Parking</span>
+        </div>
+        <div class="hotel-footer">
+          <div class="hotel-rating">
+            <span class="rating-score">4.6</span>
+            <span class="rating-label">Exceptionnel · 31 avis</span>
+          </div>
+          <div class="hotel-price">
+            <div class="price-amount">16 000 <span>FCFA</span></div>
+            <div class="price-per">/ nuit</div>
+          </div>
+        </div>
+        <div class="hotel-cta">
+          <button class="btn-detail">
+            <i class="fa-solid fa-circle-info"></i> Détails
+          </button>
+          <button class="btn-reserve">
+            <i class="fa-solid fa-calendar-check"></i> Réserver
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- 9. Baobab Soleil -->
+    <div class="hotel-card"
+      data-dept="thies"
+      data-type="maison"
+      data-price="20000"
+      data-rating="4.0"
+      data-stars="3"
+      data-amenities="piscine,parking"
+      data-chambres="1"
+      data-lits="1">
+      <div class="hotel-img" style="background:linear-gradient(135deg,#B7410E,#E8730A)">
+        <i class="fa-solid fa-sun"></i>
+        <span class="hotel-img-label">Lodge</span>
+        <div class="hotel-badge">Vue nature</div>
+      </div>
+      <div class="hotel-body">
+        <div class="hotel-meta">
+          <span class="hotel-type">Lodge / Maison d'hôtes</span>
+          <div class="hotel-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+        </div>
+        <h3 class="hotel-name">Baobab Soleil</h3>
+        <p class="hotel-location"><i class="fa-solid fa-location-dot"></i> Proche Bandia, périphérie de Thiès</p>
+        <div class="hotel-amenities">
+          <span class="amenity-tag"><i class="fa-solid fa-swimming-pool"></i> Piscine</span>
+          <span class="amenity-tag"><i class="fa-solid fa-square-parking"></i> Parking</span>
+          <span class="amenity-tag"><i class="fa-solid fa-people-group"></i> Ambiance conviviale</span>
+        </div>
+        <div class="hotel-footer">
+          <div class="hotel-rating">
+            <span class="rating-score">4.0</span>
+            <span class="rating-label">Très bien</span>
+          </div>
+          <div class="hotel-price">
+            <div class="price-amount">20 000 <span>FCFA</span></div>
+            <div class="price-per">/ nuit</div>
+          </div>
+        </div>
+        <div class="hotel-cta">
+          <button class="btn-detail"><i class="fa-solid fa-circle-info"></i> Détails</button>
+          <button class="btn-reserve"><i class="fa-solid fa-calendar-check"></i> Réserver</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10. Résidence Yaye Arame -->
+    <div class="hotel-card"
+      data-dept="thies"
+      data-type="residence"
+      data-price="11000"
+      data-rating="4.2"
+      data-stars="2"
+      data-amenities="wifi"
+      data-chambres="2"
+      data-lits="2">
+      <div class="hotel-img" style="background:linear-gradient(135deg,#7D3C98,#A569BD)">
+        <i class="fa-solid fa-house-chimney"></i>
+        <span class="hotel-img-label">Résidence</span>
+        <div class="hotel-badge">Idéal familles</div>
+      </div>
+      <div class="hotel-body">
+        <div class="hotel-meta">
+          <span class="hotel-type">Résidence</span>
+          <div class="hotel-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+        </div>
+        <h3 class="hotel-name">Résidence Yaye Arame</h3>
+        <p class="hotel-location"><i class="fa-solid fa-location-dot"></i> Quartier calme, Thiès</p>
+        <div class="hotel-amenities">
+          <span class="amenity-tag"><i class="fa-solid fa-wifi"></i> Wi-Fi</span>
+          <span class="amenity-tag"><i class="fa-solid fa-people-roof"></i> Chambres familiales</span>
+        </div>
+        <div class="hotel-footer">
+          <div class="hotel-rating">
+            <span class="rating-score">4.2</span>
+            <span class="rating-label">Très bien</span>
+          </div>
+          <div class="hotel-price">
+            <div class="price-amount">11 000 <span>FCFA</span></div>
+            <div class="price-per">/ nuit</div>
+          </div>
+        </div>
+        <div class="hotel-cta">
+          <button class="btn-detail"><i class="fa-solid fa-circle-info"></i> Détails</button>
+          <button class="btn-reserve"><i class="fa-solid fa-calendar-check"></i> Réserver</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 11. Résidence Saly Beach (Mbour) -->
+    <div class="hotel-card"
+      data-dept="mbour"
+      data-type="hotel"
+      data-price="28000"
+      data-rating="4.5"
+      data-stars="5"
+      data-amenities="wifi,piscine,restaurant"
+      data-chambres="1"
+      data-lits="1">
+      <div class="hotel-img" style="background:linear-gradient(135deg,#F39C12,#F5B041)">
+        <i class="fa-solid fa-umbrella-beach"></i>
+        <span class="hotel-img-label">Front de mer</span>
+        <div class="hotel-badge">Populaire</div>
+      </div>
+      <div class="hotel-body">
+        <div class="hotel-meta">
+          <span class="hotel-type">Hôtel</span>
+          <div class="hotel-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+        </div>
+        <h3 class="hotel-name">Résidence Saly Beach</h3>
+        <p class="hotel-location"><i class="fa-solid fa-location-dot"></i> Saly Portudal, Mbour</p>
+        <div class="hotel-amenities">
+          <span class="amenity-tag"><i class="fa-solid fa-wifi"></i> Wi-Fi</span>
+          <span class="amenity-tag"><i class="fa-solid fa-swimming-pool"></i> Piscine</span>
+          <span class="amenity-tag"><i class="fa-solid fa-utensils"></i> Restaurant</span>
+        </div>
+        <div class="hotel-footer">
+          <div class="hotel-rating">
+            <span class="rating-score">4.5</span>
+            <span class="rating-label">Excellent · 210 avis</span>
+          </div>
+          <div class="hotel-price">
+            <div class="price-amount">28 000 <span>FCFA</span></div>
+            <div class="price-per">/ nuit</div>
+          </div>
+        </div>
+        <div class="hotel-cta">
+          <button class="btn-detail"><i class="fa-solid fa-circle-info"></i> Détails</button>
+          <button class="btn-reserve"><i class="fa-solid fa-calendar-check"></i> Réserver</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 12. Auberge de la Zawiya (Tivaouane) -->
+    <div class="hotel-card"
+      data-dept="tivaouane"
+      data-type="maison"
+      data-price="9000"
+      data-rating="4.4"
+      data-stars="3"
+      data-amenities="parking"
+      data-chambres="1"
+      data-lits="1">
+      <div class="hotel-img" style="background:linear-gradient(135deg,#1B4F30,#2E8B57)">
+        <i class="fa-solid fa-mosque"></i>
+        <span class="hotel-img-label">Proche zawiya</span>
+      </div>
+      <div class="hotel-body">
+        <div class="hotel-meta">
+          <span class="hotel-type">Maison d'hôtes</span>
+          <div class="hotel-stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+        </div>
+        <h3 class="hotel-name">Auberge de la Zawiya</h3>
+        <p class="hotel-location"><i class="fa-solid fa-location-dot"></i> Centre-ville, Tivaouane</p>
+        <div class="hotel-amenities">
+          <span class="amenity-tag"><i class="fa-solid fa-square-parking"></i> Parking</span>
+          <span class="amenity-tag"><i class="fa-solid fa-bread-slice"></i> Pdéj inclus</span>
+        </div>
+        <div class="hotel-footer">
+          <div class="hotel-rating">
+            <span class="rating-score">4.4</span>
+            <span class="rating-label">Très bien · 56 avis</span>
+          </div>
+          <div class="hotel-price">
+            <div class="price-amount">9 000 <span>FCFA</span></div>
+            <div class="price-per">/ nuit</div>
+          </div>
+        </div>
+        <div class="hotel-cta">
+          <button class="btn-detail"><i class="fa-solid fa-circle-info"></i> Détails</button>
+          <button class="btn-reserve"><i class="fa-solid fa-calendar-check"></i> Réserver</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /hotel-grid -->
+
+  <div class="empty-state" id="emptyState">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <h3>Aucun hébergement trouvé</h3>
+    <p>Essayez d'élargir vos filtres pour voir plus de résultats.</p>
+  </div>
+
+</div><!-- /main -->
+
+<!-- FILTER MODAL OVERLAY -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal()"></div>
+
+<!-- FILTER MODAL -->
+<div class="filter-modal" id="filterModal">
+  <div class="modal-header">
+    <h2><i class="fa-solid fa-sliders"></i> Filtres</h2>
+    <button class="modal-close" onclick="closeModal()">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+    <!-- Type de logement -->
+    <div class="filter-section">
+      <h3>Type de logement</h3>
+      <div class="type-pills">
+        <button class="type-pill active" data-type="tous" onclick="selectType(this)">Tous les types</button>
+        <button class="type-pill" data-type="hotel" onclick="selectType(this)">Hôtel</button>
+        <button class="type-pill" data-type="maison" onclick="selectType(this)">Maison d'hôtes</button>
+        <button class="type-pill" data-type="residence" onclick="selectType(this)">Résidence</button>
+      </div>
+    </div>
+
+    <!-- Fourchette de prix -->
+    <div class="filter-section">
+      <h3>Fourchette de prix <span style="font-size:0.78rem;font-weight:400;color:var(--text-muted)">— par nuit en FCFA</span></h3>
+      <div class="price-histogram" id="histogram">
+        <!-- bars generated by JS -->
+      </div>
+      <div class="range-track">
+        <div class="range-fill" id="rangeFill"></div>
+        <input type="range" class="range-input" id="minRange" min="5000" max="40000" step="1000" value="5000">
+        <input type="range" class="range-input" id="maxRange" min="5000" max="40000" step="1000" value="40000">
+      </div>
+      <div class="range-inputs">
+        <div class="range-input-box">
+          <label>Minimum</label>
+          <span id="minVal">5 000 FCFA</span>
+        </div>
+        <div class="range-input-box">
+          <label>Maximum</label>
+          <span id="maxVal">40 000+ FCFA</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chambres et lits -->
+    <div class="filter-section">
+      <h3>Chambres et lits</h3>
+      <div class="counter-row">
+        <span class="counter-label">Chambres</span>
+        <div class="counter-controls">
+          <button class="counter-btn" onclick="changeCounter('chambres',-1)" id="chambres-minus" disabled>−</button>
+          <span class="counter-val" id="chambres-val">Tout</span>
+          <button class="counter-btn" onclick="changeCounter('chambres',1)">+</button>
+        </div>
+      </div>
+      <div class="counter-row">
+        <span class="counter-label">Lits</span>
+        <div class="counter-controls">
+          <button class="counter-btn" onclick="changeCounter('lits',-1)" id="lits-minus" disabled>−</button>
+          <span class="counter-val" id="lits-val">Tout</span>
+          <button class="counter-btn" onclick="changeCounter('lits',1)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Équipements -->
+    <div class="filter-section">
+      <h3>Équipements</h3>
+      <div class="amenity-chips" id="amenityChips">
+        <button class="amenity-chip" data-amenity="wifi" onclick="toggleAmenity(this)">
+          <i class="fa-solid fa-wifi"></i> Wi-Fi
+        </button>
+        <button class="amenity-chip" data-amenity="piscine" onclick="toggleAmenity(this)">
+          <i class="fa-solid fa-swimming-pool"></i> Piscine
+        </button>
+        <button class="amenity-chip" data-amenity="clim" onclick="toggleAmenity(this)">
+          <i class="fa-solid fa-snowflake"></i> Climatisation
+        </button>
+        <button class="amenity-chip" data-amenity="restaurant" onclick="toggleAmenity(this)">
+          <i class="fa-solid fa-utensils"></i> Restaurant
+        </button>
+        <button class="amenity-chip" data-amenity="parking" onclick="toggleAmenity(this)">
+          <i class="fa-solid fa-square-parking"></i> Parking
+        </button>
+        <button class="amenity-chip" data-amenity="pdej" onclick="toggleAmenity(this)">
+          <i class="fa-solid fa-mug-hot"></i> Petit-déjeuner
+        </button>
+        <button class="amenity-chip" data-amenity="cuisine" onclick="toggleAmenity(this)">
+          <i class="fa-solid fa-kitchen-set"></i> Cuisine équipée
+        </button>
+        <button class="amenity-chip" data-amenity="fitness" onclick="toggleAmenity(this)">
+          <i class="fa-solid fa-dumbbell"></i> Fitness
+        </button>
+        <button class="amenity-chip" data-amenity="jardin" onclick="toggleAmenity(this)">
+          <i class="fa-solid fa-tree"></i> Jardin
+        </button>
+        <button class="amenity-chip" data-amenity="bar" onclick="toggleAmenity(this)">
+          <i class="fa-solid fa-martini-glass"></i> Bar
+        </button>
+      </div>
+    </div>
+
+    <!-- Options de réservation -->
+    <div class="filter-section">
+      <h3>Options de réservation</h3>
+      <div class="option-chips">
+        <button class="option-chip" data-option="instant" onclick="toggleOption(this)">
+          <i class="fa-solid fa-bolt"></i> Réservation instantanée
+        </button>
+        <button class="option-chip" data-option="animaux" onclick="toggleOption(this)">
+          <i class="fa-solid fa-paw"></i> Animaux acceptés
+        </button>
+      </div>
+    </div>
+
+    <!-- Type de propriété -->
+    <div class="filter-section">
+      <h3>Type de propriété</h3>
+      <div class="property-grid">
+        <div class="property-card" data-prop="hotel" onclick="toggleProperty(this)">
+          <i class="fa-solid fa-hotel"></i>
+          <span>Hôtel</span>
+        </div>
+        <div class="property-card" data-prop="residence" onclick="toggleProperty(this)">
+          <i class="fa-solid fa-building"></i>
+          <span>Résidence</span>
+        </div>
+        <div class="property-card" data-prop="maison" onclick="toggleProperty(this)">
+          <i class="fa-solid fa-house-chimney"></i>
+          <span>Maison d'hôtes</span>
+        </div>
+        <div class="property-card" data-prop="lodge" onclick="toggleProperty(this)">
+          <i class="fa-solid fa-campground"></i>
+          <span>Lodge</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /modal-body -->
+
+  <div class="modal-footer">
+    <button class="btn-reset" onclick="resetFilters()">Tout effacer</button>
+    <button class="btn-apply" onclick="applyFilters()">
+      Afficher <span id="applyCount">10</span> hébergements
+    </button>
+  </div>
+</div>
+
+<script>
+// ── STATE ──────────────────────────────────────────────────────────────────
+const state = {
+  dept: 'all',
+  type: 'tous',
+  minPrice: 5000,
+  maxPrice: 40000,
+  chambres: 0,
+  lits: 0,
+  amenities: new Set(),
+  options: new Set(),
+  properties: new Set(),
+};
+
+// ── MODAL ──────────────────────────────────────────────────────────────────
+function openModal() {
+  document.getElementById('modalOverlay').classList.add('open');
+  document.getElementById('filterModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  updateApplyCount();
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.getElementById('filterModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ── DEPARTMENT FILTER (header pills) ────────────────────────────────────────
+function quickFilterDept(dept, btn) {
+  state.dept = dept;
+  document.querySelectorAll('.dept-pill').forEach(p => p.classList.remove('active'));
+  (btn || event.currentTarget).classList.add('active');
+  applyFilters();
+}
+
+// ── QUICK FILTER (header pills) ────────────────────────────────────────────
+function quickFilter(type) {
+  state.type = type;
+  document.querySelectorAll('.type-filters-bar .hfb-pill').forEach(p => p.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  // sync modal pill
+  document.querySelectorAll('.type-pill').forEach(p => {
+    p.classList.toggle('active', p.dataset.type === type);
+  });
+  applyFilters();
+}
+
+// ── TYPE SELECTOR ──────────────────────────────────────────────────────────
+function selectType(el) {
+  document.querySelectorAll('.type-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  state.type = el.dataset.type;
+  updateApplyCount();
+}
+
+// ── PRICE RANGE ────────────────────────────────────────────────────────────
+const prices = [9000,10000,12000,15000,16000,18000,22000,35000];
+const MIN = 5000, MAX = 40000;
+
+function buildHistogram() {
+  const bars = 20;
+  const step = (MAX - MIN) / bars;
+  const hist = document.getElementById('histogram');
+  hist.innerHTML = '';
+  for (let i = 0; i < bars; i++) {
+    const lo = MIN + i * step, hi = lo + step;
+    const count = prices.filter(p => p >= lo && p < hi).length;
+    const h = Math.max(8, (count / 2) * 100);
+    const bar = document.createElement('div');
+    bar.className = 'hist-bar';
+    bar.dataset.lo = lo; bar.dataset.hi = hi;
+    bar.style.height = h + '%';
+    hist.appendChild(bar);
+  }
+  updateHistogram();
+}
+
+function updateHistogram() {
+  document.querySelectorAll('.hist-bar').forEach(b => {
+    const lo = +b.dataset.lo, hi = +b.dataset.hi;
+    b.classList.toggle('in-range', lo >= state.minPrice && hi <= state.maxPrice + (MAX-MIN)/20);
+  });
+  const pct = (v) => ((v - MIN) / (MAX - MIN)) * 100;
+  document.getElementById('rangeFill').style.left  = pct(state.minPrice) + '%';
+  document.getElementById('rangeFill').style.width = (pct(state.maxPrice) - pct(state.minPrice)) + '%';
+  document.getElementById('minVal').textContent = state.minPrice.toLocaleString('fr') + ' FCFA';
+  document.getElementById('maxVal').textContent = state.maxPrice >= MAX
+    ? state.maxPrice.toLocaleString('fr') + '+ FCFA'
+    : state.maxPrice.toLocaleString('fr') + ' FCFA';
+}
+
+document.getElementById('minRange').addEventListener('input', function() {
+  state.minPrice = Math.min(+this.value, state.maxPrice - 1000);
+  this.value = state.minPrice;
+  updateHistogram(); updateApplyCount();
+});
+document.getElementById('maxRange').addEventListener('input', function() {
+  state.maxPrice = Math.max(+this.value, state.minPrice + 1000);
+  this.value = state.maxPrice;
+  updateHistogram(); updateApplyCount();
+});
+
+// ── COUNTERS ───────────────────────────────────────────────────────────────
+function changeCounter(key, delta) {
+  state[key] = Math.max(0, state[key] + delta);
+  const val = document.getElementById(key + '-val');
+  val.textContent = state[key] === 0 ? 'Tout' : state[key] + '+';
+  document.getElementById(key + '-minus').disabled = state[key] === 0;
+  updateApplyCount();
+}
+
+// ── AMENITIES ──────────────────────────────────────────────────────────────
+function toggleAmenity(el) {
+  const a = el.dataset.amenity;
+  if (state.amenities.has(a)) { state.amenities.delete(a); el.classList.remove('active'); }
+  else { state.amenities.add(a); el.classList.add('active'); }
+  updateApplyCount();
+}
+
+// ── OPTIONS ────────────────────────────────────────────────────────────────
+function toggleOption(el) {
+  const o = el.dataset.option;
+  if (state.options.has(o)) { state.options.delete(o); el.classList.remove('active'); }
+  else { state.options.add(o); el.classList.add('active'); }
+  updateApplyCount();
+}
+
+// ── PROPERTIES ────────────────────────────────────────────────────────────
+function toggleProperty(el) {
+  const p = el.dataset.prop;
+  if (state.properties.has(p)) { state.properties.delete(p); el.classList.remove('active'); }
+  else { state.properties.add(p); el.classList.add('active'); }
+  updateApplyCount();
+}
+
+// ── APPLY FILTERS ──────────────────────────────────────────────────────────
+function applyFilters() {
+  const cards = document.querySelectorAll('.hotel-card');
+  let visible = 0;
+  cards.forEach(card => {
+    const dept    = card.dataset.dept;
+    const type    = card.dataset.type;
+    const price   = +card.dataset.price;
+    const amenStr = card.dataset.amenities || '';
+    const cardAmenities = amenStr.split(',');
+    const chambres = +card.dataset.chambres;
+    const lits     = +card.dataset.lits;
+
+    let show = true;
+
+    // Department
+    if (state.dept !== 'all' && dept !== state.dept) show = false;
+
+    // Type
+    if (state.type !== 'tous' && type !== state.type) show = false;
+
+    // Price
+    if (price < state.minPrice || price > state.maxPrice) show = false;
+
+    // Chambres / lits
+    if (state.chambres > 0 && chambres < state.chambres) show = false;
+    if (state.lits > 0 && lits < state.lits) show = false;
+
+    // Amenities (must have ALL selected)
+    state.amenities.forEach(a => {
+      if (!cardAmenities.includes(a)) show = false;
+    });
+
+    // Properties
+    if (state.properties.size > 0 && !state.properties.has(type)) show = false;
+
+    card.classList.toggle('hidden', !show);
+    if (show) visible++;
+  });
+
+  document.getElementById('resultCount').textContent = visible;
+  document.getElementById('navCount').textContent = visible + ' établissement' + (visible !== 1 ? 's' : '');
+  document.getElementById('emptyState').classList.toggle('show', visible === 0);
+
+  const resultsTitle = document.querySelector('.results-title');
+  if (resultsTitle) {
+    const deptLabel = state.dept === 'all' ? 'dans la région'
+      : state.dept === 'thies' ? 'à Thiès'
+      : state.dept === 'mbour' ? 'à Mbour'
+      : 'à Tivaouane';
+    resultsTitle.innerHTML = `<strong id="resultCount">${visible}</strong> établissement${visible !== 1 ? 's' : ''} trouvé${visible !== 1 ? 's' : ''} ${deptLabel}`;
+  }
+
+  updateActiveTags();
+  updateFilterBadge();
+  closeModal();
+}
+
+// ── RESET ──────────────────────────────────────────────────────────────────
+function resetFilters() {
+  state.type = 'tous';
+  state.minPrice = 5000; state.maxPrice = 40000;
+  state.chambres = 0; state.lits = 0;
+  state.amenities.clear(); state.options.clear(); state.properties.clear();
+
+  document.querySelectorAll('.type-pill').forEach(p => p.classList.toggle('active', p.dataset.type === 'tous'));
+  document.querySelectorAll('.type-filters-bar .hfb-pill').forEach(p => p.classList.toggle('active', p.textContent.trim().includes('Tous')));
+  document.getElementById('minRange').value = 5000;
+  document.getElementById('maxRange').value = 40000;
+  updateHistogram();
+  ['chambres','lits'].forEach(k => {
+    state[k] = 0;
+    document.getElementById(k+'-val').textContent = 'Tout';
+    document.getElementById(k+'-minus').disabled = true;
+  });
+  document.querySelectorAll('.amenity-chip, .option-chip, .property-card').forEach(el => el.classList.remove('active'));
+
+  updateApplyCount();
+  applyFilters();
+}
+
+// ── SORT ───────────────────────────────────────────────────────────────────
+function sortHotels(by) {
+  const grid = document.getElementById('hotelGrid');
+  const cards = [...grid.querySelectorAll('.hotel-card')];
+  cards.sort((a, b) => {
+    if (by === 'price-asc')  return +a.dataset.price  - +b.dataset.price;
+    if (by === 'price-desc') return +b.dataset.price  - +a.dataset.price;
+    if (by === 'rating')     return +b.dataset.rating - +a.dataset.rating;
+    return 0;
+  });
+  cards.forEach(c => grid.appendChild(c));
+}
+
+// ── ACTIVE FILTER TAGS ─────────────────────────────────────────────────────
+function updateActiveTags() {
+  const container = document.getElementById('activeFilters');
+  container.innerHTML = '';
+  const add = (label, reset) => {
+    const tag = document.createElement('div');
+    tag.className = 'active-filter-tag';
+    tag.innerHTML = `${label} <button onclick="${reset}"><i class="fa-solid fa-xmark"></i></button>`;
+    container.appendChild(tag);
+  };
+  if (state.type !== 'tous') add(state.type.charAt(0).toUpperCase() + state.type.slice(1), "removeFilter('type')");
+  if (state.minPrice > 5000 || state.maxPrice < 40000) add(`${(state.minPrice/1000).toFixed(0)}k–${(state.maxPrice/1000).toFixed(0)}k FCFA`, "removeFilter('price')");
+  state.amenities.forEach(a => add(a.charAt(0).toUpperCase() + a.slice(1), `removeFilter('amenity','${a}')`));
+}
+
+function removeFilter(type, val) {
+  if (type === 'type')    { state.type = 'tous'; }
+  if (type === 'price')   { state.minPrice = 5000; state.maxPrice = 40000; document.getElementById('minRange').value=5000; document.getElementById('maxRange').value=40000; updateHistogram(); }
+  if (type === 'amenity') { state.amenities.delete(val); document.querySelector(`[data-amenity="${val}"]`)?.classList.remove('active'); }
+  applyFilters();
+}
+
+// ── HELPERS ────────────────────────────────────────────────────────────────
+function updateApplyCount() {
+  const cards = document.querySelectorAll('.hotel-card');
+  let count = 0;
+  cards.forEach(card => {
+    const dept = card.dataset.dept;
+    const type = card.dataset.type;
+    const price = +card.dataset.price;
+    let show = true;
+    if (state.dept !== 'all' && dept !== state.dept) show = false;
+    if (state.type !== 'tous' && type !== state.type) show = false;
+    if (price < state.minPrice || price > state.maxPrice) show = false;
+    state.amenities.forEach(a => { if (!card.dataset.amenities.split(',').includes(a)) show = false; });
+    if (show) count++;
+  });
+  document.getElementById('applyCount').textContent = count;
+}
+
+function updateFilterBadge() {
+  let count = 0;
+  if (state.type !== 'tous') count++;
+  if (state.minPrice > 5000 || state.maxPrice < 40000) count++;
+  if (state.chambres > 0) count++;
+  if (state.lits > 0) count++;
+  count += state.amenities.size + state.options.size + state.properties.size;
+  const badge = document.getElementById('filterBadge');
+  badge.textContent = count;
+  badge.style.display = count > 0 ? 'flex' : 'none';
+}
+
+// ── WISHLIST ───────────────────────────────────────────────────────────────
+document.querySelectorAll('.hotel-wishlist').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    btn.classList.toggle('active');
+  });
+});
+
+// ── INIT ───────────────────────────────────────────────────────────────────
+buildHistogram();
+updateApplyCount();
+</script>
+</body>
+</html>

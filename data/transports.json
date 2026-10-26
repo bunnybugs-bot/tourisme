@@ -1,0 +1,97 @@
+[
+ {
+  "id": 1,
+  "nom": "Wemoov Sénégal",
+  "type_service": "VTC & Navette Aéroport",
+  "zones": [
+   "Thiès",
+   "Mbour",
+   "Saly",
+   "AIBD"
+  ],
+  "telephone": "+221338018282",
+  "site_web": "https://wemoovsenegal.com/"
+ },
+ {
+  "id": 2,
+  "nom": "Sénégal Transport Solutions",
+  "type_service": "VTC & Transfert Privé",
+  "zones": [
+   "AIBD",
+   "Mbour",
+   "Saly",
+   "Thiès"
+  ],
+  "telephone": "+221775372893",
+  "site_web": "https://senegaltransportsolutions.com/"
+ },
+ {
+  "id": 3,
+  "nom": "Sénégal Shuttle",
+  "type_service": "Navette Aéroport & Interurbaine",
+  "zones": [
+   "Thiès",
+   "Mbour",
+   "Saly",
+   "AIBD",
+   "Tivaouane"
+  ],
+  "telephone": "+221777731713",
+  "site_web": "https://www.senegal-shuttle.com/"
+ },
+ {
+  "id": 4,
+  "nom": "Yobalé – Taxis Privés",
+  "type_service": "VTC Écoresponsable (Hybride)",
+  "zones": [
+   "Thiès",
+   "Mbour",
+   "Saly",
+   "Tivaouane",
+   "AIBD"
+  ],
+  "telephone": "+221786330808",
+  "site_web": "https://yobale.sn/"
+ },
+ {
+  "id": 5,
+  "nom": "Allo Taxi Dakar",
+  "type_service": "Centrale de réservation VTC 24/7",
+  "zones": [
+   "Thiès",
+   "Mbour",
+   "Saly",
+   "Tivaouane",
+   "AIBD"
+  ],
+  "telephone": "+221781653737",
+  "site_web": "http://www.allotaxisn.com/"
+ },
+ {
+  "id": 6,
+  "nom": "Chauffeur Adama",
+  "type_service": "Chauffeur Privé à la journée",
+  "zones": [
+   "Mbour",
+   "Saly",
+   "Popenguine",
+   "Somone",
+   "Thiès"
+  ],
+  "telephone": "+221773649965",
+  "site_web": ""
+ },
+ {
+  "id": 7,
+  "nom": "Le Minibus Bleu",
+  "type_service": "Location de Minibus avec Chauffeur",
+  "zones": [
+   "Saly",
+   "Mbour",
+   "Thiès",
+   "AIBD"
+  ],
+  "telephone": "+221775449311",
+  "site_web": "https://leminibusbleu.com/"
+ }
+]

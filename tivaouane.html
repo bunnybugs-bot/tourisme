@@ -3,334 +3,1129 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tivaouane — Région de Thiès | Tourisme</title>
+<title>Tivaouane — Territoire & Patrimoine | Région de Thiès</title>
+<meta name="description" content="Découvrez le département de Tivaouane : son histoire, son économie locale (agriculture, élevage, artisanat), Mékhé, Pire, le parc éolien de Taïba Ndiaye.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Montserrat:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
-
+/* ============================================================
+   TIVAOUANE — Page Territoire
+   Palette : vert (spiritualité & nature), jaune (or), blanc (pureté)
+   ============================================================ */
 :root {
-  --orange: #E8730A;
-  --orange-light: #F59B3B;
-  --orange-pale: #FDF0E0;
-  --green: #2D6A4F;
-  --green-light: #52B788;
-  --blue: #1B4F72;
-  --blue-mid: #2E86AB;
-  --cream: #FAF7F0;
-  --sand: #E8D5B7;
-  --dark: #0F1923;
+  --green: #1B5E20;
+  --green-mid: #2E7D32;
+  --green-light: #66BB6A;
+  --green-pale: #E8F5E9;
+  --green-dark: #0D3512;
+  --yellow: #F9A825;
+  --yellow-light: #FDD835;
+  --yellow-pale: #FFF9E6;
+  --gold: #D4AF37;
+  --white: #FFFFFF;
+  --white-soft: #FAFAF8;
   --charcoal: #1C2B39;
   --text: #2C3E50;
-  --text-muted: #8A9BB0;
-  --white: #FFFFFF;
+  --text-muted: #7F8C8D;
+  --text-soft: #95A5A6;
+  --dark: #0F1923;
   --nav-h: 68px;
-  --border: rgba(232,213,183,0.5);
+  --border: rgba(27,94,32,0.12);
+  --border-yellow: rgba(249,168,37,0.25);
   --shadow: 0 2px 20px rgba(15,25,35,0.07);
-  --shadow-lg: 0 16px 56px rgba(15,25,35,0.18);
+  --shadow-md: 0 8px 32px rgba(15,25,35,0.10);
+  --shadow-lg: 0 20px 64px rgba(15,25,35,0.20);
   --radius: 20px;
+  --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
+html { scroll-behavior:smooth; scroll-padding-top: 130px; }
 body {
   font-family:'Montserrat',sans-serif;
-  background: var(--cream);
+  background: var(--white);
   color: var(--text);
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  overflow-x: hidden;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 100% 0%, rgba(27,94,32,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 0% 100%, rgba(249,168,37,0.04) 0%, transparent 60%);
+  background-attachment: fixed;
 }
 
-/* NAV */
+/* ============== NAV ============== */
 nav {
-  position: sticky; top: 0; z-index: 100;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
   height: var(--nav-h);
   display: flex; align-items: center; padding: 0 2.5rem; gap: 1rem;
-  background: rgba(250,247,240,0.92);
-  backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid var(--border);
+  background: rgba(13,53,18,0.85);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  backdrop-filter: blur(16px) saturate(160%);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  transition: background var(--transition);
 }
+nav.solid { background: rgba(13,53,18,0.98); }
 .nav-back {
   display: flex; align-items: center; gap: 0.6rem;
-  color: var(--text-muted); text-decoration: none;
-  font-size: 0.78rem; font-weight: 600;
-  letter-spacing: 0.3px; transition: color 0.2s;
+  color: rgba(255,255,255,0.75); text-decoration: none;
+  font-size: 0.76rem; font-weight: 600;
+  letter-spacing: 0.3px; transition: color var(--transition);
   text-transform: uppercase;
 }
-.nav-back:hover { color: var(--orange); }
+.nav-back:hover { color: var(--yellow-light); }
 .nav-back i { font-size: 0.72rem; }
-.nav-divider { color: var(--sand); }
-.nav-title { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--dark); font-weight: 700; }
-.nav-links-inline { margin-left: auto; display: flex; gap: 1.4rem; }
-.nav-links-inline a {
-  font-size: 0.76rem; font-weight: 600; color: var(--text-muted);
-  text-decoration: none; text-transform: uppercase; letter-spacing: 0.4px;
-  transition: color 0.2s;
-}
-.nav-links-inline a:hover { color: var(--orange); }
-
-/* PAGE HEADER */
-.page-header {
-  background: var(--dark);
-  padding: 4.5rem 2.5rem 3.5rem;
-  position: relative; overflow: hidden;
-}
-.page-header::before {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse 70% 90% at 90% 60%, rgba(45,106,79,0.25) 0%, transparent 65%), radial-gradient(ellipse 40% 60% at 10% 30%, rgba(232,115,10,0.1) 0%, transparent 60%);
-}
-.page-header-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 2; }
-.breadcrumb {
-  display: flex; align-items: center; gap: 0.5rem;
-  font-size: 0.72rem; color: rgba(255,255,255,0.4);
-  text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 1.2rem;
-}
-.breadcrumb span { color: var(--orange-light); }
-.page-header h1 {
+.nav-divider { color: rgba(255,255,255,0.25); }
+.nav-title {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(2rem, 5vw, 3.2rem);
-  color: white; line-height: 1.15; margin-bottom: 0.7rem; font-weight: 900;
+  font-size: 1rem; color: #fff; font-weight: 700;
 }
-.page-header h1 em { font-style: italic; color: var(--orange-light); }
-.page-header p.tagline { color: rgba(255,255,255,0.55); font-size: 0.95rem; max-width: 560px; line-height: 1.7; margin-bottom: 2rem; }
 
-.header-stats { display: flex; gap: 2.2rem; flex-wrap: wrap; }
-.header-stat-num {
-  display: block; font-family: 'Playfair Display', serif;
-  font-size: 1.8rem; font-weight: 800; color: var(--orange-light);
+/* ============== HERO MINI + ENVELOPPE ============== */
+.hero-mini {
+  position: relative;
+  height: 55vh;
+  min-height: 400px;
+  overflow: hidden;
+  color: #fff;
+  z-index: 1;
 }
-.header-stat-label { font-size: 0.72rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.5px; }
-
-/* MAIN */
-.main { max-width: 1200px; margin: 0 auto; padding: 3rem 2rem; }
-
-.dept-section { margin-bottom: 4.5rem; }
-.dept-section-head { margin-bottom: 2rem; display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
-.section-eyebrow {
-  font-size: 0.72rem; font-weight: 700; letter-spacing: 1.5px;
-  text-transform: uppercase; color: var(--orange); margin-bottom: 0.4rem; display:block;
+.hero-mini-bg {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--green-dark);
+  transform: scale(1.05);
+  will-change: transform, filter;
 }
-.section-h2 { font-family: 'Playfair Display', serif; font-size: 1.7rem; color: var(--dark); font-weight: 800; }
-.section-h2 em { font-style: italic; color: var(--orange); }
-.section-lead { font-size: 0.88rem; color: var(--text-muted); max-width: 650px; line-height: 1.8; margin-top: 0.6rem; }
+.hero-mini-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(13,53,18,0.20) 0%,
+    rgba(13,53,18,0.30) 55%,
+    rgba(13,53,18,0.70) 100%
+  );
+}
+.hero-mini-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+.hero-mini-content {
+  position: relative; z-index: 3;
+  max-width: 1280px; margin: 0 auto;
+  padding: calc(var(--nav-h) + 2rem) 2.5rem 2rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.hero-mini-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 0.4rem 1rem; border-radius: 30px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.35);
+  color: #fff;
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 1.2rem;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+  width: fit-content;
+}
+.hero-mini-tag .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--yellow);
+  box-shadow: 0 0 0 3px rgba(249,168,37,0.3);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(249,168,37,0.3); }
+  50%      { box-shadow: 0 0 0 8px rgba(249,168,37,0.1); }
+}
+.hero-mini h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 7vw, 5rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.8rem;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.75),
+               0 4px 32px rgba(0,0,0,0.5);
+}
+.hero-mini h1 em {
+  font-style: italic;
+  color: var(--yellow-light);
+  font-weight: 400;
+  display: block;
+  font-size: 0.55em;
+  margin-top: 0.3rem;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.75),
+               0 4px 24px rgba(0,0,0,0.5);
+}
+.hero-mini-lead {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1rem, 1.8vw, 1.3rem);
+  font-style: italic;
+  color: rgba(255,255,255,0.95);
+  line-height: 1.5;
+  max-width: 620px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.8),
+               0 4px 20px rgba(0,0,0,0.5);
+}
+.content-envelope {
+  position: relative;
+  z-index: 10;
+  background: var(--white);
+  border-radius: 40px 40px 0 0;
+  margin-top: -50px;
+  box-shadow: 0 -20px 60px rgba(13,53,18,0.18);
+  padding-top: 2rem;
+  overflow: clip;
+}
 
-.see-all-link {
-  font-size: 0.8rem; font-weight: 700; color: var(--dark);
-  text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+/* ============== SOMMAIRE ============== */
+.sommaire {
+  position: sticky; top: var(--nav-h); z-index: 100;
+  background: rgba(255,255,255,0.97);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 4px 20px rgba(27,94,32,0.05);
+}
+.sommaire-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: flex; align-items: center;
+  padding: 0.7rem 2.5rem;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.sommaire-inner::-webkit-scrollbar { display: none; }
+.sommaire-label {
+  font-size: 0.68rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1.5px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.sommaire-label i { color: var(--green); }
+.sommaire-links { display: flex; gap: 0.3rem; list-style: none; }
+.sommaire-links a {
+  display: inline-block;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.78rem; font-weight: 600;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 20px;
   white-space: nowrap;
+  transition: all var(--transition);
 }
-.see-all-link:hover { color: var(--orange); }
+.sommaire-links a:hover { background: var(--green-pale); color: var(--green); }
+.sommaire-links a.active { background: var(--green); color: #fff; }
+.sommaire-progress {
+  position: absolute; bottom: -1px; left: 0;
+  height: 2px; background: var(--yellow);
+  width: 0%;
+  transition: width 0.1s linear;
+}
 
-/* INTRO */
-.intro-box {
-  background: white; border-radius: var(--radius); padding: 2.2rem;
-  box-shadow: var(--shadow); margin-bottom: 4.5rem;
-  display: grid; grid-template-columns: 2fr 1fr; gap: 2.5rem; align-items: center;
+/* ============== SECTIONS ============== */
+section { padding: 5rem 2.5rem; position: relative; }
+.section-inner { max-width: 1280px; margin: 0 auto; }
+.section-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 2rem; flex-wrap: wrap;
+  margin-bottom: 2.5rem;
 }
-.intro-box p { font-size: 0.92rem; line-height: 1.9; color: var(--text); }
-.intro-fact-list { display: flex; flex-direction: column; gap: 1rem; }
-.intro-fact {
-  display: flex; gap: 0.8rem; align-items: flex-start;
-  padding: 0.9rem; background: var(--cream); border-radius: 12px;
+.section-head > div { max-width: 720px; }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 0.7rem;
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--green); margin-bottom: 0.7rem;
 }
-.intro-fact i { color: var(--orange); font-size: 0.95rem; margin-top: 2px; }
-.intro-fact b { display: block; font-size: 0.85rem; color: var(--dark); }
-.intro-fact span { font-size: 0.72rem; color: var(--text-muted); }
+.eyebrow::before { content: ''; width: 28px; height: 2px; background: var(--yellow); }
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--green-dark);
+  letter-spacing: -0.01em;
+}
+.section-title em { font-style: italic; color: var(--yellow); font-weight: 400; }
+.section-lead {
+  font-size: 0.95rem; color: var(--text-muted);
+  line-height: 1.8; max-width: 720px;
+  margin-top: 0.8rem;
+}
 
-/* GRID CARDS (attractions / expériences) */
-.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.6rem; }
-.dept-card {
-  background: white; border-radius: 18px; overflow: hidden;
-  box-shadow: var(--shadow); transition: transform 0.3s, box-shadow 0.3s;
+.section-white { background: var(--white); }
+.section-white-soft { background: var(--white-soft); }
+.section-pale-green { background: linear-gradient(180deg, var(--white) 0%, var(--green-pale) 100%); }
+.section-dark {
+  background:
+    radial-gradient(ellipse 70% 60% at 100% 0%, rgba(102,187,106,0.25) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 0% 100%, rgba(249,168,37,0.15) 0%, transparent 60%),
+    var(--green-dark);
+  color: #fff;
 }
-.dept-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
-.dept-card-img {
-  height: 170px; display: flex; align-items: center; justify-content: center;
-  font-size: 3.2rem; color: rgba(255,255,255,0.85); position: relative;
-}
-.dept-card-body { padding: 1.3rem 1.4rem 1.5rem; }
-.dept-card-tag {
-  font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 1px; color: var(--orange); margin-bottom: 0.4rem; display: block;
-}
-.dept-card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--dark); margin-bottom: 0.5rem; }
-.dept-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.7; }
+.section-dark .section-title { color: #fff; }
+.section-dark .section-lead { color: rgba(255,255,255,0.7); }
+.section-dark .eyebrow { color: var(--yellow-light); }
+.section-dark .eyebrow::before { background: var(--yellow-light); }
 
-/* PREVIEW ROW (hébergements / restaurants) */
-.preview-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem; }
-.preview-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); }
-.preview-img { height: 140px; display: flex; align-items: center; justify-content: center; font-size: 2.4rem; color: rgba(255,255,255,0.85); }
-.preview-body { padding: 1.1rem 1.2rem; }
-.preview-body h4 { font-family: 'Playfair Display', serif; font-size: 0.98rem; color: var(--dark); margin-bottom: 0.3rem; }
-.preview-body p { font-size: 0.76rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 0.6rem; }
-.preview-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; }
-.preview-price { font-weight: 700; color: var(--orange); }
-.preview-rating { color: var(--dark); font-weight: 700; }
-
-.btn-cta {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  background: var(--dark); color: white; text-decoration: none;
-  padding: 0.75rem 1.5rem; border-radius: 50px;
-  font-size: 0.82rem; font-weight: 700; transition: all 0.25s;
+/* ============== TEXTE & GRILLES ============== */
+.intro-text {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--text);
+  max-width: 820px;
 }
-.btn-cta:hover { background: var(--orange); box-shadow: 0 6px 20px rgba(232,115,10,0.35); }
-.btn-cta.outline { background: transparent; border: 1.5px solid var(--border); color: var(--text); }
-.btn-cta.outline:hover { border-color: var(--dark); color: var(--dark); background: white; }
+.intro-text p { margin-bottom: 1.2rem; }
+.intro-text strong { color: var(--green-dark); }
+.intro-text em { color: var(--yellow); font-style: italic; font-weight: 600; }
 
-/* PRACTICAL FOOTER CTA */
-.dept-footer-cta {
-  background: var(--charcoal); border-radius: var(--radius);
-  padding: 3rem 2.5rem; text-align: center; color: white;
-  margin-top: 1rem;
+.intro-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 3.5rem; align-items: start; margin-top: 1rem; }
+@media (max-width:860px){ .intro-grid { grid-template-columns: 1fr; gap: 2rem; } }
+
+.intro-stats { display: grid; grid-template-columns: 1fr; gap: 0.9rem; }
+.intro-stat { display: flex; gap: 1rem; align-items: flex-start; padding: 1.1rem 1.2rem; background: #fff; border-radius: 14px; border: 1px solid var(--border); box-shadow: var(--shadow); transition: transform var(--transition); }
+.intro-stat:hover { transform: translateX(5px); box-shadow: var(--shadow-md); }
+.intro-stat-icon { width: 42px; height: 42px; border-radius: 10px; background: linear-gradient(135deg, var(--green-pale), var(--yellow-pale)); color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.intro-stat-body b { display: block; font-size: 0.9rem; color: var(--green-dark); font-weight: 700; margin-bottom: 0.15rem; }
+.intro-stat-body span { font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; }
+
+/* ============== CARTES (villes & économie) ============== */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.8rem; }
+.dept-card { background: #fff; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: transform var(--transition), box-shadow var(--transition); border: 1px solid rgba(0,0,0,0.03); display: flex; flex-direction: column; }
+.dept-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+.dept-card-img { height: 190px; position: relative; display: flex; align-items: center; justify-content: center; font-size: 3.2rem; color: rgba(255,255,255,0.85); }
+.dept-card-body { padding: 1.3rem 1.4rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
+.dept-card-tag { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--green); margin-bottom: 0.4rem; display: block; }
+.dept-card h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--green-dark); margin-bottom: 0.5rem; line-height: 1.25; }
+.dept-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.65; flex: 1; }
+
+/* ============== MINI-MAP GÉOPORTAIL ============== */
+.geo-block {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 3rem;
+  align-items: center;
 }
-.dept-footer-cta h2 { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 0.8rem; }
-.dept-footer-cta h2 em { color: var(--orange-light); font-style: italic; }
-.dept-footer-cta p { color: rgba(255,255,255,0.55); font-size: 0.88rem; margin-bottom: 1.8rem; max-width: 480px; margin-left: auto; margin-right: auto; }
-.dept-footer-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.geo-visual {
+  position: relative;
+  aspect-ratio: 4/3;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  background: linear-gradient(135deg, #0A2911 0%, var(--green-dark) 50%, #0A2911 100%);
+  border: 1px solid rgba(249,168,37,0.15);
+}
+.mini-map { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; background: #E9ECEF; }
+.mini-map .leaflet-tile-pane { filter: brightness(0.9) contrast(1.02) saturate(1.05); }
+.mini-map .leaflet-control-attribution {
+  background: rgba(13,53,18,0.8) !important;
+  color: rgba(255,255,255,0.6) !important;
+  font-size: 9px !important; padding: 1px 6px !important;
+}
+.mini-map .leaflet-control-attribution a { color: var(--yellow-light) !important; }
+.mini-map .leaflet-control-zoom { display: none; }
+.geo-overlay-info { position: absolute; inset: 0; pointer-events: none; z-index: 500; }
+.geo-overlay-info .geo-coords {
+  position: absolute; top: 14px; left: 14px;
+  background: rgba(13,53,18,0.88); color: rgba(255,255,255,0.9);
+  padding: 6px 12px; border-radius: 8px;
+  font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 1px; 
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  pointer-events: auto;
+}
+.geo-overlay-info .geo-coords i { color: var(--yellow-light); margin-right: 4px; }
+.geo-map-hint {
+  position: absolute; bottom: 14px; left: 14px;
+  background: rgba(13,53,18,0.88); color: rgba(255,255,255,0.9);
+  padding: 6px 12px; border-radius: 8px;
+  font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.3px; 
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  animation: hintFade 3s ease-in-out infinite;
+}
+.geo-map-hint i { color: var(--yellow-light); margin-right: 5px; }
+@keyframes hintFade {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.6; }
+}
+.mini-marker { background: transparent; border: none; }
+.mini-marker-inner {
+  width: 28px; height: 28px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.35);
+  border: 2px solid #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.mini-marker-inner i { transform: rotate(45deg); color: #fff; font-size: 12px; }
+.mini-marker:hover .mini-marker-inner {
+  transform: rotate(-45deg) scale(1.2);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+}
+.mini-map .leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(15,25,35,0.25);
+  padding: 0; background: #fff;
+}
+.mini-map .leaflet-popup-content {
+  margin: 0; padding: 0.9rem 1rem;
+  min-width: 180px; font-family: 'Montserrat', sans-serif;
+}
+.mini-map .leaflet-popup-tip { background: #fff; }
+.mini-popup-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem; font-weight: 700;
+  color: var(--green-dark); margin: 0 0 0.5rem; line-height: 1.2;
+}
+.mini-popup-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 0.35rem 0.75rem;
+  background: var(--green); color: #fff;
+  border: none; border-radius: 20px;
+  font-family: inherit; font-size: 0.7rem; font-weight: 600;
+  cursor: pointer; transition: background 0.2s;
+}
+.mini-popup-btn:hover { background: var(--yellow); color: var(--green-dark); }
 
-@media (max-width: 860px) {
-  .intro-box { grid-template-columns: 1fr; }
+.geo-content h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; color: #fff;
+  margin-bottom: 1rem; line-height: 1.2;
+}
+.geo-content h3 em { color: var(--yellow-light); font-style: italic; }
+.geo-content > p {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.9rem; line-height: 1.75;
+  margin-bottom: 1.5rem;
+}
+.geo-features {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0.8rem; margin-bottom: 2rem;
+}
+.geo-feature {
+  padding: 0.9rem 1rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(249,168,37,0.15);
+  border-radius: 12px;
+  transition: background var(--transition), border-color var(--transition);
+}
+.geo-feature:hover { background: rgba(255,255,255,0.08); border-color: rgba(249,168,37,0.3); }
+.geo-feature i { color: var(--yellow-light); font-size: 1rem; margin-bottom: 0.4rem; display: block; }
+.geo-feature strong { display: block; color: #fff; font-size: 0.82rem; margin-bottom: 0.15rem; font-weight: 600; }
+.geo-feature span { color: rgba(255,255,255,0.5); font-size: 0.72rem; }
+
+/* ============== CTA CIRCUIT ============== */
+.cta-circuit { text-align: center; max-width: 800px; margin: 0 auto; }
+.cta-circuit p {
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+/* ============== SOURCES ============== */
+.section-sources { padding: 3rem 2.5rem 1rem; background: var(--white); border-top: 1px solid var(--border); }
+.sources-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.sources-list { list-style: none; padding: 0; margin: 0; }
+.sources-list li { font-size: 0.8rem; color: var(--text); line-height: 1.6; margin-bottom: 0.6rem; display: flex; align-items: flex-start; gap: 8px; }
+.sources-list li i { color: var(--green-mid); font-size: 0.7rem; margin-top: 4px; }
+.sources-list li strong { color: var(--green-dark); }
+.sources-list a { color: inherit; text-decoration: underline; text-decoration-color: rgba(27,94,32,0.3); transition: color var(--transition); }
+.sources-list a:hover { color: var(--green); text-decoration-color: var(--green); }
+
+/* ============== CTA & FOOTER ============== */
+.cta-final { padding: 5rem 2.5rem; text-align: center; background: var(--white); }
+.cta-box { max-width: 800px; margin: 0 auto; background: linear-gradient(135deg, #fff 0%, var(--yellow-pale) 100%); border-radius: 24px; padding: 3.5rem 2.5rem; box-shadow: var(--shadow-md); border: 1px solid var(--border-yellow); position: relative; overflow: hidden; }
+.cta-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: linear-gradient(90deg, var(--green), var(--yellow), var(--green-light)); }
+.cta-box h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--green-dark); margin-bottom: 0.8rem; line-height: 1.2; }
+.cta-box h2 em { color: var(--yellow); font-style: italic; }
+.cta-box p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.75; max-width: 520px; margin: 0 auto 2rem; }
+.cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.9rem 1.8rem; border-radius: 50px; font-family: inherit; font-size: 0.85rem; font-weight: 600; text-decoration: none; cursor: pointer; border: none; letter-spacing: 0.3px; transition: transform var(--transition), box-shadow var(--transition); white-space: nowrap; }
+.btn-yellow { background: linear-gradient(135deg, var(--yellow) 0%, var(--yellow-light) 100%); color: var(--green-dark); box-shadow: 0 8px 24px rgba(249,168,37,0.4); font-weight: 700; }
+.btn-yellow:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(249,168,37,0.55); }
+.btn-green { background: linear-gradient(135deg, var(--green) 0%, var(--green-mid) 100%); color: #fff; box-shadow: 0 8px 24px rgba(27,94,32,0.4); }
+.btn-green:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(27,94,32,0.55); }
+.btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--green); }
+.btn-outline:hover { border-color: var(--green); color: var(--green); background: var(--green-pale); }
+
+footer { background: var(--green-dark); color: rgba(255,255,255,0.65); padding: 3rem 2.5rem 1.5rem; margin-top: 2rem; }
+.footer-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(249,168,37,0.15); }
+.footer-brand h4 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #fff; margin-bottom: 0.6rem; }
+.footer-brand p { font-size: 0.82rem; line-height: 1.7; color: rgba(255,255,255,0.5); }
+.footer-col h5 { color: #fff; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 1.2rem; }
+.footer-col a { display: block; color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.82rem; padding: 0.35rem 0; transition: color var(--transition), transform var(--transition); }
+.footer-col a:hover { color: var(--yellow-light); transform: translateX(4px); }
+.footer-bottom { max-width: 1280px; margin: 1.5rem auto 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.75rem; color: rgba(255,255,255,0.4); }
+.footer-bottom strong { color: var(--yellow-light); }
+
+/* ============== REVEAL & BACK TOP ============== */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+#back-top { position: fixed; bottom: 2rem; right: 2rem; width: 46px; height: 46px; border-radius: 50%; background: var(--green); color: #fff; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 24px rgba(27,94,32,0.4); opacity: 0; pointer-events: none; transform: translateY(10px); transition: all var(--transition); z-index: 500; font-size: 1rem; }
+#back-top.show { opacity: 1; pointer-events: all; transform: translateY(0); }
+#back-top:hover { background: var(--yellow); color: var(--green-dark); transform: translateY(-3px); }
+
+@media (max-width: 1024px) {
+  .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+}
+@media (max-width: 768px) {
   nav { padding: 0 1.2rem; }
-  .nav-links-inline { display: none; }
-  .page-header { padding: 3rem 1.5rem 2.5rem; }
-  .main { padding: 2.5rem 1.2rem; }
+  section { padding: 3.5rem 1.2rem; }
+  .sommaire-inner { padding: 0.6rem 1rem; gap: 0.8rem; }
+  .sommaire-label { display: none; }
+  .hero-mini { height: 60vh; min-height: 420px; }
+  .hero-mini-content { padding: calc(var(--nav-h) + 1rem) 1.2rem 1.5rem; }
+  .content-envelope { border-radius: 24px 24px 0 0; margin-top: -30px; }
+  .footer-inner { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
+  .sources-grid { grid-template-columns: 1fr; gap: 0.5rem; }
+  .geo-block { grid-template-columns: 1fr; gap: 2.5rem; }
 }
-
+@media (max-width: 480px) {
+  .section-head { flex-direction: column; align-items: flex-start; }
+}
 </style>
 </head>
 <body>
-<nav>
-  <a href="n_index.html" class="nav-back"><i class="fa-solid fa-arrow-left"></i> Retour</a>
+
+<!-- ============== NAV ============== -->
+<nav id="navbar">
+  <a href="n_index.html" class="nav-back">
+    <i class="fa-solid fa-arrow-left"></i> Retour
+  </a>
   <span class="nav-divider">/</span>
   <span class="nav-title">Département de Tivaouane</span>
-  <div class="nav-links-inline">
-    <a href="hebergements.html#tivaouane">Hébergements</a>
-    <a href="restaurants.html#tivaouane">Restaurants</a>
-    <a href="n_index.html#region">Toute la région</a>
+</nav>
+
+<!-- ============== HERO MINI ============== -->
+<header class="hero-mini" id="hero">
+  <div class="hero-mini-bg" style="background-image:url('images/tivaouane-hero.jpg')"></div>
+  <div class="hero-mini-overlay"></div>
+  <div class="hero-mini-grid"></div>
+
+  <div class="hero-mini-content">
+    <div class="hero-mini-tag">
+      <span class="dot"></span>
+      Terre d'histoire, d'économie et de patrimoine
+    </div>
+
+    <h1>
+      Tivaouane
+      <em>au-delà de la ville sainte</em>
+    </h1>
+
+    <p class="hero-mini-lead">
+      Du bassin arachidier aux parcs éoliens, en passant par les ateliers de Mékhé et l'héritage intellectuel de Pire, découvrez le territoire du département de Tivaouane.
+    </p>
   </div>
-</nav><div class="page-header">
-  <div class="page-header-inner">
-    <div class="breadcrumb">Région de Thiès <i class="fa-solid fa-chevron-right" style="font-size:0.6rem"></i> <span>Tivaouane</span></div>
-    <h1>Tivaouane</h1>
-    <p class="tagline">Foyer spirituel de la confrérie Tijaniyya — siège du grand Gamou (Mawlid) annuel.</p>
-    <div class="header-stats"><div><span class="header-stat-num">1,5%</span><span class="header-stat-label">Réceptifs de la région</span></div>
-<div><span class="header-stat-num">XIXe s.</span><span class="header-stat-label">Fondation religieuse</span></div>
-<div><span class="header-stat-num">Annuel</span><span class="header-stat-label">Grand Gamou (Mawlid)</span></div></div>
-  </div>
-</div><div class="main">
-  <div class="intro-box">
-    <p>Fondée au XIX<sup>e</sup> siècle, Tivaouane devient le siège de la confrérie Tijaniyya sous l'impulsion d'El Hadji Malick Sy, et reste depuis un haut lieu spirituel du Sénégal. Avec seulement 1,5% des réceptifs hôteliers de la région, Tivaouane se distingue moins par sa capacité d'accueil que par son rayonnement religieux : la ville accueille chaque année le grand Gamou (Mawlid), l'un des plus importants rassemblements religieux du pays, réunissant des pèlerins venus de tout le Sénégal et de la sous-région.</p>
-    <div class="intro-fact-list">
-      <div class="intro-fact"><i class="fa-solid fa-mosque"></i><div><b>XIXe s.</b><span>Fondation par El Hadji Malick Sy</span></div></div>
-<div class="intro-fact"><i class="fa-solid fa-users"></i><div><b>Pèlerinage</b><span>Grand Gamou annuel</span></div></div>
-<div class="intro-fact"><i class="fa-solid fa-hand-holding-heart"></i><div><b>Tijaniyya</b><span>Confrérie soufie majeure</span></div></div>
-    </div>
-  </div>  <section class="dept-section">
-    <div class="dept-section-head">
-      <div>
-        <span class="section-eyebrow">À voir</span>
-        <h2 class="section-h2">Sites & <em>attractions</em></h2>
-      </div>
-    </div>
-    <div class="card-grid">
-      <div class="dept-card">
-        <div class="dept-card-img" style="background:linear-gradient(135deg,#1B4F30,#2E8B57)"><i class="fa-solid fa-mosque"></i></div>
-        <div class="dept-card-body">
-          <span class="dept-card-tag">Religion</span>
-          <h3>Grande Mosquée de Tivaouane</h3>
-          <p>Cœur de la confrérie Tijaniyya, elle accueille chaque année le grand Gamou (Mawlid), rassemblement de pèlerins venus de tout le Sénégal.</p>
-        </div>
-      </div>
-      <div class="dept-card">
-        <div class="dept-card-img" style="background:linear-gradient(135deg,#145A32,#27AE60)"><i class="fa-solid fa-place-of-worship"></i></div>
-        <div class="dept-card-body">
-          <span class="dept-card-tag">Religion</span>
-          <h3>Zawiya Tijaniyya</h3>
-          <p>Siège spirituel fondé par El Hadji Malick Sy, lieu de recueillement et de transmission du savoir religieux depuis le XIXe siècle.</p>
-        </div>
-      </div>
-      <div class="dept-card">
-        <div class="dept-card-img" style="background:linear-gradient(135deg,#0B5345,#1E8449)"><i class="fa-solid fa-monument"></i></div>
-        <div class="dept-card-body">
-          <span class="dept-card-tag">Patrimoine</span>
-          <h3>Mausolée d'El Hadji Malick Sy</h3>
-          <p>Lieu de pèlerinage toute l'année, particulièrement fréquenté lors du Gamou annuel.</p>
-        </div>
-      </div>
-    </div>
-  </section>  <section class="dept-section">
-    <div class="dept-section-head">
-      <div>
-        <span class="section-eyebrow">À vivre</span>
-        <h2 class="section-h2"><em>Expériences</em></h2>
-      </div>
-    </div>
-    <div class="card-grid">
-      <div class="dept-card">
-        <div class="dept-card-img" style="background:#E8F5EC"><i class="fa-solid fa-mosque"></i></div>
-        <div class="dept-card-body">
-          <span class="dept-card-tag">Religieux · Saisonnier</span>
-          <h3>Pèlerinage du Gamou</h3>
-          <p>Vivez le grand Mawlid annuel de la confrérie Tijaniyya : chants religieux, processions et ferveur spirituelle.</p>
-        </div>
-      </div>
-      <div class="dept-card">
-        <div class="dept-card-img" style="background:#F0EAF5"><i class="fa-solid fa-place-of-worship"></i></div>
-        <div class="dept-card-body">
-          <span class="dept-card-tag">Culture · 1–2h</span>
-          <h3>Visite guidée de la Zawiya</h3>
-          <p>Découvrez l'histoire d'El Hadji Malick Sy et le rôle de Tivaouane comme foyer spirituel.</p>
-        </div>
-      </div>
-    </div>
-  </section>  <section class="dept-section">
-    <div class="dept-section-head">
-      <div>
-        <span class="section-eyebrow">Où dormir</span>
-        <h2 class="section-h2">Hébergements à <em>Tivaouane</em></h2>
-      </div>
-      <a href="hebergements.html#tivaouane" class="see-all-link">Voir tous les hébergements <i class="fa-solid fa-arrow-right"></i></a>
-    </div>
-    <div class="preview-row">
-      <div class="preview-card">
-        <div class="preview-img" style="background:linear-gradient(135deg,#1B4F30,#2E8B57)"><i class="fa-solid fa-house"></i></div>
-        <div class="preview-body">
-          <h4>Auberge de la Zawiya</h4>
-          <p>Proche zawiya · Centre-ville</p>
-          <div class="preview-meta">
-            <span class="preview-price">9 000 FCFA/nuit</span>
-            <span class="preview-rating">★ 4.4</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>  <section class="dept-section">
-    <div class="dept-section-head">
-      <div>
-        <span class="section-eyebrow">Où manger</span>
-        <h2 class="section-h2">Restaurants à <em>Tivaouane</em></h2>
-      </div>
-      <a href="restaurants.html#tivaouane" class="see-all-link">Voir tous les restaurants <i class="fa-solid fa-arrow-right"></i></a>
-    </div>
-    <div class="preview-row">
-      <div class="preview-card">
-        <div class="preview-img" style="background:linear-gradient(135deg,#1B4F30,#2E8B57)"><i class="fa-solid fa-bowl-food"></i></div>
-        <div class="preview-body">
-          <h4>Chez Sokhna</h4>
-          <p>Traditionnelle · Centre-ville</p>
-          <div class="preview-meta">
-            <span class="preview-price">1 500–2 500 FCFA</span>
-            <span class="preview-rating">★ 4.4</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>  <div class="dept-footer-cta">
-    <h2>Préparez votre pèlerinage à <em>Tivaouane</em></h2>
-    <p>Notre équipe vous aide à organiser votre séjour dans la région de Thiès.</p>
-    <div class="dept-footer-btns">
-      <a href="n_index.html#contact" class="btn-cta"><i class="fa-solid fa-envelope"></i> Nous contacter</a>
-      <a href="n_index.html#geoportail" class="btn-cta outline"><i class="fa-solid fa-location-dot"></i> Voir sur le Géoportail</a>
-    </div>
+</header>
+
+<main class="content-envelope">
+
+<!-- ============== SOMMAIRE ============== -->
+<div class="sommaire" id="sommaire">
+  <div class="sommaire-inner">
+    <span class="sommaire-label"><i class="fa-solid fa-list-ul"></i> Sommaire</span>
+<ul class="sommaire-links">
+  <li><a href="#histoire" data-target="histoire">Histoire</a></li>
+  <li><a href="#geographie" data-target="geographie">Géographie</a></li>
+  <li><a href="#economie" data-target="economie">Économie</a></li>
+  <li><a href="#mekhe" data-target="mekhe">Mékhé</a></li>
+  <li><a href="#pire" data-target="pire">Pire</a></li>
+  <li><a href="#taiba" data-target="taiba">Taïba Ndiaye</a></li>
+  <li><a href="#communes" data-target="communes">Communes</a></li>
+  <li><a href="#culture" data-target="culture">Culture</a></li>
+  <li><a href="#circuit-religieux" data-target="circuit-religieux">Circuit</a></li>  <!-- NEW -->
+  <li><a href="#geoportail" data-target="geoportail">Géoportail</a></li>
+  <li><a href="#sources" data-target="sources">Sources</a></li>
+</ul>
+    <div class="sommaire-progress" id="sommaireProgress"></div>
   </div>
 </div>
+
+<!-- ============== HISTOIRE & TERRITOIRE ============== -->
+<section id="histoire" class="section-pale-green">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Vue d'ensemble</span>
+        <h2 class="section-title">Un département <em>aux multiples facettes</em></h2>
+        <p class="section-lead">
+          Le département de Tivaouane est l'un des trois départements de la région de Thiès. Connu pour son rayonnement spirituel, il joue également un rôle important dans l'économie régionale grâce à son agriculture, son artisanat et ses infrastructures modernes.
+        </p>
+      </div>
+    </div>
+
+    <div class="intro-text reveal">
+      <p>
+        Ancienne capitale du royaume du Cayor, Tivaouane est aujourd'hui un carrefour entre le bassin arachidier et la zone des Niayes. Le département est administrativement subdivisé en <strong>18 communes</strong> et couvre une superficie de <strong>3 121 km²</strong>.
+      </p>
+      <p>
+        Avec une population estimée à <strong>669 656 habitants en 2024</strong>, c'est le département le plus vaste et le plus peuplé de la région de Thiès. Sa population est jeune, avec près de la moitié ayant moins de 20 ans. Il joue un rôle clé dans l'approvisionnement des marchés de Dakar et de Thiès.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============== GÉOGRAPHIE & TERRITOIRE ============== -->
+<section id="geographie" class="section-white">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Géographie & Environnement</span>
+        <h2 class="section-title">Terres et <em>paysages</em></h2>
+      </div>
+    </div>
+
+    <div class="intro-grid">
+      <div class="intro-text reveal">
+        <p><strong>Une position stratégique :</strong> Le département est un carrefour routier majeur, traversé par la route nationale N2 reliant Dakar à Saint-Louis. Il est limitrophe des départements de Thiès, de Mbour et de la région de Louga.</p>
+        <p><strong>Des écosystèmes variés :</strong> Le territoire présente une grande diversité de paysages. On y trouve des zones de savane sahélienne, des forêts de rôniers (notamment autour de Pire), et une façade littorale au niveau de Mboro et Fass Boye, propice à la pêche. La zone des Niayes, au nord-ouest, est réputée pour ses cultures maraîchères.</p>
+      </div>
+      <div class="intro-stats reveal">
+        <div class="intro-stat">
+          <div class="intro-stat-icon"><i class="fa-solid fa-map"></i></div>
+          <div class="intro-stat-body">
+            <b>3 121 km²</b>
+            <span>Superficie départementale</span>
+          </div>
+        </div>
+        <div class="intro-stat">
+          <div class="intro-stat-icon"><i class="fa-solid fa-city"></i></div>
+          <div class="intro-stat-body">
+            <b>18 communes</b>
+            <span>Découpage administratif</span>
+          </div>
+        </div>
+        <div class="intro-stat">
+          <div class="intro-stat-icon"><i class="fa-solid fa-users"></i></div>
+          <div class="intro-stat-body">
+            <b>669 656 hab.</b>
+            <span>Population (ANSD, 2024)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== ÉCONOMIE LOCALE ============== -->
+<section id="economie" class="section-white-soft">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Le moteur du département</span>
+        <h2 class="section-title">Une économie <em>diversifiée</em></h2>
+        <p class="section-lead">Bien que le secteur primaire domine, le département possède un tissu économique riche porté par l'agriculture, l'élevage, le commerce et l'artisanat.</p>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="dept-card reveal">
+        <div class="dept-card-img" style="background:linear-gradient(135deg,#1B5E20,#66BB6A)"><i class="fa-solid fa-wheat-awn"></i></div>
+        <div class="dept-card-body">
+          <span class="dept-card-tag">Agriculture</span>
+          <h3>Un pôle agricole majeur</h3>
+          <p>Le département est un pôle d'intenses activités agricoles. Les cultures vivrières (mil, sorgho, maïs) côtoient les cultures industrielles (arachide, manioc). Le maraîchage y est très développé, notamment dans la zone des Niayes.</p>
+        </div>
+      </div>
+
+      <div class="dept-card reveal">
+        <div class="dept-card-img" style="background:linear-gradient(135deg,#F9A825,#FDD835);color:#0D3512"><i class="fa-solid fa-cow"></i></div>
+        <div class="dept-card-body">
+          <span class="dept-card-tag">Élevage</span>
+          <h3>L'élevage de bétail</h3>
+          <p>L'élevage est une activité majeure. En 2019, le département comptait 181 040 têtes de bétail (majoritairement des ovins et des bovins) et 189 500 sujets en volaille. Le département dispose de 28 forages agropastoraux.</p>
+        </div>
+      </div>
+
+      <div class="dept-card reveal">
+        <div class="dept-card-img" style="background:linear-gradient(135deg,#0D3B66,#2E86AB)"><i class="fa-solid fa-shop"></i></div>
+        <div class="dept-card-body">
+          <span class="dept-card-tag">Commerce</span>
+          <h3>Un réseau de marchés</h3>
+          <p>Le commerce est dynamique grâce à un réseau de 12 marchés (4 permanents et 8 hebdomadaires). Les loumas (marchés hebdomadaires) de Ngaye, Diogo, Pékesse et Pire sont des points de convergence importants pour les échanges.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== MÉKHÉ ============== -->
+<section id="mekhe" class="section-white">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Artisanat & Savoir-faire</span>
+        <h2 class="section-title">Mékhé, <em>capitale de la chaussure</em></h2>
+        <p class="section-lead">Située au nord du département, la ville de Mékhé (ou Ngaye Mékhé) est célèbre dans tout le Sénégal pour son artisanat du cuir.</p>
+      </div>
+    </div>
+
+    <div class="intro-grid">
+      <div class="reveal">
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--green-dark); margin-bottom: 1rem;">La cordonnerie et la broderie</h3>
+        <p class="intro-text" style="margin-bottom: 1rem;">Mékhé est largement reconnue comme l'un des principaux centres sénégalais de fabrication de chaussures artisanales. On y compte environ <strong>150 ateliers</strong> produisant chacun une trentaine de paires de chaussures par jour, générant un chiffre d'affaires annuel de plus de <strong>5 milliards de francs CFA</strong>.</p>
+        <p class="intro-text">Si la cordonnerie est traditionnellement pratiquée par les hommes, la <strong>broderie à la main</strong> est la principale activité de nombreuses femmes, qui confectionnent des tenues légères, des pagnes et des boubous. La ville abrite également une production notable d'<strong>huile d'arachide artisanale</strong>.</p>
+      </div>
+      <div class="reveal">
+        <img src="images/mekhe-artisanat.webp" alt="Artisanat à Mékhé" style="width: 100%; border-radius: 16px; box-shadow: var(--shadow-lg); object-fit: cover; height: 400px;" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22400%22%3E%3Crect width=%22600%22 height=%22400%22 fill=%22%231B5E20%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-family=%22Arial%22 font-size=%2224%22 fill=%22%23ffffff%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EMékhé%3C/text%3E%3C/svg%3E'">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== PIRE ============== -->
+<section id="pire" class="section-white-soft">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Patrimoine intellectuel</span>
+        <h2 class="section-title">Pire Goureye, <em>berceau du savoir</em></h2>
+        <p class="section-lead">Pire Goureye occupe une place à part sur la carte intellectuelle et spirituelle de l'Afrique de l'Ouest.</p>
+      </div>
+    </div>
+
+    <div class="intro-grid">
+      <div class="reveal">
+        <img src="images/pire-universite.webp" alt="Université islamique de Pire" style="width: 100%; border-radius: 16px; box-shadow: var(--shadow-lg); object-fit: cover; height: 400px;" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22400%22%3E%3Crect width=%22600%22 height=%22400%22 fill=%22%232E7D32%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-family=%22Arial%22 font-size=%2224%22 fill=%22%23ffffff%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EPire%3C/text%3E%3C/svg%3E'">
+      </div>
+      <div class="reveal">
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--green-dark); margin-bottom: 1rem;">Un ancien foyer du savoir islamique</h3>
+<p class="intro-text" style="margin-bottom: 1rem;">
+Vers <strong>1603</strong>, <strong>Khaly Amar Fall</strong> y a fondé un centre d'enseignement islamique, considéré comme <strong>l'un des principaux foyers historiques du savoir islamique au Sénégal</strong>. La <strong>Grande Mosquée de Pire</strong>, construite en <strong>1611</strong>, est l'une des plus anciennes de la sous-région.
+</p>
+        <p class="intro-text">Ce haut lieu du savoir attire depuis des siècles les grands esprits du monde musulman. Aujourd'hui, la Grande Mosquée et le mausolée de Khaly Amar Fall sont classés sur la liste des sites et monuments historiques du Sénégal.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== TAÏBA NDIAYE ============== -->
+<section id="taiba" class="section-white">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Énergie & Modernité</span>
+        <h2 class="section-title">Taïba Ndiaye, <em>le souffle de l'énergie</em></h2>
+        <p class="section-lead">La commune de Taïba Ndiaye abrite le premier parc éolien à l'échelle industrielle du Sénégal, une infrastructure majeure de la stratégie énergétique nationale.</p>
+      </div>
+    </div>
+
+    <div class="intro-grid">
+      <div class="reveal">
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--green-dark); margin-bottom: 1rem;">Le parc éolien (Lekela)</h3>
+        <p class="intro-text" style="margin-bottom: 1rem;">Développé par la société Lekela, le parc dispose de <strong>46 éoliennes</strong> d'une capacité unitaire de 3,45 MW, pour une puissance installée totale de <strong>158,7 MW</strong>.</p>
+        <p class="intro-text">Il fournit environ <strong>384 GWh d'énergie propre par an</strong>, soit une augmentation de 15 % de la capacité de production d'électricité du Sénégal. L'électricité est vendue à la Senelec dans le cadre d'un contrat d'achat de 20 ans. Un programme d'investissement social de 20 millions de dollars est mis en œuvre au profit des communautés locales.</p>
+      </div>
+      <div class="reveal">
+        <img src="images/taiba-eolien.webp" alt="Parc éolien de Taïba Ndiaye" style="width: 100%; border-radius: 16px; box-shadow: var(--shadow-lg); object-fit: cover; height: 400px;" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22400%22%3E%3Crect width=%22600%22 height=%22400%22 fill=%22%230D3B66%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-family=%22Arial%22 font-size=%2224%22 fill=%22%23ffffff%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3ETaïba Ndiaye%3C/text%3E%3C/svg%3E'">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== COMMUNES ============== -->
+<section id="communes" class="section-white-soft">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Découpage territorial</span>
+        <h2 class="section-title">Les <em>communes du département</em></h2>
+        <p class="section-lead">Outre Tivaouane, Mékhé, Pire et Taïba Ndiaye, le département regroupe 18 communes. Chacune possède ses spécificités locales et son rôle dans l'économie régionale.</p>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="dept-card reveal">
+        <div class="dept-card-img" style="background:linear-gradient(135deg,#F9A825,#FDD835);color:#0D3512"><i class="fa-solid fa-mosque"></i></div>
+        <div class="dept-card-body">
+          <span class="dept-card-tag">Pambal</span>
+          <h3>Chérif Lô</h3>
+          <p>Située dans l'arrondissement de Pambal, à 14 km au nord-est de Tivaouane et à 84 km de Dakar, cette commune fait partie de l'ancien bassin arachidier et joue un rôle important dans les activités agricoles et commerciales locales.</p>
+        </div>
+      </div>
+
+      <div class="dept-card reveal">
+        <div class="dept-card-img" style="background:linear-gradient(135deg,#1B5E20,#66BB6A)"><i class="fa-solid fa-water"></i></div>
+        <div class="dept-card-body">
+          <span class="dept-card-tag">Pambal</span>
+          <h3>Notto Gouye Diama</h3>
+          <p>Commune de l'arrondissement de Pambal, intégrée à la zone des Niayes, favorable au maraîchage grâce à ses conditions naturelles et à ses ressources en eau.</p>
+        </div>
+      </div>
+
+      <div class="dept-card reveal">
+        <div class="dept-card-img" style="background:linear-gradient(135deg,#2E7D32,#66BB6A)"><i class="fa-solid fa-tree"></i></div>
+        <div class="dept-card-body">
+          <span class="dept-card-tag">Arrondissement</span>
+          <h3>Mérina Dakhar</h3>
+          <p>Commune de l'arrondissement du même nom, elle compte une population importante et une activité agricole dynamique, avec plusieurs fermes maraîchères. L'élevage y est également en développement.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== CULTURE ============== -->
+<section id="culture" class="section-pale-green">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Patrimoine & Traditions</span>
+        <h2 class="section-title">Culture <em>et savoir-faire</em></h2>
+        <p class="section-lead">Au-delà du patrimoine religieux, le département possède un patrimoine culturel riche et diversifié, porté par ses artisans et ses traditions.</p>
+      </div>
+    </div>
+
+    <div class="intro-grid">
+      <div class="intro-text reveal">
+        <p><strong>Artisanat et savoir-faire :</strong> L'artisanat est un pilier de l'identité économique et culturelle du département, avec <strong>1 280 artisans recensés</strong>. Les savoir-faire sont variés : cordonnerie et maroquinerie à Mékhé, broderie et tissage, poterie, vannerie, et transformation agroalimentaire.</p>
+        <p><strong>Traditions et festivals :</strong> Le département accueille un festival international de contes et plusieurs troupes théâtrales. Les loumas (marchés hebdomadaires) de Ngaye, Diogo, Pékesse et Pire sont des lieux de sociabilité et d'échange culturel.</p>
+        <p><strong>Sites historiques :</strong> Le département compte <strong>11 sites historiques et monuments classés</strong>, dont la Grande Mosquée de Pire et le mausolée de Khaly Amar Fall, qui témoignent de l'importance historique de la région dans l'enseignement islamique en Afrique de l'Ouest.</p>
+      </div>
+      <div class="reveal">
+        <img src="images/culture-tivaouane.jpeg" alt="Artisanat et culture" style="width: 100%; border-radius: 16px; box-shadow: var(--shadow-lg); object-fit: cover; height: 400px;" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22400%22%3E%3Crect width=%22600%22 height=%22400%22 fill=%22%23F9A825%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-family=%22Arial%22 font-size=%2224%22 fill=%22%230D3512%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3ECulture%3C/text%3E%3C/svg%3E'">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== CIRCUIT RELIGIEUX (Renvoi) ============== -->
+<section id="circuit-religieux" class="section-dark" style="padding: 5rem 2.5rem;">
+  <div class="section-inner cta-circuit reveal">
+    <span class="eyebrow" style="justify-content: center; color: var(--yellow-light);">
+      Découvrir les sites
+    </span>
+    <h2 class="section-title" style="color: #fff; font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 1rem;">
+      Le Circuit Religieux
+    </h2>
+    <p>
+      De la Grande Mosquée de Tivaouane aux sanctuaires de Ndiassane, Thiénaba et Pire,
+      en passant par les lieux mourides de Thiès et les hauts lieux chrétiens de
+      Popenguine et Keur Moussa, découvrez les <strong>9 hauts lieux spirituels</strong>
+      de la région de Thiès à travers notre circuit interactif.
+    </p>
+    <a href="circuit-religieux.html" class="btn btn-yellow" style="padding: 1rem 2rem; font-size: 1rem;">
+      <i class="fa-solid fa-hands-praying"></i> Explorer le circuit religieux
+    </a>
+  </div>
+</section>
+
+<!-- ============== MINI-MAP GÉOPORTAIL ============== -->
+<section id="geoportail" class="section-dark">
+  <div class="section-inner">
+    <div class="geo-block">
+      <div class="geo-visual reveal" id="geoVisual">
+        <div id="miniMap" class="mini-map"></div>
+        <div class="geo-overlay-info">
+          <div class="geo-coords"><i class="fa-solid fa-location-dot"></i> 14.95° N · 16.82° W</div>
+          <div class="geo-map-hint">
+            <i class="fa-solid fa-hand-pointer"></i> Cliquez sur un point
+          </div>
+        </div>
+      </div>
+
+      <div class="geo-content reveal">
+        <span class="eyebrow">SIG &amp; Cartographie</span>
+        <h3>Explorez le territoire <em>sur le Géoportail</em></h3>
+        <p>
+          Notre géoportail vous permet d'explorer interactivement le département de Tivaouane et toute la région :
+          villes, sites patrimoniaux, infrastructures, itinéraires, mesure de distances, export PDF.
+        </p>
+
+        <div class="geo-features">
+          <div class="geo-feature">
+            <i class="fa-solid fa-map"></i>
+            <strong>Cartographie SIG</strong>
+            <span>Couches superposables</span>
+          </div>
+          <div class="geo-feature">
+            <i class="fa-solid fa-city"></i>
+            <strong>Points d'intérêt</strong>
+            <span>Villes, sites et patrimoine</span>
+          </div>
+          <div class="geo-feature">
+            <i class="fa-solid fa-route"></i>
+            <strong>Itinéraires</strong>
+            <span>Multi-étapes Google Maps</span>
+          </div>
+          <div class="geo-feature">
+            <i class="fa-solid fa-file-pdf"></i>
+            <strong>Export PDF</strong>
+            <span>Cartes imprimables</span>
+          </div>
+        </div>
+
+        <a href="carte.html?lat=14.95&lon=-16.8167&z=11" class="btn btn-yellow">
+          <i class="fa-solid fa-map-location-dot"></i> Ouvrir le Géoportail
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== SOURCES ============== -->
+<section id="sources" class="section-sources">
+  <div class="section-inner">
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem;">
+      <i class="fa-solid fa-book-open" style="color: var(--green); font-size: 1.2rem;"></i>
+      <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--green-dark); margin: 0;">Sources & Références</h3>
+    </div>
+    
+    <div class="sources-grid">
+      <ul class="sources-list">
+        <li><i class="fa-solid fa-caret-right"></i> <strong>Données démographiques :</strong> <a href="https://www.ansd.sn/sites/default/files/2026-02/SES%202024-THIES.pdf" target="_blank" rel="noopener">ANSD – Situation Économique et Sociale de la région de Thiès (2024)</a>.</li>
+        <li><i class="fa-solid fa-caret-right"></i> <strong>Histoire de la Tijaniyya :</strong> Recherches universitaires sur El Hadji Malick Sy et la confrérie.</li>
+        <li><i class="fa-solid fa-caret-right"></i> <strong>Monuments historiques :</strong> Arrêtés de classement de 2003 (Ministère de la Culture).</li>
+        <li><i class="fa-solid fa-caret-right"></i> <strong>Économie locale :</strong> <a href="https://aps.sn/" target="_blank" rel="noopener">Agence de Presse Sénégalaise (APS)</a>, rapports sur l'agriculture et l'élevage.</li>
+      </ul>
+      
+      <ul class="sources-list">
+        <li><i class="fa-solid fa-caret-right"></i> <strong>Mékhé :</strong> Enquête Plus, « Quand Mékhé huile le marché » et données de la chambre des métiers.</li>
+        <li><i class="fa-solid fa-caret-right"></i> <strong>Pire :</strong> Sénégal Direct, « Pire Gourëy : Une bourgade longtemps habitée par des bergers peuls ».</li>
+        <li><i class="fa-solid fa-caret-right"></i> <strong>Parc éolien de Taïba Ndiaye :</strong> <a href="https://lekela.com/project/taiba-ndiaye-wind-project/" target="_blank" rel="noopener">Lekela – Taiba N'Diaye wind farm</a> et Enel Green Power.</li>
+        <li><i class="fa-solid fa-caret-right"></i> <strong>Contexte littéraire :</strong> Francy Brethenoux-Seguin, <em>Une pause à Tivaouane. Récit de voyage</em>, L'Harmattan, 2002.</li>
+      </ul>
+    </div>
+    <p style="font-size: 0.7rem; color: var(--text-soft); margin-top: 1.5rem; text-align: right; font-style: italic;">
+      Dernière mise à jour des données : Février 2026.
+    </p>
+  </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="n_index.html" style="display: inline-block; margin-bottom: 1rem;">
+        <img src="images/logo.png" alt="Thiès Kaay" style="height: 100px; width: auto;  padding: 6px 14px; border-radius: 10px;">
+      </a>
+      <p>Découvrez le département de Tivaouane — de son patrimoine spirituel à son dynamisme économique, en passant par ses savoir-faire uniques.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Explorer</h5>
+      <a href="#histoire">Histoire</a>
+      <a href="#geographie">Géographie</a>
+      <a href="#economie">Économie</a>
+      <a href="#culture">Culture</a>
+    </div>
+    <div class="footer-col">
+      <h5>Pratique</h5>
+      <a href="#taiba">Parc éolien</a>
+      <a href="#mekhe">Mékhé</a>
+      <a href="circuit-religieux.html">Circuit religieux</a>
+      <a href="carte.html">Géoportail SIG</a>
+    </div>
+    <div class="footer-col">
+      <h5>Région</h5>
+      <a href="n_index.html">Vue d'ensemble</a>
+      <a href="thies.html">Département de Thiès</a>
+      <a href="mbour.html">Département de Mbour</a>
+      <a href="carte.html">Géoportail</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Tivaouane Tourisme — Tous droits réservés.</span>
+    <span>Coordonnées SIG : <strong>14.95°N · 16.82°W</strong> · Sénégal</span>
+  </div>
+</footer>
+
+<!-- ============== BACK TO TOP ============== -->
+<button id="back-top" aria-label="Retour en haut"><i class="fa-solid fa-chevron-up"></i></button>
+
+<script>
+/* ============================================================
+   TIVAOUANE — Interactions & Mini-Map
+   ============================================================ */
+
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('solid', window.scrollY > 100);
+}, { passive: true });
+
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach((el, i) => {
+  el.style.transitionDelay = (i % 6) * 0.06 + 's';
+  revealObs.observe(el);
+});
+
+const sommaireLinks = document.querySelectorAll('.sommaire-links a');
+const sommaireProgress = document.getElementById('sommaireProgress');
+const sectionIds = ['histoire','geographie','economie','mekhe','pire','taiba','communes','culture','circuit-religieux','geoportail','sources'];
+const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+
+function updateSommaire() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  sommaireProgress.style.width = Math.min(100, (scrollTop / docHeight) * 100) + '%';
+  let current = null;
+  sections.forEach(sec => {
+    const rect = sec.getBoundingClientRect();
+    if (rect.top <= 180 && rect.bottom > 180) current = sec.id;
+  });
+  sommaireLinks.forEach(a => {
+    a.classList.toggle('active', a.dataset.target === current);
+  });
+}
+window.addEventListener('scroll', updateSommaire, { passive: true });
+updateSommaire();
+
+const backTop = document.getElementById('back-top');
+window.addEventListener('scroll', () => {
+  backTop.classList.toggle('show', window.scrollY > 600);
+}, { passive: true });
+backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', (e) => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      const y = target.getBoundingClientRect().top + window.scrollY - 120;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  });
+});
+
+(function heroEnvelopeEffect() {
+  const hero = document.querySelector('.hero-mini');
+  if (!hero) return;
+  const bg = hero.querySelector('.hero-mini-bg');
+  if (!bg) return;
+
+  let ticking = false;
+
+  function update() {
+    const scrolled = window.scrollY;
+    const heroHeight = hero.offsetHeight;
+    const progress = Math.min(1, scrolled / heroHeight);
+
+    const scale = 1.05 - progress * 0.08;
+    const brightness = 1 - progress * 0.35;
+    bg.style.transform = `scale(${scale})`;
+    bg.style.filter = `brightness(${brightness})`;
+
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  update();
+})();
+
+/* ============================================================
+   MINI-CARTE GÉOPORTAIL — Leaflet lazy
+   ============================================================ */
+const SITE_COORDS = {
+  tivaouane: { lat: 14.9511, lng: -16.8179, color: '#F9A825', icon: 'fa-city' },
+  mekhe:     { lat: 15.1150, lng: -16.6300, color: '#1B5E20', icon: 'fa-shoe-prints' },
+  pire:      { lat: 15.0333, lng: -16.7500, color: '#2E7D32', icon: 'fa-book-open' },
+  taiba:     { lat: 14.9500, lng: -16.9667, color: '#0D3B66', icon: 'fa-wind' },
+  mboro:     { lat: 15.1500, lng: -16.9000, color: '#66BB6A', icon: 'fa-ship' }
+};
+
+let miniMapInitialized = false;
+function initMiniMap() {
+  if (miniMapInitialized || !window.L) return;
+  const el = document.getElementById('miniMap');
+  if (!el) return;
+
+  const map = L.map('miniMap', {
+    center: [14.98, -16.78],
+    zoom: 10,
+    zoomControl: false,
+    scrollWheelZoom: false,
+    dragging: true, touchZoom: true, doubleClickZoom: true
+  });
+
+  map.on('focus click', () => map.scrollWheelZoom.enable());
+  map.on('blur mouseout', () => map.scrollWheelZoom.disable());
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap', maxZoom: 19
+  }).addTo(map);
+
+  const TITLES = {
+    tivaouane: 'Tivaouane',
+    mekhe: 'Mékhé (Ngaye)',
+    pire: 'Pire Goureye',
+    taiba: 'Taïba Ndiaye',
+    mboro: 'Mboro'
+  };
+
+  Object.keys(SITE_COORDS).forEach(key => {
+    const c = SITE_COORDS[key];
+    const icon = L.divIcon({
+      className: 'mini-marker',
+      html: `<div class="mini-marker-inner" style="background:${c.color}">
+               <i class="fa-solid ${c.icon}"></i>
+             </div>`,
+      iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -26]
+    });
+
+    const marker = L.marker([c.lat, c.lng], { icon }).addTo(map);
+    const popupHtml = `
+      <h4 class="mini-popup-title">${TITLES[key]}</h4>
+      <a class="mini-popup-btn" href="carte.html?lat=${c.lat}&lon=${c.lng}&z=14" style="text-decoration:none;">
+        Voir sur la carte <i class="fa-solid fa-arrow-right" style="font-size:0.6rem"></i>
+      </a>`;
+      
+    marker.bindPopup(popupHtml, { closeButton: false, offset: [0, -4], maxWidth: 220 });
+  });
+
+  miniMapInitialized = true;
+  setTimeout(() => map.invalidateSize(), 400);
+}
+
+(function setupMiniMapLazy() {
+  const target = document.getElementById('geoVisual');
+  if (!target) return;
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(initMiniMap, 150);
+          obs.disconnect();
+        }
+      });
+    }, { threshold: 0.15 });
+    obs.observe(target);
+  } else {
+    window.addEventListener('load', () => setTimeout(initMiniMap, 300));
+  }
+})();
+</script>
+
 </body>
 </html>

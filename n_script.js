@@ -103,19 +103,6 @@ document.addEventListener('keydown', (e) => {
 });
 
 /* ============================================================
-   BANDEAU COUP DE CŒUR / GÉOPORTAIL — défilement horizontal
-   Alterne entre les deux messages toutes les 5 secondes.
-   ============================================================ */
-const coupCoeurTrack = document.getElementById('coupCoeurTrack');
-if (coupCoeurTrack) {
-  let coupCoeurIndex = 0;
-  setInterval(() => {
-    coupCoeurIndex = (coupCoeurIndex + 1) % 2;
-    coupCoeurTrack.classList.toggle('slide-2', coupCoeurIndex === 1);
-  }, 5000);
-}
-
-/* ============================================================
    SLIDER "POURQUOI VISITER" — une raison à la fois, image de
    fond plein écran, flèches + dots + rotation auto (6s).
    ============================================================ */
@@ -194,12 +181,15 @@ function filterSitesFromHero(cat) {
   }, prefersReducedMotion ? 0 : 600);
 }
 
-// Hero search bar
-document.getElementById('heroSearch').addEventListener('keydown', function (e) {
-  if (e.key === 'Enter') {
-    smoothScrollTo('sites');
-  }
-});
+// Hero search bar (élément retiré de la page — protection contre le crash)
+const heroSearchEl = document.getElementById('heroSearch');
+if (heroSearchEl) {
+  heroSearchEl.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      smoothScrollTo('sites');
+    }
+  });
+}
 
 /* ============================================================
    SCROLL ANIMATIONS (IntersectionObserver)
@@ -307,11 +297,20 @@ const lightboxNext = document.getElementById('lightboxNext');
 let lbIndex = 0;
 let lbLastFocused = null;
 
-const galleryData = gItems.map(item => ({
-  bgClass: item.querySelector('.g-bg').className,
-  iconHtml: item.querySelector('.g-bg i').outerHTML,
-  label: item.querySelector('.g-label').textContent
-}));
+// Chaque tuile est soit une vraie photo (<img class="g-bg" src="...">),
+// soit encore un dégradé/icône de secours (<div class="g-bg bg-x"><i></i></div>)
+// pour les quelques lieux sans photo disponible pour l'instant.
+const galleryData = gItems.map(item => {
+  const bg = item.querySelector('.g-bg');
+  const isPhoto = bg.tagName === 'IMG';
+  return {
+    isPhoto,
+    photoSrc: isPhoto ? bg.getAttribute('src') : null,
+    bgClass: isPhoto ? '' : bg.className,
+    iconHtml: isPhoto ? '' : bg.querySelector('i').outerHTML,
+    label: item.querySelector('.g-label').textContent
+  };
+});
 
 function openLightbox(index) {
   if (!lightboxOverlay || !galleryData.length) return;
@@ -325,8 +324,13 @@ function openLightbox(index) {
 
 function renderLightbox() {
   const data = galleryData[lbIndex];
-  lightboxVisual.className = 'lightbox-visual ' + data.bgClass.replace('g-bg', '').trim();
-  lightboxVisual.innerHTML = data.iconHtml;
+  if (data.isPhoto) {
+    lightboxVisual.className = 'lightbox-visual';
+    lightboxVisual.innerHTML = `<img src="${data.photoSrc}" alt="${data.label}">`;
+  } else {
+    lightboxVisual.className = 'lightbox-visual ' + data.bgClass.replace('g-bg', '').trim();
+    lightboxVisual.innerHTML = data.iconHtml;
+  }
   lightboxTitle.textContent = data.label;
   lightboxCount.textContent = (lbIndex + 1) + ' / ' + galleryData.length;
 }
@@ -433,22 +437,120 @@ if (contactForm) {
 }
 
 /* ============================================================
-   NEWSLETTER — lightweight feedback via toast
+   MINI-CARTE D'ACCUEIL — Région de Thiès (3 départements)
    ============================================================ */
-const newsletterForm = document.querySelector('.newsletter-form');
-if (newsletterForm) {
-  const newsletterInput = newsletterForm.querySelector('input[type="email"]');
-  const newsletterBtn = newsletterForm.querySelector('button');
-  if (newsletterInput && newsletterBtn) {
-    newsletterBtn.addEventListener('click', () => {
-      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRe.test(newsletterInput.value.trim())) {
-        showToast('Entrez une adresse email valide.', 'error');
-        newsletterInput.focus();
-        return;
-      }
-      showToast('Inscription confirmée — à bientôt !', 'success');
-      newsletterInput.value = '';
+(function initHomeMap() {
+  const mapEl = document.getElementById('miniMap');
+  if (!mapEl || !window.L) return;
+
+  // Attendre que la section soit visible (lazy loading)
+  let initialized = false;
+  function build() {
+    if (initialized || !window.L) return;
+    initialized = true;
+
+    const map = L.map('miniMap', {
+      center: [14.75, -16.90],
+      zoom: 9,
+      zoomControl: false,
+      scrollWheelZoom: false,
+      attributionControl: true,
+      dragging: true,
+      touchZoom: true,
+      doubleClickZoom: true
     });
+
+    // Zoom molette actif seulement après clic
+    map.on('focus click', () => map.scrollWheelZoom.enable());
+    map.on('blur mouseout', () => map.scrollWheelZoom.disable());
+
+    // Fond de carte OSM
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap',
+      maxZoom: 19
+    }).addTo(map);
+
+    // Départements — chaque pin a sa couleur et mène à sa page
+    const depts = [
+      {
+        key: 'thies',
+        lat: 14.7886, lng: -16.9260,
+        color: '#E8730A',
+        icon: 'fa-train',
+        cat: 'Département de Thiès',
+        title: 'Thiès',
+        desc: 'La Capitale du Rail — patrimoine ferroviaire, MSAD, avenues ombragées.',
+        link: 'thies.html'
+      },
+      {
+        key: 'mbour',
+        lat: 14.42, lng: -16.96,
+        color: '#1B4F72',
+        icon: 'fa-umbrella-beach',
+        cat: 'Département de Mbour',
+        title: 'Mbour',
+        desc: 'La Petite Côte — plages de Saly, lagune de Somone, île de Fadiouth.',
+        link: 'mbour.html'
+      },
+      {
+        key: 'tivaouane',
+        lat: 14.95, lng: -16.82,
+        color: '#2D6A4F',
+        icon: 'fa-mosque',
+        cat: 'Département de Tivaouane',
+        title: 'Tivaouane',
+        desc: 'Ville sainte — capitale de la Tijaniyya en Afrique noire, grand Gamou.',
+        link: 'tivaouane.html'
+      }
+    ];
+
+    depts.forEach(d => {
+      const icon = L.divIcon({
+        className: 'home-marker',
+        html: `<div class="home-marker-inner" style="background:${d.color}">
+                 <i class="fa-solid ${d.icon}"></i>
+               </div>`,
+        iconSize: [38, 38],
+        iconAnchor: [19, 38],
+        popupAnchor: [0, -34]
+      });
+
+      const marker = L.marker([d.lat, d.lng], { icon }).addTo(map);
+
+      const popupHtml = `
+        <span class="mini-popup-cat">${d.cat}</span>
+        <h4 class="mini-popup-title">${d.title}</h4>
+        <p class="mini-popup-desc">${d.desc}</p>
+        <a class="mini-popup-btn" href="${d.link}">
+          Découvrir <i class="fa-solid fa-arrow-right" style="font-size:0.65rem"></i>
+        </a>`;
+      marker.bindPopup(popupHtml, {
+        closeButton: false,
+        offset: [0, -6],
+        maxWidth: 240
+      });
+    });
+
+    // Ajuster la vue pour englober les 3 pins
+    const bounds = L.latLngBounds(depts.map(d => [d.lat, d.lng]));
+    map.fitBounds(bounds, { padding: [50, 50] });
+
+    setTimeout(() => map.invalidateSize(), 400);
   }
-}
+
+  // Lazy : déclencher quand la section devient visible
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(build, 150);
+          obs.disconnect();
+        }
+      });
+    }, { threshold: 0.15 });
+    obs.observe(mapEl);
+  } else {
+    window.addEventListener('load', () => setTimeout(build, 300));
+  }
+})();
+

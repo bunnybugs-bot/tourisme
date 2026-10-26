@@ -1,0 +1,25 @@
+/* Circuits thématiques (onglet « Mon circuit ») */
+#gpThemeChips { display: flex; flex-wrap: wrap; gap: .4rem; margin: .5rem 0 .2rem; }
+#gpThemeChips button { display: inline-flex; align-items: center; gap: .4rem; padding: .4rem .7rem; border-radius: 999px; font: inherit; font-size: .78rem; font-weight: 600;
+  border: 1.5px solid var(--border); background: #fff; color: var(--charcoal); cursor: pointer; }
+#gpThemeChips button i { color: var(--c); }
+#gpThemeChips button.on { background: var(--c); border-color: var(--c); color: #fff; }
+#gpThemeChips button.on i { color: #fff; }
+.gp-th-obj { font-size: .8rem; line-height: 1.45; color: var(--text-muted); margin: .6rem 0 .4rem; }
+.gp-th-pole { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--orange); margin: .7rem 0 .2rem; }
+.gp-th-list { list-style: none; margin: 0; padding: 0; }
+.gp-th-item label { display: flex; gap: .55rem; align-items: flex-start; padding: .45rem 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+.gp-th-item input { accent-color: var(--orange); width: 16px; height: 16px; margin-top: .15rem; flex: none; }
+.gp-th-item span { display: block; min-width: 0; }
+.gp-th-nom { all: unset; font-size: .84rem; font-weight: 600; color: var(--charcoal); cursor: pointer; text-decoration: underline dotted; }
+.gp-th-item small { display: block; font-size: .72rem; color: var(--text-muted); }
+.gp-th-item em { display: block; font-style: normal; font-size: .74rem; line-height: 1.4; color: var(--text-muted); margin-top: .1rem; }
+.gp-th-actions { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem; margin-top: .8rem; }
+.gp-th-actions [data-act="ajouter"] { grid-column: 1 / -1; }
+
+/* Lieux du thème mis en évidence sur la carte */
+.gp-th-pin span { position: relative; display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%;
+  background: var(--c); color: #fff; font-size: 1rem; border: 3px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,.45); }
+.gp-th-pin span::after { content: ''; position: absolute; inset: -9px; border-radius: 50%; border: 2px solid var(--c); opacity: .6; animation: gp-th-pulse 1.8s ease-out infinite; }
+@keyframes gp-th-pulse { from { transform: scale(.7); opacity: .8; } to { transform: scale(1.25); opacity: 0; } }
+.gp-th-dim .leaflet-marker-icon:not(.gp-th-pin) { opacity: .28; }

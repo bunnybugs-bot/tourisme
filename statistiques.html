@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Statistiques — Tourisme région de Thiès</title>
+<meta name="theme-color" content="#A16D32">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="assets/css/carte.css">
+<style>
+  body { overflow: auto; background: var(--cream); }
+  .st-wrap { width: 100%; max-width: 1280px; margin: 0 auto; padding: 2.2rem 1.25rem 4rem; box-sizing: border-box; }
+  #stBody { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.4rem; align-items: start; }
+  #stBody > * { grid-column: 1 / -1; }
+  #stBody > .st-half { grid-column: auto; height: 100%; box-sizing: border-box; }
+  @media (max-width: 1100px) { #stBody > .st-half { grid-column: 1 / -1; height: auto; } }
+  #stBody .st-sec, #stBody .st-kpis { margin-bottom: 0; }
+  .st-hero { text-align: center; margin-bottom: 2rem; }
+  .st-hero h1 { font-family: 'Playfair Display', serif; font-size: 2.3rem; margin: 0 0 .7rem; }
+  .st-hero p { color: var(--text-muted); font-size: 1rem; max-width: 820px; margin: 0 auto; line-height: 1.7; }
+  .st-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: .9rem; margin: 0 0 2rem; }
+  .st-kpi { background: #fff; border-radius: 14px; padding: 1.1rem .8rem; text-align: center; box-shadow: var(--shadow-sm); }
+  .st-kpi b { display: block; font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--orange); line-height: 1; margin-bottom: .35rem; }
+  .st-kpi span { font-size: .72rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
+  .st-sec { background: #fff; border-radius: 16px; box-shadow: var(--shadow-sm); padding: 1.4rem 1.5rem 1.5rem; margin-bottom: 1.4rem; }
+  .st-sec h2 { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin: 0 0 .35rem; display: flex; align-items: center; gap: .6rem; }
+  .st-sec h2 i { color: var(--orange); font-size: 1.05rem; }
+  .st-lead { color: #3a4a5c; font-size: .88rem; line-height: 1.65; margin: 0 0 1.1rem; max-width: none; }
+  .st-note { color: var(--text-muted); font-size: .76rem; line-height: 1.55; margin: .9rem 0 0; }
+  .st-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem 2rem; }
+  @media (max-width: 760px) { .st-cols { grid-template-columns: 1fr; } .st-hero h1 { font-size: 1.8rem; } }
+  .st-sub { font-size: .76rem; font-weight: 700; color: var(--charcoal); text-transform: uppercase; letter-spacing: .5px; margin: 0 0 .6rem; }
+  .st-legend { display: flex; flex-wrap: wrap; gap: .4rem 1.1rem; font-size: .78rem; color: #3a4a5c; margin: 0 0 .8rem; }
+  .st-legend i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: .4rem; vertical-align: -1px; }
+  /* barres */
+  .st-bar { display: grid; grid-template-columns: minmax(96px, 150px) 1fr 44px; align-items: center; gap: .6rem; padding: 3px 0; font-size: .8rem; }
+  .st-bar-l { color: #2a3a4b; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .st-bar-t { display: flex; height: 14px; border-radius: 0 4px 4px 0; overflow: hidden; gap: 2px; background: transparent; }
+  .st-bar-t i { display: block; height: 100%; min-width: 2px; }
+  .st-bar-t i:last-child { border-radius: 0 4px 4px 0; }
+  .st-bar b { text-align: right; font-variant-numeric: tabular-nums; color: var(--charcoal); }
+  .st-scroll { max-height: 520px; overflow: auto; padding-right: .4rem; }
+  /* anneau */
+  .st-donut { display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap; }
+  .st-donut svg { flex: none; }
+  .st-donut ul { list-style: none; margin: 0; padding: 0; font-size: .8rem; flex: 1; min-width: 180px; }
+  .st-donut li { display: flex; align-items: center; gap: .5rem; padding: 3px 0; }
+  .st-donut li i { width: 11px; height: 11px; border-radius: 3px; flex: none; }
+  .st-donut li b { margin-left: auto; font-variant-numeric: tabular-nums; }
+  /* tableaux */
+  .st-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
+  .st-table th { text-align: right; font-size: .68rem; text-transform: uppercase; letter-spacing: .4px; color: var(--text-muted); padding: .45rem .5rem; border-bottom: 2px solid var(--border); position: sticky; top: 0; background: #fff; }
+  .st-table th:first-child, .st-table td:first-child { text-align: left; }
+  .st-table td { text-align: right; padding: .4rem .5rem; border-bottom: 1px solid #eee; font-variant-numeric: tabular-nums; }
+  .st-table tr.zero td { color: #b0663b; }
+  details.st-tab { margin-top: .9rem; font-size: .8rem; }
+  details.st-tab summary { cursor: pointer; color: var(--orange); font-weight: 600; }
+  /* puces */
+  .st-chips { display: flex; flex-wrap: wrap; gap: .4rem; margin: 0 0 .8rem; }
+  .st-chip { background: #f6efe6; color: #6d4a1f; border-radius: 999px; padding: .22rem .7rem; font-size: .76rem; font-weight: 600; }
+  .st-chip.none { background: #eef3f3; color: #3a5559; }
+  .st-sel { display: inline-flex; align-items: center; gap: .5rem; font-size: .82rem; margin: 0 0 1rem; }
+  .st-sel select { border: 1px solid var(--border); border-radius: 8px; padding: .3rem .6rem; font: inherit; background: #fff; }
+  .st-empty { background: #faf6f0; border: 1px dashed #d9c8ad; border-radius: 12px; padding: 1.1rem 1.2rem; font-size: .84rem; line-height: 1.65; color: #5a4a35; }
+  .st-dist { display: grid; grid-template-columns: minmax(130px, 1.4fr) 1fr 1fr; gap: .5rem .9rem; align-items: center; font-size: .78rem; padding: 4px 0; border-bottom: 1px solid #f1ece4; }
+  .st-dist .st-bar-t { height: 10px; }
+  .st-dist small { color: var(--text-muted); margin-left: .3rem; }
+  .st-dist-h { font-size: .68rem; text-transform: uppercase; letter-spacing: .4px; color: var(--text-muted); font-weight: 700; border-bottom: 2px solid var(--border); }
+  .st-method { list-style: none; padding: 0; margin: 0; }
+  .st-method li { display: flex; gap: .7rem; padding: .65rem 0; border-bottom: 1px solid var(--border); font-size: .86rem; line-height: 1.6; color: #35485b; }
+  .st-method li:last-child { border-bottom: 0; }
+  .st-method i { color: var(--orange); margin-top: 4px; }
+  .st-cta { display: flex; gap: .8rem; flex-wrap: wrap; margin-top: 1.1rem; }
+  .st-cta a { padding: .7rem 1.2rem; border-radius: 10px; font-weight: 600; font-size: .85rem; text-decoration: none; display: inline-flex; align-items: center; gap: .5rem; }
+  .st-cta a.primary { background: var(--orange); color: #fff; } .st-cta a.primary:hover { background: #7F5528; }
+  .st-cta a.secondary { background: #fff; color: var(--charcoal); border: 1.5px solid var(--border); } .st-cta a.secondary:hover { border-color: var(--orange); color: var(--orange); }
+  .st-load { text-align: center; color: var(--text-muted); padding: 3rem 0; }
+  .st-kpi i { display: block; color: var(--orange); font-size: 1.1rem; margin-bottom: .45rem; }
+  .st-ctrl { display: flex; flex-wrap: wrap; gap: .6rem 1.4rem; margin: 0 0 1rem; font-size: .82rem; }
+  .st-ctrl label { display: inline-flex; align-items: center; gap: .5rem; font-weight: 600; color: var(--charcoal); }
+  .st-ctrl select { border: 1px solid var(--border); border-radius: 8px; padding: .35rem .6rem; font: inherit; background: #fff; }
+  .st-mapgrid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+  @media (max-width: 760px) { .st-mapgrid { grid-template-columns: 1fr; } }
+  #stMap svg { max-height: 58vh; display: block; margin: 0 auto; }
+  #stMap svg path { transition: opacity .15s; cursor: default; } #stMap svg path:hover { opacity: .75; stroke: #172431; stroke-width: 1.5; }
+  .st-facts { display: flex; gap: 1.6rem; flex-wrap: wrap; }
+  .st-facts div { display: flex; flex-direction: column; } .st-facts b { font-family: 'Playfair Display', serif; font-size: 1.7rem; color: var(--orange); line-height: 1.1; } .st-facts span { font-size: .74rem; color: var(--text-muted); max-width: 150px; }
+</style>
+</head>
+<body>
+
+<header class="gp-header">
+  <div class="gp-header-left">
+    <a href="carte.html" class="gp-logo">
+      <span class="gp-logo-mark">T</span>
+      <span class="gp-logo-text"><strong>Géoportail</strong><small>Tourisme — Région de Thiès</small></span>
+    </a>
+  </div>
+  <nav class="gp-nav">
+    <a href="carte.html"><i class="fa-solid fa-map"></i> Carte</a>
+    <a href="catalogue.html"><i class="fa-solid fa-list"></i> Catalogue</a>
+    <a href="excursions.html"><i class="fa-solid fa-route"></i> Excursions</a>
+    <a href="statistiques.html" class="active"><i class="fa-solid fa-chart-column"></i> Statistiques</a>
+    <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact</a>
+  </nav>
+  <button class="gp-mobile-menu" id="gpMobileMenu"><i class="fa-solid fa-bars"></i></button>
+</header>
+
+<main class="st-wrap">
+  <div class="st-hero">
+    <h1>Le tourisme de la région de Thiès en chiffres</h1>
+    <p>Une lecture du territoire à partir des données du géoportail : où se trouve l'offre, quelle est sa capacité, quels sites sont mal desservis et quelle est la fiabilité des informations. Ces analyses aident à décider où renforcer l'accueil.</p>
+  </div>
+  <div id="stBody"><p class="st-load"><i class="fa-solid fa-spinner fa-spin"></i> Calcul des statistiques…</p></div>
+</main>
+
+<script>
+(() => {
+'use strict';
+const C = { heb: '#172431', resto: '#A16D32', site: '#286D73', gris: '#64748B', alerte: '#B0663B' };
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const nf = n => Number(n).toLocaleString('fr-FR');
+const nf1 = n => Number(n).toLocaleString('fr-FR', { maximumFractionDigits: 1 });
+const norm = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toUpperCase().trim();
+const titre = s => String(s).toLowerCase().replace(/(^|[\s'-])\S/g, m => m.toUpperCase()).replace('Thies', 'Thiès');
+const ALIAS = { 'KEUR MOUSSEU (KEUR MOUSSA)': 'KEUR MOUSSA', 'TIVAOUNE': 'TIVAOUANE' };
+const getJson = (u, opt) => fetch(u).then(r => { if (!r.ok) throw new Error(u + ' ' + r.status); return r.json(); }).catch(e => { if (opt) return null; throw e; });
+const pt = f => ({ lon: f.geometry.coordinates[0], lat: f.geometry.coordinates[1] });
+
+function hav(a, b) {
+  const r = Math.PI / 180, dLa = (b.lat - a.lat) * r, dLo = (b.lon - a.lon) * r;
+  const h = Math.sin(dLa / 2) ** 2 + Math.cos(a.lat * r) * Math.cos(b.lat * r) * Math.sin(dLo / 2) ** 2;
+  return 12742 * Math.asin(Math.min(1, Math.sqrt(h)));
+}
+
+// LECTURE DU NOM DE LA COMMUNE : On utilise "communes" (votre nouvelle colonne)
+const limiteNom = p => { p = p || {}; return p.communes || p.nom || p.NOM || p.name || p.NAME || p.NAME_4 || p.NAME_3 || p.NAME_2 || p.ADM3_FR || p.ADM2_FR || p.admin3Name || p.admin2Name || p.shapeName || ''; };
+
+/* ---------- limites : certains fichiers sont en UTM 28N (EPSG:32628) ou en lat/lon inversés ---------- */
+function utm28nToLonLat(E, N) {
+  const a = 6378137, f = 1 / 298.257223563, k0 = 0.9996, e2 = f * (2 - f), ep2 = e2 / (1 - e2), x = E - 500000, M = N / k0;
+  const mu = M / (a * (1 - e2 / 4 - 3 * e2 * e2 / 64 - 5 * Math.pow(e2, 3) / 256)), e1 = (1 - Math.sqrt(1 - e2)) / (1 + Math.sqrt(1 - e2));
+  const phi1 = mu + (3 * e1 / 2 - 27 * Math.pow(e1, 3) / 32) * Math.sin(2 * mu) + (21 * e1 * e1 / 16 - 55 * Math.pow(e1, 4) / 32) * Math.sin(4 * mu)
+    + (151 * Math.pow(e1, 3) / 96) * Math.sin(6 * mu) + (1097 * Math.pow(e1, 4) / 512) * Math.sin(8 * mu);
+  const s = Math.sin(phi1), c = Math.cos(phi1), t = Math.tan(phi1), N1 = a / Math.sqrt(1 - e2 * s * s), T1 = t * t, C1 = ep2 * c * c;
+  const R1 = a * (1 - e2) / Math.pow(1 - e2 * s * s, 1.5), D = x / (N1 * k0);
+  const lat = phi1 - (N1 * t / R1) * (D * D / 2 - (5 + 3 * T1 + 10 * C1 - 4 * C1 * C1 - 9 * ep2) * Math.pow(D, 4) / 24 + (61 + 90 * T1 + 298 * C1 + 45 * T1 * T1 - 252 * ep2 - 3 * C1 * C1) * Math.pow(D, 6) / 720);
+  const lon = (-15 * Math.PI / 180) + (D - (1 + 2 * T1 + C1) * Math.pow(D, 3) / 6 + (5 - 2 * C1 + 28 * T1 - 3 * C1 * C1 + 8 * ep2 + 24 * T1 * T1) * Math.pow(D, 5) / 120) / c;
+  return [lon * 180 / Math.PI, lat * 180 / Math.PI];
+}
+const mapCoords = (c, fn) => typeof c[0] === 'number' ? fn(c) : c.map(x => mapCoords(x, fn));
+function normaliseLimites(fc) {
+  const feats = (fc && fc.features) || [];
+  let c = feats.length && feats[0].geometry && feats[0].geometry.coordinates; while (Array.isArray(c) && Array.isArray(c[0])) c = c[0];
+  if (!c) return [];
+  let fn = null;
+  if (Math.abs(c[0]) > 1000 || Math.abs(c[1]) > 1000) fn = p => utm28nToLonLat(p[0], p[1]);
+  else if (c[0] > 10 && c[0] < 18 && c[1] < -10 && c[1] > -20) fn = p => [p[1], p[0]];
+  return fn ? feats.map(f => ({ ...f, geometry: f.geometry && { ...f.geometry, coordinates: mapCoords(f.geometry.coordinates, fn) } })) : feats;
+}
+
+/* ---------- géométrie : point dans polygone, surface ---------- */
+function polys(g) { return !g ? [] : g.type === 'Polygon' ? [g.coordinates] : g.type === 'MultiPolygon' ? g.coordinates : []; }
+function inRing(x, y, ring) {
+  let ins = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const xi = ring[i][0], yi = ring[i][1], xj = ring[j][0], yj = ring[j][1];
+    if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) ins = !ins;
+  }
+  return ins;
+}
+function inPoly(x, y, poly) { return inRing(x, y, poly[0]) && !poly.slice(1).some(h => inRing(x, y, h)); }
+function aireKm2(poly) {
+  const ring = r => { const lat0 = r.reduce((a, p) => a + p[1], 0) / r.length * Math.PI / 180, kx = 111.32 * Math.cos(lat0), ky = 110.57; let s = 0;
+    for (let i = 0, j = r.length - 1; i < r.length; j = i++) s += (r[j][0] * kx) * (r[i][1] * ky) - (r[i][0] * kx) * (r[j][1] * ky); return Math.abs(s) / 2; };
+  return ring(poly[0]) - poly.slice(1).reduce((a, h) => a + ring(h), 0);
+}
+function bbox(poly) { let a = 1e9, b = 1e9, c = -1e9, d = -1e9; poly[0].forEach(p => { a = Math.min(a, p[0]); b = Math.min(b, p[1]); c = Math.max(c, p[0]); d = Math.max(d, p[1]); }); return [a, b, c, d]; }
+
+/* ---------- briques graphiques ---------- */
+function barsHtml(rows, opt = {}) {      // rows : {label, segs:[{v,color,name}]}
+  const max = Math.max(1, ...rows.map(r => r.segs.reduce((a, s) => a + s.v, 0)));
+  return rows.map(r => {
+    const tot = r.segs.reduce((a, s) => a + s.v, 0);
+    const tip = r.segs.filter(s => s.v).map(s => `${s.name} : ${nf(s.v)}`).join(' · ');
+    return `<div class="st-bar" title="${esc(r.label)} — ${esc(tip)}"><span class="st-bar-l">${esc(r.label)}</span>
+      <span class="st-bar-t" style="width:${Math.max(1.5, tot / max * 100)}%">${r.segs.filter(s => s.v > 0).map(s => `<i style="flex:${s.v};background:${s.color}"></i>`).join('')}</span><b>${opt.fmt ? opt.fmt(tot) : nf(tot)}</b></div>`;
+  }).join('');
+}
+function donutHtml(items, centre) {      // items : {label, v, color}
+  const tot = items.reduce((a, i) => a + i.v, 0) || 1, R = 52, W = 22, CIR = 2 * Math.PI * R;
+  let off = 0;
+  const arcs = items.filter(i => i.v > 0).map(i => {
+    const len = i.v / tot * CIR, d = `<circle r="${R}" cx="70" cy="70" fill="none" stroke="${i.color}" stroke-width="${W}" stroke-dasharray="${Math.max(0, len - 2)} ${CIR - Math.max(0, len - 2)}" stroke-dashoffset="${-off}" transform="rotate(-90 70 70)"><title>${esc(i.label)} : ${nf(i.v)} (${Math.round(i.v / tot * 100)} %)</title></circle>`;
+    off += len; return d;
+  }).join('');
+  return `<div class="st-donut"><svg width="140" height="140" viewBox="0 0 140 140" role="img" aria-label="${esc(centre.label)}">${arcs}
+      <text x="70" y="68" text-anchor="middle" font-family="Playfair Display,serif" font-size="26" font-weight="700" fill="#172431">${esc(centre.big)}</text>
+      <text x="70" y="86" text-anchor="middle" font-size="9" fill="#64748B">${esc(centre.label)}</text></svg>
+    <ul>${items.map(i => `<li><i style="background:${i.color}"></i>${esc(i.label)}<b>${nf(i.v)}</b></li>`).join('')}</ul></div>`;
+}
+function legend(items) { return `<div class="st-legend">${items.map(i => `<span><i style="background:${i.color}"></i>${esc(i.name)}</span>`).join('')}</div>`; }
+function lineSvg(pts, label) {           // pts : [{x:label, y:number}]
+  const W = 640, H = 220, L = 46, R = 14, T = 14, B = 34, max = Math.max(1, ...pts.map(p => p.y)) * 1.1;
+  const X = i => L + (pts.length === 1 ? (W - L - R) / 2 : i * (W - L - R) / (pts.length - 1)), Y = v => T + (H - T - B) * (1 - v / max);
+  const d = pts.map((p, i) => `${i ? 'L' : 'M'}${X(i).toFixed(1)},${Y(p.y).toFixed(1)}`).join(' ');
+  const grid = [0, .5, 1].map(f => { const v = max * f; return `<line x1="${L}" x2="${W - R}" y1="${Y(v)}" y2="${Y(v)}" stroke="#e8e2d8"/><text x="${L - 6}" y="${Y(v) + 3}" text-anchor="end" font-size="10" fill="#64748B">${nf(Math.round(v))}</text>`; }).join('');
+  const step = Math.ceil(pts.length / 10);
+  const xl = pts.map((p, i) => i % step ? '' : `<text x="${X(i)}" y="${H - 12}" text-anchor="middle" font-size="10" fill="#64748B">${esc(p.x)}</text>`).join('');
+  const dots = pts.map((p, i) => `<circle cx="${X(i)}" cy="${Y(p.y)}" r="4" fill="${C.resto}" stroke="#fff" stroke-width="2"><title>${esc(p.x)} : ${nf(p.y)}</title></circle>`).join('');
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${esc(label)}">${grid}<path d="${d}" fill="none" stroke="${C.resto}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>${dots}${xl}</svg>`;
+}
+const pct = (n, d) => d ? Math.round(n / d * 100) : 0;
+
+/* ---------- chargement et calculs ---------- */
+(async function main() {
+  const body = document.getElementById('stBody');
+  let heb, resto, sites, presta, comm, transp;
+  
+  try {
+    [heb, resto, sites, presta, comm, transp] = await Promise.all([
+      getJson('hebergements.geojson'), 
+      getJson('restaurants.geojson'), 
+      getJson('sites.json'),
+      getJson('data/prestataires.json', true), 
+      getJson('data/limites_communes.geojson', true), 
+      getJson('data/transports.json', true)
+    ]);
+  } catch (e) { 
+    body.innerHTML = '<p class="st-load">Les données n\'ont pas pu être chargées. Vérifiez la connexion puis rechargez la page.</p>'; 
+    console.error(e); 
+    return; 
+  }
+  
+  // Vérification de sécurité pour éviter le plantage
+  if (!heb || !heb.features) { body.innerHTML = '<p class="st-load">Erreur : Le fichier hebergements.geojson est introuvable ou mal formé.</p>'; return; }
+  if (!resto || !resto.features) { body.innerHTML = '<p class="st-load">Erreur : Le fichier restaurants.geojson est introuvable ou mal formé.</p>'; return; }
+  if (!sites || !sites.features) { body.innerHTML = '<p class="st-load">Erreur : Le fichier sites.json est introuvable ou mal formé.</p>'; return; }
+
+  heb = heb.features; 
+  resto = resto.features; 
+  sites = sites.features;
+  presta = (Array.isArray(presta) ? presta : []).filter(p => isFinite(parseFloat(p.latitude)) && isFinite(parseFloat(p.longitude)));
+  transp = Array.isArray(transp) ? transp : [];
+  const prestaPts = presta.map(p => ({ geometry: { coordinates: [parseFloat(p.longitude), parseFloat(p.latitude)] }, properties: p }));
+
+  /* commune de chaque point : par position dans les limites communales (jointure spatiale) ; à défaut, champ « commune » */
+  const zones = normaliseLimites(comm).map(f => ({ nom: norm(limiteNom(f.properties)), polys: polys(f.geometry), pop: +(f.properties.TOTAL || 0) }))
+    .filter(z => z.nom && z.polys.length && Math.abs(z.polys[0][0][0][0]) < 180);
+  zones.forEach(z => { z.bb = z.polys.map(bbox); z.aire = z.polys.reduce((a, p) => a + aireKm2(p), 0); });
+  const parPosition = zones.length >= 5;
+  
+  function communeDe(f) {
+    if (parPosition) {
+      const { lon, lat } = pt(f);
+      for (const z of zones) for (let i = 0; i < z.polys.length; i++) {
+        const b = z.bb[i]; if (lon < b[0] || lon > b[2] || lat < b[1] || lat > b[3]) continue;
+        if (inPoly(lon, lat, z.polys[i])) return z.nom;
+      }
+    }
+    const c = norm(f.properties.commune); return ALIAS[c] || c || '';
+  }
+  [heb, resto, sites, prestaPts].forEach(a => a.forEach(f => { f._c = communeDe(f); }));
+
+  const lignes = new Map();
+  const ligne = nom => { if (!lignes.has(nom)) lignes.set(nom, { nom, heb: 0, resto: 0, sites: 0, exc: 0, chambres: 0, aire: (zones.find(z => z.nom === nom) || {}).aire || 0, pop: (zones.find(z => z.nom === nom) || {}).pop || 0 }); return lignes.get(nom); };
+  if (parPosition) zones.forEach(z => ligne(z.nom));
+  heb.forEach(f => { if (f._c) { const l = ligne(f._c); l.heb++; l.chambres += +f.properties.nb_chambres || 0; } });
+  resto.forEach(f => { if (f._c) ligne(f._c).resto++; });
+  sites.forEach(f => { if (f._c) ligne(f._c).sites++; });
+  prestaPts.forEach(f => { if (f._c) ligne(f._c).exc++; });
+  const L = [...lignes.values()].map(l => ({ ...l, total: l.heb + l.resto + l.sites + l.exc }));
+  const parTotal = [...L].sort((a, b) => b.total - a.total || a.nom.localeCompare(b.nom));
+  const avecOffre = parTotal.filter(l => l.total);
+  const totalOffre = avecOffre.reduce((a, l) => a + l.total, 0);
+  const SEG = [{ name: 'Hébergements', color: C.heb }, { name: 'Restaurants', color: C.resto }, { name: 'Sites touristiques', color: C.site }, { name: 'Excursions & activités', color: C.gris }];
+  const nz = (a, f) => a.filter(f).length;
+  let html = '';
+
+  /* 1. chiffres clés : les quatre besoins du touriste */
+  const chambres = heb.reduce((a, f) => a + (+f.properties.nb_chambres || 0), 0), nbChambresRens = nz(heb, f => +f.properties.nb_chambres > 0);
+  html += `<div class="st-kpis">
+    <div class="st-kpi"><i class="fa-solid fa-bed"></i><b>${nf(heb.length)}</b><span>Où dormir</span></div>
+    <div class="st-kpi"><i class="fa-solid fa-utensils"></i><b>${nf(resto.length)}</b><span>Où manger</span></div>
+    <div class="st-kpi"><i class="fa-solid fa-mountain-sun"></i><b>${nf(sites.length)}</b><span>Que visiter</span></div>
+    <div class="st-kpi"><i class="fa-solid fa-person-hiking"></i><b>${nf(presta.length)}</b><span>Excursions &amp; activités</span></div>
+    <div class="st-kpi"><i class="fa-solid fa-van-shuttle"></i><b>${nf(transp.length)}</b><span>Services de transport</span></div>
+    <div class="st-kpi"><i class="fa-solid fa-city"></i><b>${nf(avecOffre.length)}</b><span>Communes avec une offre</span></div></div>`;
+
+  /* 2. carte thématique (choroplèthe) */
+  if (parPosition) {
+    html += `<section class="st-sec"><h2><i class="fa-solid fa-map-location-dot"></i> Où se trouve l'offre touristique ?</h2>
+      <p class="st-lead">Chaque commune est colorée selon son nombre de lieux : plus la teinte est foncée, plus l'offre y est concentrée. Survolez une commune pour connaître ses chiffres.</p>
+      <div class="st-ctrl"><label>Afficher <select id="stMetric"><option value="total">Toute l'offre</option><option value="heb">Hébergements</option><option value="resto">Restaurants</option><option value="sites">Sites touristiques</option><option value="exc">Excursions &amp; activités</option></select></label>
+        <label>Mesure <select id="stMode"><option value="n">Nombre de lieux</option><option value="d">Densité (lieux / 100 km²)</option><option value="p">Densité de population (hab/km²)</option></select></label></div>
+      <div class="st-mapgrid"><div id="stMap"></div><div><p class="st-sub" id="stRankTitle">Les 10 communes en tête</p><div id="stRank"></div></div></div>
+      <div id="stLeg" class="st-legend" style="margin-top:.8rem"></div></section>`;
+  }
+
+  /* 3. concentration de l'offre */
+  const top5 = avecOffre.slice(0, 5), part5 = pct(top5.reduce((a, l) => a + l.total, 0), totalOffre);
+  const dep = {}; [['heb', heb], ['resto', resto], ['sites', sites]].forEach(([k, a]) => a.forEach(f => { const d = norm(f.properties.departement); if (d) { dep[d] = dep[d] || { heb: 0, resto: 0, sites: 0, exc: 0 }; dep[d][k]++; } }));
+  presta.forEach(p => { const d = norm(p.departement); if (d) { dep[d] = dep[d] || { heb: 0, resto: 0, sites: 0, exc: 0 }; dep[d].exc++; } });
+  const sansH = L.filter(l => !l.heb).length, sansR = L.filter(l => !l.resto).length;
+  const segsOf = l => [{ v: l.heb, color: C.heb, name: 'Hébergements' }, { v: l.resto, color: C.resto, name: 'Restaurants' }, { v: l.sites, color: C.site, name: 'Sites' }, { v: l.exc, color: C.gris, name: 'Excursions' }];
+  html += `<section class="st-sec"><h2><i class="fa-solid fa-bullseye"></i> Une offre très concentrée</h2>
+    <p class="st-lead">${top5.length ? `<b>${top5.length} communes</b> (${top5.map(l => esc(titre(l.nom))).join(', ')}) concentrent <b>${part5} %</b> des lieux recensés.` : ''}
+      ${parPosition ? ` À l'inverse, ${sansH} commune${sansH > 1 ? 's' : ''} sur ${L.length} n'${sansH > 1 ? 'ont' : 'a'} aucun hébergement recensé et ${sansR} aucun restaurant.` : ''}</p>
+    ${legend(SEG)}
+    <div class="st-cols"><div><p class="st-sub">Par département</p>${barsHtml(Object.entries(dep).sort((a, b) => Object.values(b[1]).reduce((x, y) => x + y, 0) - Object.values(a[1]).reduce((x, y) => x + y, 0))
+        .map(([k, v]) => ({ label: titre(k), segs: segsOf(v) })))}</div>
+      <div><p class="st-sub">Par commune (les 12 premières)</p>${barsHtml(avecOffre.slice(0, 12).map(l => ({ label: titre(l.nom), segs: segsOf(l) })))}</div></div></section>`;
+
+  /* 4. hébergement */
+  const typeHeb = t => { t = (t || '').toLowerCase(); return t.includes('hôtes') || t.includes('hotes') ? 'Maison / chambre d\'hôtes' : t.includes('hôtel') || t.includes('hotel') ? 'Hôtel' : t.includes('auberge') ? 'Auberge'
+    : t.includes('lodge') || t.includes('campement') ? 'Lodge & campement' : t.includes('villa') || t.includes('location') || t.includes('appartement') ? 'Villa & location' : 'Autre'; };
+  const COUL = ['#172431', '#A16D32', '#286D73', '#6B7F94', '#B0663B', '#C9B79C'];
+  const compte = (arr, fn) => { const m = {}; arr.forEach(x => { const k = fn(x); if (k) m[k] = (m[k] || 0) + 1; }); return Object.entries(m).sort((a, b) => b[1] - a[1]); };
+  const itemsOf = (entries, couleurs = COUL) => entries.map(([label, v], i) => ({ label, v, color: couleurs[i % couleurs.length] }));
+  const urb = nz(heb, f => norm(f.properties.milieu) === 'URBAIN'), rur = nz(heb, f => norm(f.properties.milieu) === 'RURAL');
+  const pisc = nz(heb, f => f.properties.piscine === true), piscRens = nz(heb, f => f.properties.piscine === true || f.properties.piscine === false);
+  const enLigne = [['Site web propre', nz(heb, f => (f.properties.site_web || '').trim())], ['Fiche Booking', nz(heb, f => (f.properties.booking || '').trim())], ['Fiche Tripadvisor', nz(heb, f => (f.properties.tripadvisor || '').trim())],
+    ['Au moins un des trois', nz(heb, f => (f.properties.site_web || '').trim() || (f.properties.booking || '').trim() || (f.properties.tripadvisor || '').trim())]];
+  html += `<section class="st-sec"><h2><i class="fa-solid fa-hotel"></i> Où dormir : le profil de l'hébergement</h2>
+    <p class="st-lead">Types d'établissements, milieu d'implantation, capacité et visibilité en ligne : de quoi juger si l'offre répond à différents publics.</p>
+    <div class="st-cols"><div><p class="st-sub">Répartition par type</p>${donutHtml(itemsOf(compte(heb, f => typeHeb(f.properties.type))), { big: nf(heb.length), label: 'hébergements' })}
+        <p class="st-sub" style="margin-top:1.3rem">Milieu d'implantation</p>${donutHtml([{ label: 'Urbain', v: urb, color: C.heb }, { label: 'Rural', v: rur, color: C.site }], { big: pct(rur, urb + rur) + ' %', label: 'en milieu rural' })}</div>
+      <div><p class="st-sub">Visibilité en ligne</p>${barsHtml(enLigne.map(([label, v]) => ({ label, segs: [{ v: pct(v, heb.length), color: C.resto, name: 'Part des hébergements' }] })), { fmt: v => v + ' %' })}
+        <p class="st-note">Part des ${heb.length} hébergements recensés qui ont une présence en ligne : un indicateur de leur capacité à toucher les voyageurs.</p>
+        <p class="st-sub" style="margin-top:1.3rem">Capacité et confort</p>
+        <div class="st-facts"><div><b>${nf(chambres)}</b><span>chambres recensées</span></div><div><b>${pct(pisc, piscRens)} %</b><span>avec piscine (sur ${piscRens} renseignés)</span></div></div>
+        <p class="st-note">La capacité n'est connue que pour ${nbChambresRens} établissements sur ${heb.length} : le total réel est supérieur.</p></div></div></section>`;
+
+  /* 5. restauration */
+  const typeResto = t => { t = (t || '').toLowerCase(); return t.includes('bar') && !t.includes('restaurant') ? 'Bar' : t.includes('café') || t.includes('cafe') ? 'Café' : t.includes('glac') ? 'Glacier' : 'Restaurant'; };
+  const modal = resto.map(f => (f.properties.modalite || '').toLowerCase()), modRens = modal.filter(m => m.includes('place') || m.includes('emporter') || m.includes('livraison'));
+  const modes = [['Sur place', modRens.filter(m => m.includes('place')).length], ['À emporter', modRens.filter(m => m.includes('emporter')).length], ['Livraison', modRens.filter(m => m.includes('livraison')).length]];
+  html += `<section class="st-sec st-half"><h2><i class="fa-solid fa-utensils"></i> Où manger</h2>
+    <p class="st-lead">La diversité de l'offre de restauration et la façon dont on peut en profiter.</p>
+    <div class="st-cols"><div><p class="st-sub">Type d'établissement</p>${donutHtml(itemsOf(compte(resto, f => typeResto(f.properties.type))), { big: nf(resto.length), label: 'établissements' })}</div>
+      <div><p class="st-sub">Modes de service</p>${barsHtml(modes.map(([label, v]) => ({ label, segs: [{ v: pct(v, modRens.length), color: C.resto, name: 'Part des restaurants' }] })), { fmt: v => v + ' %' })}
+        <p class="st-note">Sur les ${modRens.length} restaurants dont les modes de service sont renseignés (un restaurant peut proposer plusieurs modes).</p></div></div></section>`;
+
+  /* 6. sites et excursions */
+  const TYPES_SITE = { naturel: 'Naturel', culturel: 'Culturel', loisir: 'Loisir' }, FAM = { aventure: 'Aventure & nature', nautique: 'Nautique & pêche', loisirs: 'Loisirs', agence: 'Agences & guides' };
+  const parCommuneExc = avecOffre.filter(l => l.exc).sort((a, b) => b.exc - a.exc);
+  html += `<section class="st-sec st-half"><h2><i class="fa-solid fa-mountain-sun"></i> Que visiter, que faire</h2>
+    <p class="st-lead">Les sites à découvrir et les activités proposées aux visiteurs.</p>
+    <div class="st-cols"><div><p class="st-sub">Sites touristiques par nature</p>${donutHtml(itemsOf(compte(sites, f => TYPES_SITE[f.properties.type] || 'Autre')), { big: nf(sites.length), label: 'sites' })}</div>
+      <div><p class="st-sub">Excursions &amp; activités par famille</p>${donutHtml(itemsOf(compte(presta, p => FAM[p.famille] || 'Autre'), ['#7A4A2A', '#4B6A8F', '#54476E', '#64748B']), { big: nf(presta.length), label: 'prestataires' })}</div></div>
+    ${parCommuneExc.length ? `<p class="st-sub" style="margin-top:1.3rem">Où se trouvent les prestataires</p>${barsHtml(parCommuneExc.slice(0, 8).map(l => ({ label: titre(l.nom), segs: [{ v: l.exc, color: C.gris, name: 'Prestataires' }] })))}
+      <p class="st-note">Les excursions recensées se trouvent pour l'instant dans le département de Mbour${Object.keys(dep).some(k => dep[k].exc && k !== 'MBOUR') ? ' et ailleurs' : ''}.</p>` : ''}</section>`;
+
+  /* 7. se déplacer */
+  const zonesT = {}; transp.forEach(t => (t.zones_desservies || t.zones || []).forEach(z => { zonesT[z] = (zonesT[z] || 0) + 1; }));
+  if (Object.keys(zonesT).length) html += `<section class="st-sec"><h2><i class="fa-solid fa-van-shuttle"></i> Se déplacer sans voiture</h2>
+    <p class="st-lead">Nombre de services de transport (VTC, navettes, chauffeurs privés, minibus) qui desservent chaque zone.</p>
+    ${barsHtml(Object.entries(zonesT).sort((a, b) => b[1] - a[1]).map(([z, n]) => ({ label: z, segs: [{ v: n, color: C.heb, name: 'Services' }] })))}
+    <p class="st-note">Une zone avec peu de services est une zone où il est plus difficile de se déplacer sans véhicule personnel.</p></section>`;
+
+  body.innerHTML = html;
+
+  /* carte thématique : dessin et interactions */
+  if (parPosition) {
+    const ramp = ['#f4e7d3', '#e6c795', '#cf9f58', '#a16d32', '#6a4219'];
+    const allPts = zones.flatMap(z => z.polys.flatMap(p => p[0]));
+    const lat0 = allPts.reduce((a, p) => a + p[1], 0) / allPts.length, kx = Math.cos(lat0 * Math.PI / 180);
+    const xs = allPts.map(p => p[0] * kx), ys = allPts.map(p => -p[1]);
+    const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+    const W = 560, sc = (W - 8) / (x1 - x0), H = Math.round((y1 - y0) * sc + 8);
+    const proj = p => `${((p[0] * kx - x0) * sc + 4).toFixed(1)},${((-p[1] - y0) * sc + 4).toFixed(1)}`;
+    const dPath = z => z.polys.map(poly => poly.map(r => 'M' + r.map(proj).join('L') + 'Z').join('')).join('');
+    const byName = Object.fromEntries(L.map(l => [l.nom, l]));
+    const svgMap = document.getElementById('stMap');
+    svgMap.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Carte de l'offre touristique par commune">${zones.map(z => `<path data-n="${esc(z.nom)}" d="${dPath(z)}" fill="#efeae2" stroke="#fff" stroke-width="1" fill-rule="evenodd"><title></title></path>`).join('')}</svg>`;
+    const NOMS = { total: 'lieux', heb: 'hébergements', resto: 'restaurants', sites: 'sites', exc: 'prestataires' };
+    function dessiner() {
+      const m = document.getElementById('stMetric').value, mode = document.getElementById('stMode').value;
+      const val = l => !l ? 0 : mode === 'd' ? (l.aire ? l[m] / l.aire * 100 : 0) : mode === 'p' ? (l.aire ? l.pop / l.aire : 0) : l[m];
+      const vals = zones.map(z => val(byName[z.nom])).filter(v => v > 0).sort((a, b) => a - b);
+      const cuts = vals.length ? [0, 1, 2, 3, 4].map(i => vals[Math.min(vals.length - 1, Math.floor(vals.length * (i + 1) / 5) - 1)]) : [];
+      const classe = v => { if (v <= 0) return -1; for (let i = 0; i < cuts.length; i++) if (v <= cuts[i]) return i; return 4; };
+      const fmt = v => mode === 'd' || mode === 'p' ? nf1(v) : nf(v);
+      svgMap.querySelectorAll('path').forEach(pa => {
+        const z = byName[pa.dataset.n], v = val(z), c = classe(v);
+        pa.setAttribute('fill', c < 0 ? '#efeae2' : ramp[c]);
+        pa.querySelector('title').textContent = `${titre(pa.dataset.n)} : ${fmt(v)} ${mode === 'd' ? NOMS[m] + ' / 100 km²' : mode === 'p' ? 'hab/km²' : NOMS[m]}${z && z.aire ? ` · ${nf(Math.round(z.aire))} km²` : ''}`;
+      });
+      const bornes = []; let prev = 0;
+      cuts.forEach((c, i) => { if (!bornes.length || c > prev) { bornes.push({ i, lo: prev, hi: c }); prev = c; } });
+      document.getElementById('stLeg').innerHTML = `<span><i style="background:#efeae2;border:1px solid #ddd"></i>Aucun</span>` +
+        bornes.map(b => `<span><i style="background:${ramp[b.i]}"></i>${b.lo === 0 ? '≤ ' + fmt(b.hi) : '> ' + fmt(b.lo) + ' à ' + fmt(b.hi)}</span>`).join('');
+      const top = [...L].map(l => ({ l, v: val(l) })).filter(x => x.v > 0).sort((a, b) => b.v - a.v).slice(0, 10);
+      document.getElementById('stRankTitle').textContent = `Les ${top.length} communes en tête`;
+      document.getElementById('stRank').innerHTML = barsHtml(top.map(x => ({ label: titre(x.l.nom), segs: [{ v: x.v, color: C.resto, name: mode === 'd' ? 'pour 100 km²' : mode === 'p' ? 'hab/km²' : NOMS[m] }] })), { fmt: v => fmt(v) });
+    }
+    document.getElementById('stMetric').addEventListener('change', dessiner); document.getElementById('stMode').addEventListener('change', dessiner);
+    dessiner();
+  }
+})();
+
+document.getElementById('gpMobileMenu').addEventListener('click', () => document.querySelector('.gp-nav').classList.toggle('open'));
+if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+})();
+</script>
+</body>
+</html>

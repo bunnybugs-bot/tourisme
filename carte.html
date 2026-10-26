@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Géoportail — Tourisme région de Thiès</title>
+<meta name="theme-color" content="#A16D32">
+<link rel="manifest" href="manifest.json">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+<link rel="stylesheet" href="https://unpkg.com/@geoman-io/leaflet-geoman-free@2.17.0/dist/leaflet-geoman.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<!-- Impression PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+<link rel="stylesheet" href="assets/css/carte.css?v=16">
+<link rel="stylesheet" href="assets/css/circuits-themes.css?v=1">
+</head>
+<body>
+
+<!-- ============ BANDEAU HAUT ============ -->
+<header class="gp-header">
+  <div class="gp-header-left">
+    <a href="n_index.html" class="gp-logo">
+      <span class="gp-logo-mark">T</span>
+      <span class="gp-logo-text">
+        <strong>Géoportail</strong>
+        <small>Tourisme — Région de Thiès</small>
+      </span>
+    </a>
+  </div>
+  <nav class="gp-nav">
+    <a href="carte.html" class="active"><i class="fa-solid fa-map"></i> Carte</a>
+    <a href="catalogue.html"><i class="fa-solid fa-list"></i> Catalogue</a>
+    <a href="excursions.html"><i class="fa-solid fa-route"></i> Excursions</a>
+    <a href="statistiques.html"><i class="fa-solid fa-chart-column"></i> Statistiques</a>
+    <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact</a>
+  </nav>
+  <button class="gp-mobile-menu" id="gpMobileMenu" aria-label="Menu">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+</header>
+
+<!-- ============ CORPS ============ -->
+<div class="gp-app">
+
+  <!-- ===== SIDEBAR À ONGLETS ===== -->
+  <aside class="gp-sidebar" id="gpSidebar">
+
+    <div class="gp-tabs">
+      <button class="gp-tab active" data-tab="decouvrir"><i class="fa-solid fa-compass"></i><span>Découvrir</span></button>
+      <button class="gp-tab" data-tab="sejour"><i class="fa-solid fa-suitcase-rolling"></i><span>Mon séjour</span></button>
+      <button class="gp-tab" data-tab="autour"><i class="fa-solid fa-location-crosshairs"></i><span>Autour de moi</span></button>
+      <button class="gp-tab" data-tab="itineraire"><i class="fa-solid fa-route"></i><span>Mon circuit</span></button>
+    </div>
+
+    <!-- ===== DÉCOUVRIR ===== -->
+    <div class="gp-panel active" data-panel="decouvrir">
+
+      <div class="gp-section">
+        <h3>Dans quel secteur ?</h3>
+        <select id="gpDeptSelect" class="gp-input" aria-label="Département">
+          <option value="">Toute la région de Thiès</option>
+          <option value="THIES">Département de Thiès</option>
+          <option value="MBOUR">Département de Mbour</option>
+          <option value="TIVAOUANE">Département de Tivaouane</option>
+        </select>
+        <select id="gpCommuneSelect" class="gp-input" aria-label="Commune" style="margin-top:.5rem">
+          <option value="">Toutes les communes</option>
+        </select>
+        <p class="gp-hint gp-commune-note" id="gpCommuneNote" style="display:none"></p>
+      </div>
+
+      <div class="gp-section">
+        <h3>Que cherchez-vous ?</h3>
+        <p class="gp-hint" style="margin-top:-.2rem">Un raccourci : il coche les catégories correspondantes dans « Affiner ».</p>
+        <div class="gp-needs">
+          <button class="gp-need" data-besoin="dormir"><i class="fa-solid fa-bed"></i><b>Où dormir&nbsp;?</b></button>
+          <button class="gp-need" data-besoin="manger"><i class="fa-solid fa-utensils"></i><b>Où manger&nbsp;?</b></button>
+          <button class="gp-need" data-besoin="visiter"><i class="fa-solid fa-mountain-sun"></i><b>Que visiter&nbsp;?</b></button>
+          <button class="gp-need" data-besoin="excursions"><i class="fa-solid fa-person-hiking"></i><b>Quelles excursions&nbsp;?</b></button>
+        </div>
+        <button class="gp-need-all" id="gpNeedAll"><i class="fa-solid fa-eye"></i> Tout afficher</button>
+      </div>
+
+      <div class="gp-section">
+        <h3>Affiner</h3>
+        <p class="gp-hint" style="margin-top:-.2rem">Pour aller plus loin : cochez ou décochez une catégorie, ses filtres apparaissent juste en dessous.</p>
+        <div id="gpLayerList" class="gp-lyr-list"></div>
+        <label class="gp-check gp-names-toggle">
+          <input type="checkbox" id="gpShowNames"> <span>Afficher les noms sur la carte <small>(en zoomant)</small></span>
+        </label>
+      </div>
+
+      <details class="gp-more">
+        <summary><i class="fa-solid fa-layer-group"></i> Fond de carte et limites</summary>
+        <div class="gp-section">
+        <h3>Fonds de carte</h3>
+        <div class="gp-basemaps" id="gpBasemaps">
+          <label class="gp-basemap">
+            <input type="radio" name="basemap" value="plan" checked>
+            <span class="gp-basemap-thumb" style="background-image:url('https://tile.openstreetmap.org/10/491/388.png')"></span>
+            <span>Plan</span>
+          </label>
+          <label class="gp-basemap">
+            <input type="radio" name="basemap" value="satellite">
+            <span class="gp-basemap-thumb" style="background:#1a3a2a"></span>
+            <span>Satellite</span>
+          </label>
+          <label class="gp-basemap">
+            <input type="radio" name="basemap" value="relief">
+            <span class="gp-basemap-thumb" style="background:#d4c9a8"></span>
+            <span>Relief</span>
+          </label>
+          <label class="gp-basemap">
+            <input type="radio" name="basemap" value="hybride">
+            <span class="gp-basemap-thumb" style="background:linear-gradient(135deg,#1a3a2a 50%,#333 50%)"></span>
+            <span>Hybride</span>
+          </label>
+        </div>
+      </div>
+
+        <div class="gp-section">
+        <h3>Limites administratives</h3>
+        <label class="gp-limite-check">
+          <input type="checkbox" id="gpLimDept" checked>
+          <span class="gp-limite-swatch gp-limite-swatch--dept"></span> Départements
+        </label>
+        <label class="gp-limite-check">
+          <input type="checkbox" id="gpLimCommunes">
+          <span class="gp-limite-swatch gp-limite-swatch--commune"></span> Communes
+        </label>
+        <label class="gp-limite-check">
+          <input type="checkbox" id="gpLimLabels" checked>
+          <span class="gp-limite-swatch gp-limite-swatch--label">Aa</span> Afficher les noms
+        </label>
+        <p class="gp-limite-note" id="gpLimNote" style="display:none"></p>
+      </div>
+      </details>
+
+      <button class="gp-btn gp-btn-outline gp-full" id="gpReset">
+        <i class="fa-solid fa-rotate-left"></i> Réinitialiser les filtres
+      </button>
+    </div>
+
+    <!-- ===== PRÉPARER MON SÉJOUR ===== -->
+    <div class="gp-panel" data-panel="sejour">
+      <div class="gp-section">
+        <h3><i class="fa-solid fa-suitcase-rolling"></i> Préparer mon séjour</h3>
+        <p class="gp-hint">Répondez à 4 questions : le géoportail compose un circuit, choisit un hébergement proche et propose où déjeuner.</p>
+      </div>
+
+      <div class="gp-section">
+        <h3>1 · Destination</h3>
+        <select id="gpSejDest" class="gp-input">
+          <option value="">Toute la région (le plus compact)</option>
+          <option value="THIES">Thiès</option>
+          <option value="MBOUR">Mbour (Saly, Somone, Popenguine…)</option>
+          <option value="TIVAOUANE">Tivaouane</option>
+        </select>
+      </div>
+
+      <div class="gp-section">
+        <h3>2 · Durée du séjour</h3>
+        <div class="gp-chips" id="gpSejDuree" role="group" aria-label="Durée">
+          <button type="button" class="gp-chip" data-j="1">1 jour</button>
+          <button type="button" class="gp-chip active" data-j="2">2 jours</button>
+          <button type="button" class="gp-chip" data-j="3">3 jours</button>
+          <button type="button" class="gp-chip" data-j="5">5 jours</button>
+        </div>
+      </div>
+
+      <div class="gp-section">
+        <h3>3 · Centres d'intérêt</h3>
+        <div class="gp-tags" id="gpSejInterets">
+          <button type="button" class="gp-tag on" data-i="naturel"><i class="fa-solid fa-tree"></i> Nature</button>
+          <button type="button" class="gp-tag on" data-i="culturel"><i class="fa-solid fa-landmark"></i> Culture</button>
+          <button type="button" class="gp-tag" data-i="loisir"><i class="fa-solid fa-umbrella-beach"></i> Loisirs</button>
+          <button type="button" class="gp-tag" data-i="excursions"><i class="fa-solid fa-person-hiking"></i> Excursions</button>
+        </div>
+      </div>
+
+      <div class="gp-section">
+        <h3>4 · Rythme</h3>
+        <div class="gp-chips" id="gpSejRythme" role="group" aria-label="Rythme">
+          <button type="button" class="gp-chip" data-r="2">Détendu</button>
+          <button type="button" class="gp-chip active" data-r="3">Normal</button>
+          <button type="button" class="gp-chip" data-r="4">Intense</button>
+        </div>
+        <label class="gp-check"><input type="checkbox" id="gpSejHeb" checked> Me proposer un hébergement (point de départ)</label>
+        <label class="gp-check"><input type="checkbox" id="gpSejResto" checked> Suggérer un restaurant pour chaque jour</label>
+        <p class="gp-hint">Budget : les prix ne sont pas encore renseignés dans la base, ils ne peuvent donc pas servir de critère.</p>
+      </div>
+
+      <button class="gp-btn gp-btn-primary gp-full" id="gpSejGo"><i class="fa-solid fa-wand-magic-sparkles"></i> Composer mon séjour</button>
+      <div id="gpSejResult" class="gp-sej-result" aria-live="polite"></div>
+    </div>
+
+    <!-- ===== AUTOUR DE MOI ===== -->
+    <div class="gp-panel" data-panel="autour">
+      <div class="gp-section">
+        <h3><i class="fa-solid fa-location-crosshairs"></i> Autour de moi</h3>
+        <div class="gp-autour-actions">
+          <button class="gp-btn gp-btn-outline" id="gpGeoloc">
+            <i class="fa-solid fa-location-dot"></i> Me localiser
+          </button>
+          <button class="gp-btn gp-btn-outline" id="gpPickPoint" title="Cliquer sur la carte pour choisir un point de départ (hôtel, gare…)">
+            <i class="fa-solid fa-crosshairs"></i> Choisir un point
+          </button>
+        </div>
+        <div class="gp-range-wrap" id="gpRangeWrap" style="display:none">
+          <label>Rayon de recherche</label>
+          <div class="gp-chips" id="gpRadiusChips" role="group" aria-label="Rayon de recherche">
+            <button type="button" class="gp-chip" data-km="2">2 km</button>
+            <button type="button" class="gp-chip active" data-km="5">5 km</button>
+            <button type="button" class="gp-chip" data-km="10">10 km</button>
+            <button type="button" class="gp-chip" data-km="20">20 km</button>
+          </div>
+          <div class="gp-autour-summary" id="gpAutourSummary" aria-live="polite"></div>
+          <button type="button" class="gp-btn gp-btn-primary gp-full" id="gpAutourToCircuit" style="display:none"><i class="fa-solid fa-route"></i> Créer un circuit avec les sites proches</button>
+          <ol class="gp-autour-list" id="gpAutourList"></ol>
+          <div class="gp-autour-source" id="gpAutourSource"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===== MON CIRCUIT ===== -->
+    <div class="gp-panel" data-panel="itineraire">
+      <div class="gp-section" id="gpThemes">
+        <h3><i class="fa-solid fa-compass"></i> Circuits thématiques</h3>
+        <p class="gp-hint">Choisissez un thème, cochez les lieux qui vous intéressent, puis ajoutez-les à votre circuit.</p>
+        <div id="gpThemeChips"></div>
+        <div id="gpThemeBody"></div>
+      </div>
+
+      <div class="gp-section">
+        <h3><i class="fa-solid fa-route"></i> Mon circuit</h3>
+        <div id="gpItinEmpty" class="gp-itin-empty">
+          <i class="fa-solid fa-map-location-dot"></i>
+          <p>Aucune étape.<br>Ajoutez des lieux depuis leur fiche, depuis « Autour de moi », ou laissez l'onglet « Mon séjour » composer un circuit.</p>
+        </div>
+        <div id="gpItinDepart" class="gp-itin-depart" style="display:none"></div>
+        <ol id="gpItinList" class="gp-itin-list"></ol>
+        <div id="gpItinActions" style="display:none">
+          <div class="gp-itin-summary" id="gpItinSummary"></div>
+          <details class="gp-itin-trans" id="gpItinTransBox" style="display:none">
+            <summary><i class="fa-solid fa-van-shuttle"></i> Se déplacer pour ce circuit</summary>
+            <div id="gpItinTransport"></div>
+          </details>
+          <label class="gp-check"><input type="checkbox" id="gpItinLoop"> Revenir au point de départ</label>
+          <button class="gp-btn gp-btn-outline gp-full" id="gpItinUseLoc"><i class="fa-solid fa-flag"></i> Partir de ma position</button>
+          <button class="gp-btn gp-btn-primary gp-full" id="gpItinOptimize"><i class="fa-solid fa-shuffle"></i> Optimiser l'ordre de visite</button>
+          <button class="gp-btn gp-btn-outline gp-full" id="gpItinExport"><i class="fa-solid fa-file-pdf"></i> Imprimer / enregistrer en PDF</button>
+          <button class="gp-btn gp-btn-outline gp-full" id="gpItinClear"><i class="fa-solid fa-trash"></i> Vider le circuit</button>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ===== ZONE CARTE ===== -->
+  <div class="gp-map-wrap">
+
+    <!-- Barre de recherche flottante -->
+    <div class="gp-search-wrap">
+      <div class="gp-search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="gpSearchInput" placeholder="Rechercher un lieu, une commune, un établissement…" autocomplete="off">
+        <button class="gp-search-clear" id="gpSearchClear" style="display:none" aria-label="Effacer"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="gp-search-results" id="gpSearchResults"></div>
+    </div>
+
+    <!-- Bouton menu (mobile) -->
+    <button class="gp-sidebar-toggle" id="gpSidebarToggle" aria-label="Ouvrir le menu"><i class="fa-solid fa-bars-staggered"></i> Menu</button>
+
+    <!-- Carte -->
+    <div id="gpMap"></div>
+
+    <!-- Bandeau inférieur -->
+    <div class="gp-bottom-bar">
+      <div class="gp-count">
+        <strong id="gpCount">0</strong> établissement(s) affiché(s)
+      </div>
+      <div id="gpOfflineBadge" style="display:none;background:#d33;color:#fff;padding:0.15rem 0.5rem;border-radius:8px;font-size:0.7rem;font-weight:700">
+        <i class="fa-solid fa-wifi"></i> Hors-ligne
+      </div>
+      <div class="gp-coords">
+        <i class="fa-solid fa-crosshairs"></i>
+        <span id="gpCoords">—</span>
+      </div>
+    </div>
+
+    <!-- Bandeau de chiffres (suit les filtres) -->
+    <div class="gp-stats" id="gpStats" aria-live="polite">
+      <div class="gp-stat gp-stat--total" title="Lieux affichés"><b id="gpStatTotal">0</b><span>affichés</span></div>
+      <div class="gp-stat gp-stat--cat" data-cat="hebergement" title="Hébergements"><span class="gp-lg-pin"><i class="fa-solid fa-hotel"></i></span><b>0</b></div>
+      <div class="gp-stat gp-stat--cat" data-cat="restaurant" title="Restaurants"><span class="gp-lg-pin"><i class="fa-solid fa-utensils"></i></span><b>0</b></div>
+      <div class="gp-stat gp-stat--cat" data-cat="site" title="Sites touristiques"><span class="gp-lg-pin"><i class="fa-solid fa-mountain-sun"></i></span><b>0</b></div>
+      <div class="gp-stat gp-stat--cat" data-cat="presta" title="Excursions &amp; activités"><span class="gp-lg-pin"><i class="fa-solid fa-person-hiking"></i></span><b>0</b></div>
+      <button type="button" class="gp-stats-more" id="gpStatsMore" aria-expanded="false" aria-controls="gpStatsPanel"><i class="fa-solid fa-chart-column"></i> Détails</button>
+    </div>
+    <section class="gp-stats-panel" id="gpStatsPanel" hidden aria-label="Détails de la sélection">
+      <header><h3><i class="fa-solid fa-chart-column"></i> Ma sélection en chiffres</h3>
+        <button type="button" id="gpStatsClose" aria-label="Fermer"><i class="fa-solid fa-xmark"></i></button></header>
+      <div class="gp-stats-body" id="gpStatsBody"></div>
+      <footer>
+        <button type="button" class="gp-btn gp-btn-outline" id="gpExportCsv"><i class="fa-solid fa-file-csv"></i> Exporter en CSV</button>
+        <button type="button" class="gp-btn gp-btn-outline" id="gpExportGeo"><i class="fa-solid fa-file-code"></i> Exporter en GeoJSON</button>
+      </footer>
+    </section>
+
+    <!-- Itinéraire tracé dans la carte -->
+    <section class="gp-route" id="gpRoute" hidden aria-label="Itinéraire">
+      <header>
+        <div class="gp-route-title"><small>Itinéraire vers</small><strong id="gpRouteDest"></strong></div>
+        <button type="button" id="gpRouteClose" aria-label="Fermer l'itinéraire"><i class="fa-solid fa-xmark"></i></button>
+      </header>
+      <div class="gp-route-modes" id="gpRouteModes">
+        <button type="button" data-mode="driving" class="on"><i class="fa-solid fa-car"></i> Voiture</button>
+        <button type="button" data-mode="bike"><i class="fa-solid fa-bicycle"></i> Vélo</button>
+        <button type="button" data-mode="foot"><i class="fa-solid fa-person-walking"></i> À pied</button>
+      </div>
+      <div class="gp-route-sum" id="gpRouteSum"></div>
+      <div class="gp-route-from">
+        <i class="fa-solid fa-location-dot"></i><span id="gpRouteFrom">Départ : —</span>
+        <button type="button" id="gpRouteMyPos">Ma position</button>
+        <button type="button" id="gpRoutePick">Choisir sur la carte</button>
+      </div>
+      <details class="gp-route-trans" id="gpRouteTransBox" hidden>
+        <summary><i class="fa-solid fa-van-shuttle"></i> Sans voiture ? Taxis et applications</summary>
+        <div id="gpRouteTrans"></div>
+      </details>
+      <details class="gp-route-steps" id="gpRouteStepsBox" hidden>
+        <summary>Voir les étapes</summary>
+        <ol id="gpRouteSteps"></ol>
+      </details>
+    </section>
+
+    <!-- Légende flottante (dynamique : n'affiche que ce qui est visible) -->
+    <div class="gp-legend-box" id="gpLegendBox">
+      <button class="gp-legend-head" id="gpLegendToggle" aria-expanded="true" aria-controls="gpLegendBody">
+        <i class="fa-solid fa-list-ul"></i> Légende <i class="fa-solid fa-chevron-down gp-legend-chev"></i>
+      </button>
+      <div class="gp-legend-body" id="gpLegendBody"></div>
+    </div>
+
+    <!-- Barre d'outils verticale -->
+    <div class="gp-toolbar">
+      <button class="gp-tool" id="gpZoomIn" title="Zoom +"><i class="fa-solid fa-plus"></i></button>
+      <button class="gp-tool" id="gpZoomOut" title="Zoom −"><i class="fa-solid fa-minus"></i></button>
+      <div class="gp-tool-sep"></div>
+      <button class="gp-tool" id="gpGeolocTool" title="Me localiser"><i class="fa-solid fa-location-crosshairs"></i></button>
+      <button class="gp-tool" id="gpMeasureDist" title="Mesurer une distance"><i class="fa-solid fa-ruler"></i></button>
+      <button class="gp-tool" id="gpMeasureArea" title="Mesurer une surface"><i class="fa-solid fa-vector-square"></i></button>
+      <button class="gp-tool" id="gpHeatBtn" title="Carte de densité (repères ⇄ concentration)" aria-pressed="false"><i class="fa-solid fa-fire"></i></button>
+      <div class="gp-tool-sep"></div>
+      <button class="gp-tool" id="gpItineraryBtn" title="Itinéraire multi-étapes">
+        <i class="fa-solid fa-route"></i>
+        <span class="gp-tool-badge" id="gpItinBadge" style="display:none">0</span>
+      </button>
+      <div class="gp-tool-sep"></div>
+      <button class="gp-tool" id="gpFullscreen" title="Plein écran"><i class="fa-solid fa-expand"></i></button>
+      <button class="gp-tool" id="gpShare" title="Partager cette vue"><i class="fa-solid fa-link"></i></button>
+      <button class="gp-tool" id="gpPrint" title="Imprimer / Exporter en PDF"><i class="fa-solid fa-print"></i></button>
+    </div>
+
+    <!-- Prestataire ciblé depuis la page Excursions (?presta=ID) -->
+    <div class="gp-focus-bar" id="gpFocusBar" hidden>
+      <span><i class="fa-solid fa-person-hiking"></i> <b id="gpFocusName"></b></span>
+      <button type="button" id="gpFocusBack"><i class="fa-solid fa-arrow-left"></i> Revenir à la carte générale</button>
+    </div>
+
+    <!-- Toast -->
+    <div class="gp-toast" id="gpToast"></div>
+
+    <!-- Drawer fiche établissement -->
+    <aside class="gp-drawer" id="gpDrawer" aria-hidden="true">
+      <header class="gp-drawer-header">
+        <span class="gp-drawer-type" id="gpDrawerType">Hôtel</span>
+        <button class="gp-drawer-close" id="gpDrawerClose" aria-label="Fermer"><i class="fa-solid fa-xmark"></i></button>
+      </header>
+      <div class="gp-drawer-hero">
+        <i class="fa-solid fa-image"></i>
+        <span>Photo à venir</span>
+      </div>
+      <div class="gp-drawer-body">
+        <h2 id="gpDrawerTitle">Nom</h2>
+        <div class="gp-drawer-loc" id="gpDrawerLoc"></div>
+        <div class="gp-drawer-section" id="gpDrawerInfo"></div>
+        <div class="gp-drawer-section" id="gpDrawerDesc" style="display:none"></div>
+        <div class="gp-drawer-section" id="gpDrawerBadges" style="display:none"></div>
+        <div class="gp-drawer-section" id="gpDrawerTrust"></div>
+      </div>
+      <footer class="gp-drawer-footer" id="gpDrawerActions"></footer>
+    </aside>
+    <!-- Modal export PDF -->
+<div class="gp-modal" id="gpPrintModal" aria-hidden="true">
+  <div class="gp-modal-backdrop" data-close></div>
+  <div class="gp-modal-box">
+    <header class="gp-modal-header">
+      <h3><i class="fa-solid fa-print"></i> Exporter la carte</h3>
+      <button class="gp-modal-close" data-close aria-label="Fermer"><i class="fa-solid fa-xmark"></i></button>
+    </header>
+    <div class="gp-modal-body">
+      <div class="gp-field">
+        <label>Titre du document</label>
+        <input type="text" id="gpPrintTitle" value="Carte touristique — Région de Thiès">
+      </div>
+      <div class="gp-field">
+        <label>Format</label>
+        <div class="gp-radio-row">
+          <label class="gp-radio"><input type="radio" name="pdfFormat" value="a4p" checked> A4 Portrait</label>
+          <label class="gp-radio"><input type="radio" name="pdfFormat" value="a4l"> A4 Paysage</label>
+        </div>
+      </div>
+      <div class="gp-field">
+        <label>Options</label>
+        <label class="gp-check"><input type="checkbox" id="gpPrintLegend" checked> Inclure la légende</label>
+        <label class="gp-check"><input type="checkbox" id="gpPrintScale" checked> Inclure l'échelle</label>
+        <label class="gp-check"><input type="checkbox" id="gpPrintDate" checked> Inclure la date</label>
+        <label class="gp-check"><input type="checkbox" id="gpPrintStats" checked> Inclure le compteur d'établissements</label>
+      </div>
+      <p class="gp-print-note">
+        <i class="fa-solid fa-circle-info"></i>
+        L'export peut prendre 2 à 5 secondes. La carte sera figée au zoom actuel.
+      </p>
+    </div>
+    <footer class="gp-modal-footer">
+      <button class="gp-btn gp-btn-outline" data-close>Annuler</button>
+      <button class="gp-btn gp-btn-primary" id="gpPrintGo">
+        <i class="fa-solid fa-download"></i> Générer le PDF
+      </button>
+    </footer>
+  </div>
+</div>
+
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+<script src="https://unpkg.com/@geoman-io/leaflet-geoman-free@2.17.0/dist/leaflet-geoman.min.js"></script>
+<script src="assets/js/circuit.js?v=1"></script>
+<script src="assets/js/circuit-ui.js?v=1"></script>
+<script src="assets/js/carte.js?v=20"></script>
+<script src="assets/js/sejour.js?v=3"></script>
+<script src="assets/js/circuits-themes.js?v=1"></script>
+
+<script>
+  // Service Worker (mode hors-ligne)
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(reg => console.log('✅ Service Worker enregistré', reg.scope))
+        .catch(err => console.error('❌ SW erreur:', err));
+    });
+  }
+</script>
+</body>
+</html>

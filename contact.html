@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — Tourisme région de Thiès</title>
+<meta name="theme-color" content="#A16D32">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="assets/css/carte.css">
+<style>
+  body { overflow: auto; background: var(--cream); }
+  .page-wrap { max-width: 1080px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+  .page-hero { text-align: center; margin-bottom: 3rem; }
+  .page-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem; margin: 0 0 0.8rem;
+  }
+  .page-hero p {
+    color: var(--text-muted); font-size: 1.05rem;
+    max-width: 620px; margin: 0 auto; line-height: 1.7;
+  }
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+  @media (max-width: 860px) {
+    .contact-layout { grid-template-columns: 1fr; }
+  }
+
+  .contact-info h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; margin: 0 0 1rem;
+  }
+  .contact-info p {
+    color: var(--text-muted); line-height: 1.7; font-size: 0.92rem;
+    margin: 0 0 1.5rem;
+  }
+  .contact-item {
+    display: flex; gap: 1rem; margin-bottom: 1.3rem;
+    align-items: flex-start;
+  }
+  .contact-item-icon {
+    width: 42px; height: 42px; border-radius: 10px;
+    background: #F0E8DA; color: var(--orange);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.05rem; flex-shrink: 0;
+  }
+  .contact-item-text strong {
+    display: block; font-size: 0.78rem; font-weight: 700;
+    color: var(--text-muted); text-transform: uppercase;
+    letter-spacing: 0.5px; margin-bottom: 0.2rem;
+  }
+  .contact-item-text span, .contact-item-text a {
+    font-size: 0.92rem; color: var(--charcoal);
+    text-decoration: none;
+  }
+  .contact-item-text a:hover { color: var(--orange); }
+
+  .contact-form {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+  }
+  .contact-form h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; margin: 0 0 1.4rem;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+  .form-field { margin-bottom: 1rem; }
+  .form-field label {
+    display: block; font-size: 0.78rem; font-weight: 600;
+    color: var(--charcoal); margin-bottom: 0.4rem;
+  }
+  .form-field label .req { color: var(--orange); }
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    background: #fff;
+    transition: border-color var(--transition);
+  }
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus {
+    outline: none; border-color: var(--orange);
+  }
+  .form-field textarea { resize: vertical; min-height: 130px; }
+  .form-submit {
+    width: 100%;
+    padding: 0.9rem;
+    background: var(--orange); color: #fff;
+    border: none; border-radius: 10px;
+    font-family: inherit; font-size: 0.92rem; font-weight: 600;
+    cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+    transition: background var(--transition);
+    margin-top: 0.5rem;
+  }
+  .form-submit:hover { background: #7F5528; }
+  .form-note {
+    font-size: 0.78rem; color: var(--text-muted);
+    margin-top: 0.8rem; text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<header class="gp-header">
+  <div class="gp-header-left">
+    <a href="carte.html" class="gp-logo">
+      <span class="gp-logo-mark">T</span>
+      <span class="gp-logo-text">
+        <strong>Géoportail</strong>
+        <small>Tourisme — Région de Thiès</small>
+      </span>
+    </a>
+  </div>
+  <nav class="gp-nav">
+    <a href="carte.html"><i class="fa-solid fa-map"></i> Carte</a>
+    <a href="catalogue.html"><i class="fa-solid fa-list"></i> Catalogue</a>
+    <a href="excursions.html"><i class="fa-solid fa-route"></i> Excursions</a>
+    <a href="statistiques.html"><i class="fa-solid fa-chart-column"></i> Statistiques</a>
+    <a href="contact.html" class="active"><i class="fa-solid fa-envelope"></i> Contact</a>
+  </nav>
+  <button class="gp-mobile-menu" id="gpMobileMenu"><i class="fa-solid fa-bars"></i></button>
+</header>
+
+<main class="page-wrap">
+
+  <div class="page-hero">
+    <h1>Nous contacter</h1>
+    <p>Une question, une suggestion, un signalement ? Écrivez-nous, nous vous répondrons dans les meilleurs délais.</p>
+  </div>
+
+  <div class="contact-layout">
+
+    <aside class="contact-info">
+      <h2>Coordonnées</h2>
+      <p>
+        Pour toute demande relative au géoportail touristique
+        de la région de Thiès, n'hésitez pas à nous écrire.
+      </p>
+
+      <div class="contact-item">
+        <div class="contact-item-icon"><i class="fa-solid fa-envelope"></i></div>
+        <div class="contact-item-text">
+          <strong>Email</strong>
+          <a href="mailto:contact@exemple.sn">Thieskay@gmail.com</a>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-item-icon"><i class="fa-solid fa-phone"></i></div>
+        <div class="contact-item-text">
+          <strong>Téléphone</strong>
+          <a href="tel:+221339000000">+221 33 900 00 00</a>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-item-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <div class="contact-item-text">
+          <strong>Adresse</strong>
+          <span>Thiès, Sénégal</span>
+        </div>
+      </div>
+
+     
+      <p style="font-size:0.82rem;margin-top:2rem;font-style:italic;">
+        Les coordonnées ci-dessus sont à remplacer par vos vraies coordonnées.
+      </p>
+    </aside>
+
+    <form class="contact-form" id="contactForm" novalidate>
+      <h2>Votre message</h2>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="cfNom">Nom <span class="req">*</span></label>
+          <input type="text" id="cfNom" name="nom" required>
+        </div>
+        <div class="form-field">
+          <label for="cfPrenom">Prénom</label>
+          <input type="text" id="cfPrenom" name="prenom">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label for="cfEmail">Email <span class="req">*</span></label>
+          <input type="email" id="cfEmail" name="email" required>
+        </div>
+        <div class="form-field">
+          <label for="cfTel">Téléphone</label>
+          <input type="tel" id="cfTel" name="telephone">
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="cfSujet">Sujet <span class="req">*</span></label>
+        <select id="cfSujet" name="sujet" required>
+          <option value="">— Choisir —</option>
+          <option value="signalement">Signaler une erreur </option>
+          <option value="ajout">Proposer l'ajout d'un établissement</option>
+          <option value="info">Demande d'information</option>
+          <option value="partenariat">Partenariat</option>
+          <option value="autre">Autre</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label for="cfMessage">Message <span class="req">*</span></label>
+        <textarea id="cfMessage" name="message" required placeholder="Décrivez votre demande…"></textarea>
+      </div>
+
+      <button type="submit" class="form-submit">
+        <i class="fa-solid fa-paper-plane"></i> Envoyer le message
+      </button>
+      <p class="form-note">
+        <i class="fa-solid fa-lock"></i>
+        Vos données ne sont utilisées que pour traiter votre demande.
+      </p>
+    </form>
+
+  </div>
+
+</main>
+
+<script>
+  document.getElementById('gpMobileMenu').addEventListener('click', () => {
+    document.querySelector('.gp-nav').classList.toggle('open');
+  });
+
+  // Arrivée depuis « Signaler une erreur » (fiche d'un lieu sur la carte)
+  (function () {
+    const q = new URLSearchParams(location.search);
+    if (q.get('sujet') !== 'signalement') return;
+    document.getElementById('cfSujet').value = 'signalement';
+    const lieu = [q.get('lieu'), q.get('commune')].filter(Boolean).join(' — ');
+    const coord = (q.get('lat') && q.get('lon')) ? `\nCoordonnées : ${q.get('lat')}, ${q.get('lon')}` : '';
+    document.getElementById('cfMessage').value = `Lieu concerné : ${lieu}${q.get('cat') ? ' (' + q.get('cat') + ')' : ''}${coord}\n\nErreur constatée : `;
+    document.getElementById('cfMessage').focus();
+  })();
+
+  document.getElementById('contactForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    const d = Object.fromEntries(new FormData(form));
+    const bouton = form.querySelector('[type="submit"]');
+    if (bouton) bouton.disabled = true;
+    try {
+      const r = await fetch((window.GEO_API_BASE || '') + '/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sujet: d.sujet, nom: [d.prenom, d.nom].filter(Boolean).join(' '), email: d.email,
+                               telephone: d.telephone || '', message: d.message }),
+      });
+      if (r.ok) {
+        alert('Merci ! Votre message a bien été enregistré.');
+        form.reset();
+      } else {
+        const j = await r.json().catch(() => ({}));
+        alert("Votre message n'a pas pu être envoyé : " + (typeof j.error === 'string' ? j.error : 'vérifiez les champs du formulaire.'));
+      }
+    } catch (err) {
+      alert('Le service est indisponible pour le moment. Réessayez plus tard.');
+    } finally {
+      if (bouton) bouton.disabled = false;
+    }
+  });
+</script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+  }
+</script>
+</body>
+</html>

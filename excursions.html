@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Excursions &amp; activités — Tourisme région de Thiès</title>
+<meta name="theme-color" content="#A16D32">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  /* ---- Styles de base intégrés : la page fonctionne même sans assets/css/carte.css ---- */
+  :root { --orange:#A16D32; --orange-light:#C2A074; --charcoal:#172431; --cream:#F5F3EE; --green:#4D5E43; --blue:#2F4A5E;
+    --text-muted:#64748B; --border:rgba(28,43,57,0.12); --header-h:64px;
+    --shadow-sm:0 2px 8px rgba(15,25,35,0.08); --shadow-md:0 4px 16px rgba(15,25,35,0.12); --shadow-lg:0 8px 32px rgba(15,25,35,0.18);
+    --radius:12px; --transition:0.2s ease; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; font-family:'Montserrat',sans-serif; color:var(--charcoal); background:var(--cream); }
+  .gp-header { height:var(--header-h); background:var(--charcoal); color:#fff; display:flex; align-items:center; justify-content:space-between;
+    padding:0 1.4rem; box-shadow:var(--shadow-md); position:relative; z-index:1000; }
+  .gp-logo { display:flex; align-items:center; gap:.7rem; color:#fff; text-decoration:none; }
+  .gp-logo-mark { display:inline-flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:10px;
+    background:var(--orange); font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700; }
+  .gp-logo-text { display:flex; flex-direction:column; line-height:1.1; }
+  .gp-logo-text strong { font-size:1rem; }
+  .gp-logo-text small { font-size:.68rem; color:var(--orange-light); letter-spacing:.5px; }
+  .gp-nav { display:flex; gap:.4rem; }
+  .gp-nav a { color:#cfd8e0; text-decoration:none; padding:.55rem 1rem; border-radius:8px; font-size:.85rem; font-weight:500;
+    transition:background var(--transition),color var(--transition); display:inline-flex; align-items:center; gap:.5rem; }
+  .gp-nav a:hover { background:rgba(255,255,255,.08); color:#fff; }
+  .gp-nav a.active { background:var(--orange); color:#fff; }
+  .gp-mobile-menu { display:none; background:transparent; border:none; color:#fff; font-size:1.3rem; cursor:pointer; padding:.5rem; }
+  @media (max-width:860px) {
+    .gp-nav { display:none; }
+    .gp-nav.open { display:flex; flex-direction:column; position:absolute; top:var(--header-h); right:0; background:var(--charcoal);
+      padding:.6rem; border-radius:0 0 12px 12px; box-shadow:var(--shadow-lg); min-width:220px; }
+    .gp-mobile-menu { display:block; }
+  }
+</style>
+<style>
+  html, body { height: auto; overflow: auto; }
+  body { background: var(--cream); }
+  /* ---------- Bandeau ---------- */
+  .ex-hero { position: relative; color: #fff; text-align: center; padding: 4.2rem 1.5rem 5.5rem;
+    background: linear-gradient(180deg, rgba(28,43,57,.55), rgba(28,43,57,.82)), url('images/saly.jpg') center/cover no-repeat; }
+  .ex-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); margin: 0 0 .6rem; }
+  .ex-hero p { margin: 0 auto; max-width: 620px; font-size: 1.05rem; opacity: .92; line-height: 1.55; }
+  .ex-stats { display: flex; justify-content: center; gap: 2.2rem; margin-top: 1.6rem; flex-wrap: wrap; }
+  .ex-stat strong { display: block; font-size: 1.7rem; color: var(--orange-light); }
+  .ex-stat span { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; opacity: .85; }
+
+  /* ---------- Barre de recherche flottante ---------- */
+  .ex-bar { max-width: 980px; margin: -2.6rem auto 0; padding: 0 1.2rem; position: relative; z-index: 2; }
+  .ex-search { background: #fff; border-radius: 16px; box-shadow: var(--shadow-lg); padding: .8rem 1rem;
+    display: flex; gap: .8rem; align-items: center; }
+  .ex-search i { color: var(--orange); font-size: 1.1rem; }
+  .ex-search input { flex: 1; border: 0; outline: 0; font: inherit; font-size: 1rem; padding: .5rem 0; min-width: 0; }
+  .ex-search select { border: 1px solid var(--border); border-radius: 10px; padding: .55rem .8rem; font: inherit; background: #fff; }
+  .ex-pills { display: flex; gap: .5rem; flex-wrap: wrap; justify-content: center; margin: 1.3rem 0 .4rem; }
+  .ex-pill { border: 1px solid var(--border); background: #fff; color: var(--charcoal); border-radius: 999px;
+    padding: .5rem 1.05rem; font: 600 .85rem 'Montserrat', sans-serif; cursor: pointer; transition: var(--transition); }
+  .ex-pill:hover { border-color: var(--orange); color: var(--orange); }
+  .ex-pill.on { background: var(--orange); border-color: var(--orange); color: #fff; }
+
+  /* ---------- Grille ---------- */
+  .ex-main { max-width: 1280px; margin: 0 auto; padding: 1.2rem 1.5rem 3rem; }
+  .ex-count { color: var(--text-muted); font-size: .9rem; margin: 0 0 1rem; text-align: center; }
+  .ex-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1.4rem; }
+  .ex-card { background: #fff; border-radius: 18px; overflow: hidden; box-shadow: var(--shadow-sm);
+    display: flex; flex-direction: column; transition: transform .2s ease, box-shadow .2s ease; }
+  .ex-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+  .ex-top { position: relative; height: 96px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.95); font-size: 2.3rem; }
+  .ex-top.aventure { background: linear-gradient(135deg, #A16D32, #C2A074); }
+  .ex-top.nautique { background: linear-gradient(135deg, #2F4A5E, #3b8bb8); }
+  .ex-top.loisirs  { background: linear-gradient(135deg, #6a3d9a, #a06fd0); }
+  .ex-top.agence   { background: linear-gradient(135deg, #4D5E43, #52a37d); }
+  .ex-tag { position: absolute; top: .7rem; left: .8rem; background: rgba(255,255,255,.22); backdrop-filter: blur(4px);
+    font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: .25rem .6rem; border-radius: 999px; color: #fff; }
+  .ex-info { position: absolute; top: .7rem; right: .8rem; color: #fff; opacity: .85; font-size: .95rem; cursor: help; }
+  .ex-body { padding: 1.1rem 1.25rem 1.2rem; display: flex; flex-direction: column; gap: .55rem; flex: 1; }
+  .ex-body h3 { margin: 0; font-size: 1.1rem; line-height: 1.3; }
+  .ex-loc { color: var(--text-muted); font-size: .84rem; }
+  .ex-loc i { color: var(--orange); margin-right: .3rem; }
+  .ex-desc { font-size: .9rem; line-height: 1.5; color: #35485b; }
+  .ex-line { font-size: .84rem; line-height: 1.45; display: flex; gap: .55rem; align-items: flex-start; }
+  .ex-line i { color: var(--orange); margin-top: .2rem; width: 14px; text-align: center; }
+  .ex-actions { display: flex; gap: .6rem; margin-top: auto; padding-top: .7rem; }
+  .ex-actions a { flex: 1; text-align: center; text-decoration: none; font-weight: 600; font-size: .84rem; padding: .6rem .5rem; border-radius: 10px; transition: var(--transition); }
+  .ex-actions .main { background: var(--orange); color: #fff; }
+  .ex-actions .main:hover { background: #7F5528; }
+  .ex-actions .alt { background: #f1ece1; color: var(--charcoal); }
+  .ex-actions .alt:hover { background: #e7dfcf; }
+  .ex-empty { grid-column: 1/-1; text-align: center; padding: 3rem 1rem; color: var(--text-muted); }
+
+  /* ---------- Bas de page ---------- */
+  .ex-note { max-width: 860px; margin: 2.5rem auto 0; text-align: center; font-size: .82rem; color: var(--text-muted); line-height: 1.6; }
+  @media (max-width: 640px) { .ex-search { flex-wrap: wrap; } .ex-search select { width: 100%; } .ex-hero { padding-bottom: 5rem; } }
+  /* ===== Version « attrayante » ===== */
+  .ex-hero { padding: 5rem 1.5rem 7rem; overflow: hidden; }
+  .ex-hero::after { content:''; position:absolute; left:0; right:0; bottom:-1px; height:70px;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 70' preserveAspectRatio='none'><path fill='%23F7F3EA' d='M0,40 C240,80 480,0 720,32 C960,64 1200,10 1440,40 L1440,70 L0,70 Z'/></svg>") center bottom/100% 100% no-repeat; }
+  .ex-kicker { display:inline-block; font-size:.74rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
+    color: var(--orange-light); border:1px solid rgba(245,162,92,.55); padding:.35rem .9rem; border-radius:999px; margin-bottom:1.1rem; }
+  .ex-hero h1 { font-size: clamp(2.3rem, 6vw, 3.8rem); line-height: 1.08; text-shadow: 0 2px 20px rgba(0,0,0,.35); }
+  .ex-hero h1 em { font-style: italic; color: var(--orange-light); }
+  .ex-stats { gap: 1rem; }
+  .ex-stat { background: rgba(255,255,255,.12); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,.18);
+    border-radius: 14px; padding: .8rem 1.5rem; min-width: 130px; }
+  .ex-bar { margin-top: -3.4rem; }
+  .ex-search { padding: 1rem 1.3rem; border-radius: 18px; }
+  .ex-pills { padding: .8rem 0; margin: .8rem 0 0; }
+  .ex-pill { padding: .6rem 1.2rem; box-shadow: var(--shadow-sm); }
+  .ex-pill i { margin-right: .4rem; }
+  .ex-count { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--charcoal); margin: .6rem 0 1.4rem; }
+
+  .ex-grid { gap: 1.7rem; }
+  .ex-card { border-radius: 22px; opacity: 0; animation: exUp .55s ease forwards; box-shadow: 0 4px 18px rgba(15,25,35,.07); }
+  .ex-card:hover { transform: translateY(-7px); box-shadow: 0 18px 40px rgba(15,25,35,.16); }
+  @keyframes exUp { from { opacity:0; transform: translateY(18px); } to { opacity:1; transform:none; } }
+  .ex-top { height: 150px; align-items: flex-end; justify-content: flex-start; padding: 0 1.3rem; overflow: hidden; }
+  .ex-top::before { content:''; position:absolute; inset:0;
+    background: radial-gradient(circle at 85% 20%, rgba(255,255,255,.35) 0, transparent 38%),
+                radial-gradient(circle, rgba(255,255,255,.14) 1.5px, transparent 1.6px) 0 0/16px 16px; }
+  .ex-ghost { position:absolute; right:-14px; top:-10px; font-size: 9rem; color: rgba(255,255,255,.17); transform: rotate(-12deg); }
+  .ex-badge-ico { position: relative; z-index: 1; width: 62px; height: 62px; border-radius: 18px; background: #fff;
+    display:flex; align-items:center; justify-content:center; font-size: 1.6rem; transform: translateY(31px); box-shadow: var(--shadow-md); }
+  .ex-top.aventure .ex-badge-ico { color:#A16D32; } .ex-top.nautique .ex-badge-ico { color:#2F4A5E; }
+  .ex-top.loisirs .ex-badge-ico { color:#6a3d9a; } .ex-top.agence .ex-badge-ico { color:#4D5E43; }
+  .ex-body { padding: 2.3rem 1.4rem 1.4rem; gap: .65rem; }
+  .ex-body h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; }
+  .ex-sub { font-size:.72rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color: var(--text-muted); margin-top:-.35rem; }
+  .ex-price { display:flex; gap:.6rem; align-items:center; background:#F2EBDE; border-radius:12px; padding:.6rem .8rem;
+    font-size:.82rem; line-height:1.4; color:#5C4220; font-weight:500; }
+  .ex-price i { color: var(--orange); }
+  .ex-actions a { border-radius: 12px; padding: .72rem .5rem; }
+  .ex-actions .main { box-shadow: 0 6px 14px rgba(232,115,10,.3); }
+
+  /* Sections par département */
+  .ex-dept { margin: 0 0 2.4rem; }
+  .ex-dept-head { display: flex; align-items: baseline; gap: .7rem; margin: 0 0 1rem; padding-bottom: .5rem; border-bottom: 2px solid #E6DCC8; }
+  .ex-dept-head h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin: 0; }
+  .ex-dept-head span { color: var(--text-muted); font-size: .85rem; font-weight: 600; }
+  .ex-dept-empty { display: flex; gap: .8rem; align-items: flex-start; background: #fff; border: 1px dashed #C2A074; border-radius: 14px;
+    padding: 1.1rem 1.3rem; color: #5C4220; font-size: .92rem; line-height: 1.5; }
+  .ex-dept-empty i { color: var(--orange); margin-top: .2rem; }
+  .ex-search select { max-width: 200px; }
+
+  /* Excursions d'une journée, hors de la région */
+  .ex-hors { margin: 2.6rem 0 0; scroll-margin-top: 1rem; }
+  .ex-hors-lead { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .8rem 1.2rem; margin: 0 0 1.1rem; font-size: .9rem; color: #35485b; line-height: 1.5; }
+  .ex-hors-lead label { display: inline-flex; align-items: center; gap: .55rem; font-weight: 600; color: var(--charcoal); }
+  .ex-hors-lead select { border: 1px solid var(--border); border-radius: 10px; padding: .5rem .8rem; font: inherit; font-weight: 500; background: #fff; }
+  .ex-hgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 1.1rem; align-items: start; }
+  .ex-hcard { background: #fff; border-radius: 18px; overflow: hidden; box-shadow: 0 4px 16px rgba(15,25,35,.07); display: flex; flex-direction: column; }
+  .ex-htop { position: relative; padding: 1.1rem 1.2rem; color: #fff; overflow: hidden; min-height: 108px; }
+  .ex-htop.dakar { background: linear-gradient(135deg,#8C4A5A,#b9788a); }
+  .ex-htop.lac-rose { background: linear-gradient(135deg,#a64d79,#d98cb0); }
+  .ex-htop.saloum { background: linear-gradient(135deg,#2F4A5E,#3b8bb8); }
+  .ex-htop.lompoul { background: linear-gradient(135deg,#A16D32,#d9a864); }
+  .ex-htop .ex-hghost { position: absolute; right: -8px; top: -12px; font-size: 6rem; color: rgba(255,255,255,.17); transform: rotate(-12deg); }
+  .ex-htop h3 { position: relative; margin: 0 0 .3rem; font-family: 'Playfair Display', serif; font-size: 1.2rem; line-height: 1.25; }
+  .ex-htop p { position: relative; margin: 0; font-size: .82rem; line-height: 1.45; opacity: .95; max-width: 92%; }
+  .ex-hroute { display: flex; gap: .55rem; align-items: baseline; background: #F2EBDE; padding: .6rem 1.2rem; font-size: .84rem; color: #5C4220; font-weight: 700; }
+  .ex-hroute i { color: var(--orange); }
+  .ex-hroute small { font-weight: 500; color: #7a6544; }
+  .ex-hroute .ex-hgm { margin-left: auto; font-size: .72rem; font-weight: 600; color: var(--orange); text-decoration: none; white-space: nowrap; }
+  .ex-hroute .ex-hgm:hover { text-decoration: underline; }
+  .ex-hbody { padding: .6rem 1.2rem .3rem; }
+  .ex-hbody details summary { cursor: pointer; font-size: .84rem; font-weight: 600; padding: .35rem 0; }
+  .ex-hnote { font-size: .78rem; color: var(--text-muted); background: #f6f6f3; border-radius: 10px; padding: .45rem .65rem; margin: .1rem 0 .4rem; line-height: 1.4; }
+  .ex-hnote i { color: var(--orange); margin-right: .35rem; }
+  .ex-hsite { padding: .6rem 0; border-top: 1px solid var(--border); }
+  .ex-hsite strong { font-size: .88rem; }
+  .ex-hchip { margin-left: .4rem; font-size: .62rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: #5C4220; background: #F2EBDE; border-radius: 999px; padding: .12rem .5rem; vertical-align: 1px; }
+  .ex-hsite p { margin: .25rem 0 .3rem; font-size: .82rem; line-height: 1.5; color: #35485b; }
+  .ex-hsite a { color: var(--orange); font-size: .78rem; font-weight: 600; text-decoration: none; margin-right: .9rem; }
+  .ex-hsite a:hover { text-decoration: underline; }
+  .ex-hcard .ex-actions { padding: .5rem 1.2rem 1.2rem; margin-top: 0; }
+  .ex-htransport { margin: 1.3rem 0 0; background: #fff; border-radius: 14px; box-shadow: var(--shadow-sm); padding: .85rem 1.2rem; }
+  .ex-htransport summary { cursor: pointer; font-weight: 700; font-size: .9rem; }
+  .ex-htransport summary i { color: var(--orange); margin-right: .5rem; }
+  .ex-htransport p { font-size: .83rem; line-height: 1.55; color: #35485b; margin: .6rem 0; }
+  .ex-hsvc { display: flex; justify-content: space-between; gap: .8rem; flex-wrap: wrap; padding: .5rem 0; border-top: 1px solid var(--border); font-size: .84rem; }
+  .ex-hsvc small { display: block; color: var(--text-muted); }
+  .ex-hsvc a { color: var(--orange); font-weight: 600; text-decoration: none; margin-left: .8rem; }
+  .ex-hors-note { margin: 1rem 0 0; font-size: .78rem; color: var(--text-muted); line-height: 1.55; }
+  .ex-pill--link { text-decoration: none; display: inline-block; border-style: dashed; }
+
+  /* Bandeau d'appel à l'action */
+  .ex-cta { max-width: 1180px; margin: 3.5rem auto 0; border-radius: 26px; padding: 2.6rem 2rem; text-align: center; color:#fff;
+    background: linear-gradient(135deg, rgba(28,43,57,.92), rgba(27,79,114,.9)), url('images/saly.jpg') center/cover; }
+  .ex-cta h2 { font-family:'Playfair Display',serif; font-size: 1.9rem; margin: 0 0 .5rem; }
+  .ex-cta p { margin: 0 auto 1.4rem; max-width: 520px; opacity:.9; line-height:1.55; }
+  .ex-cta a { display:inline-block; background: var(--orange); color:#fff; text-decoration:none; font-weight:700;
+    padding: .9rem 1.8rem; border-radius: 999px; box-shadow: 0 8px 22px rgba(232,115,10,.45); transition: var(--transition); }
+  .ex-cta a:hover { transform: translateY(-2px); background:#7F5528; }
+  @media (prefers-reduced-motion: reduce) { .ex-card { animation: none; opacity: 1; } }
+</style>
+</head>
+<body>
+
+<header class="gp-header">
+  <div class="gp-header-left">
+    <a href="carte.html" class="gp-logo">
+      <span class="gp-logo-mark">T</span>
+      <span class="gp-logo-text">
+        <strong>Géoportail</strong>
+        <small>Tourisme — Région de Thiès</small>
+      </span>
+    </a>
+  </div>
+  <nav class="gp-nav">
+    <a href="carte.html"><i class="fa-solid fa-map"></i> Carte</a>
+    <a href="catalogue.html"><i class="fa-solid fa-list"></i> Catalogue</a>
+    <a href="excursions.html" class="active"><i class="fa-solid fa-route"></i> Excursions</a>
+    <a href="statistiques.html"><i class="fa-solid fa-chart-column"></i> Statistiques</a>
+    <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact</a>
+  </nav>
+  <button class="gp-mobile-menu" id="gpMobileMenu"><i class="fa-solid fa-bars"></i></button>
+</header>
+<section class="ex-hero">
+  <span class="ex-kicker">Petite-Côte · Sénégal</span>
+  <h1>Vivez la côte,<br><em>à votre rythme</em></h1>
+  <p>Quad, nautisme, accrobranche, pêche en mer, circuits guidés… Découvrez les prestataires de la Petite-Côte, entre Saly, la Somone et Sindia.</p>
+  <div class="ex-stats" id="exStats"></div>
+</section>
+
+<div class="ex-bar">
+  <div class="ex-search">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input id="exSearch" type="search" placeholder="Rechercher une activité, une agence, une commune…" aria-label="Rechercher">
+    <select id="exDept" aria-label="Département">
+      <option value="">Tous les départements</option>
+      <option value="MBOUR">Mbour</option>
+      <option value="THIES">Thiès</option>
+      <option value="TIVAOUANE">Tivaouane</option>
+    </select>
+    <select id="exCommune" aria-label="Commune"><option value="">Toutes les communes</option></select>
+  </div>
+  <div class="ex-pills" id="exPills">
+    <button class="ex-pill on" data-f=""><i class="fa-solid fa-compass"></i>Tout</button>
+    <button class="ex-pill" data-f="aventure"><i class="fa-solid fa-mountain-sun"></i>Aventure &amp; nature</button>
+    <button class="ex-pill" data-f="nautique"><i class="fa-solid fa-water"></i>Nautique &amp; pêche</button>
+    <button class="ex-pill" data-f="loisirs"><i class="fa-solid fa-bullseye"></i>Loisirs</button>
+    <button class="ex-pill" data-f="agence"><i class="fa-solid fa-route"></i>Agences &amp; guides</button>
+    <a class="ex-pill ex-pill--link" id="exHorsLink" href="#hors-region"><i class="fa-solid fa-sun"></i>Excursions d'une journée</a>
+  </div>
+</div>
+
+<main class="ex-main">
+  <p class="ex-count" id="exCount">Chargement…</p>
+  <div id="exGrid"></div>
+
+  <section class="ex-hors" id="hors-region" hidden>
+    <div class="ex-dept-head"><h2>Excursions d'une journée, hors de la région</h2><span>au-delà des départements de Thiès, Mbour et Tivaouane</span></div>
+    <div class="ex-hors-lead">
+      <span id="exHorsLead">Chargement…</span>
+      <label>Je pars de
+        <select id="exFrom" aria-label="Lieu de départ">
+          <option value="thies">Thiès</option><option value="mbour">Mbour</option><option value="saly">Saly</option>
+          <option value="tivaouane">Tivaouane</option><option value="gps">Ma position</option>
+        </select>
+      </label>
+    </div>
+    <div class="ex-hgrid" id="exHorsGrid"></div>
+    <details class="ex-htransport" id="exHorsTransport" hidden>
+      <summary><i class="fa-solid fa-car-side"></i><span id="exHorsTransportTitle">Se faire transporter</span></summary>
+      <div id="exHorsTransportBody"></div>
+    </details>
+    <p class="ex-hors-note">Ces lieux ont été recensés en ligne et ne sont pas encore vérifiés sur le terrain. Les distances et les durées sont indicatives : confirmez les horaires, les tarifs et les conditions d'accès avant de partir.</p>
+  </section>
+  <section class="ex-cta">
+    <h2>Envie de voir où tout se passe ?</h2>
+    <p>Retrouvez les prestataires, les hébergements, les restaurants et les sites touristiques sur la carte interactive.</p>
+    <a href="carte.html"><i class="fa-solid fa-map-location-dot"></i> Ouvrir la carte</a>
+  </section>
+  <p class="ex-note">Ce catalogue présente les offres recensées à ce jour dans le cadre du projet ; il ne constitue pas un inventaire exhaustif de la région de Thiès. Les tarifs et contacts affichés sont indicatifs et peuvent évoluer : confirmez toujours les prix, horaires et disponibilités directement auprès du prestataire avant de réserver.</p>
+</main>
+
+<script>
+const FAM_LABEL = { aventure: 'Aventure & nature', nautique: 'Nautique & pêche', loisirs: 'Loisirs', agence: 'Agence & guide' };
+const DEPTS = [['MBOUR', 'Mbour'], ['THIES', 'Thiès'], ['TIVAOUANE', 'Tivaouane']];
+const MSG_VIDE = "Aucune offre d'excursion n'a encore été recensée dans notre catalogue pour ce département.";
+let all = [], famille = '';
+
+function esc(s) {
+  if (s == null) return '';
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function firstPhone(contact) {
+  const m = String(contact || '').match(/\+221[\d\s]{9,}/);
+  return m ? m[0].trim() : null;
+}
+function hasCoords(p) { return !isNaN(parseFloat(p.latitude)) && !isNaN(parseFloat(p.longitude)); }
+function locateHref(p) { return `carte.html?presta=${encodeURIComponent(p.id)}`; }
+function card(p, i) {
+  const tel = firstPhone(p.contact);
+  const contactTxt = p.contact && !tel ? p.contact : null;
+  const tip = `Source : ${p.source}${p.source_url ? ' — ' + p.source_url : ''}. Statut : ${p.statut_verification}.`;
+  return `
+  <article class="ex-card" style="animation-delay:${Math.min(i, 12) * 55}ms">
+    <div class="ex-top ${esc(p.famille)}">
+      <span class="ex-tag">${esc(FAM_LABEL[p.famille])}</span>
+      <span class="ex-info" title="${esc(tip)}"><i class="fa-solid fa-circle-info"></i></span>
+      <i class="fa-solid ${esc(p.icone)} ex-ghost"></i>
+      <span class="ex-badge-ico"><i class="fa-solid ${esc(p.icone)}"></i></span>
+    </div>
+    <div class="ex-body">
+      <h3>${esc(p.nom)}</h3>
+      <div class="ex-sub">${esc(p.type)}</div>
+      <div class="ex-loc"><i class="fa-solid fa-location-dot"></i>${esc(p.localisation_texte)}</div>
+      <div class="ex-desc">${esc(p.description)}</div>
+      ${p.tarif_annonce ? `<div class="ex-price"><i class="fa-solid fa-tag"></i><span>${esc(p.tarif_annonce)}</span></div>` : ''}
+      ${contactTxt ? `<div class="ex-line"><i class="fa-solid fa-circle-info"></i><span>${esc(contactTxt)}</span></div>` : ''}
+      ${(tel || hasCoords(p)) ? `<div class="ex-actions">
+        ${tel ? `<a class="main" href="tel:${tel.replace(/\s/g, '')}"><i class="fa-solid fa-phone"></i> Appeler</a>` : ''}
+        ${hasCoords(p) ? `<a class="${tel ? 'alt' : 'main'}" href="${locateHref(p)}"><i class="fa-solid fa-map-location-dot"></i> Voir sur la carte</a>` : ''}
+      </div>` : ''}
+    </div>
+  </article>`;
+}
+function fillCommunes() {
+  const d = document.getElementById('exDept').value, sel = document.getElementById('exCommune'), keep = sel.value;
+  const communes = [...new Set(all.filter(p => !d || p.departement === d).map(p => p.commune))].sort();
+  sel.innerHTML = '<option value="">Toutes les communes</option>' + communes.map(x => `<option value="${esc(x)}">${esc(x)}</option>`).join('');
+  if (communes.includes(keep)) sel.value = keep;
+}
+function render() {
+  const q = document.getElementById('exSearch').value.trim().toLowerCase();
+  const c = document.getElementById('exCommune').value;
+  const d = document.getElementById('exDept').value;
+  const match = p => (!famille || p.famille === famille) && (!c || p.commune === c) &&
+    (!q || [p.nom, p.type, p.commune, p.localisation_texte, p.description].join(' ').toLowerCase().includes(q));
+  let total = 0, i = 0;
+  const sections = DEPTS.filter(([code]) => !d || d === code).map(([code, nom]) => {
+    const inDept = all.filter(p => p.departement === code);
+    const list = inDept.filter(match);
+    total += list.length;
+    let body;
+    if (!inDept.length) body = `<div class="ex-dept-empty"><i class="fa-solid fa-circle-info"></i><span>${MSG_VIDE}</span></div>`;
+    else if (!list.length) body = '<div class="ex-empty"><i class="fa-solid fa-compass fa-2x"></i><p>Aucun résultat pour cette recherche.</p></div>';
+    else body = `<div class="ex-grid">${list.map(p => card(p, i++)).join('')}</div>`;
+    return `<section class="ex-dept"><div class="ex-dept-head"><h2>Département de ${esc(nom)}</h2><span>${inDept.length ? list.length + ' offre' + (list.length > 1 ? 's' : '') : 'aucune offre recensée'}</span></div>${body}</section>`;
+  });
+  document.getElementById('exCount').textContent = `${total} résultat${total > 1 ? 's' : ''}`;
+  document.getElementById('exGrid').innerHTML = sections.join('');
+  horsVisible(!d && !c && !q && !famille);
+}
+fetch('data/prestataires.json').then(r => r.json()).then(d => {
+  all = d;
+  const nAct = d.filter(p => p.categorie === 'activite').length, nAge = d.filter(p => p.categorie === 'agence').length;
+  const communes = [...new Set(d.map(p => p.commune))].sort();
+  document.getElementById('exStats').innerHTML =
+    `<div class="ex-stat"><strong>${nAct}</strong><span>Activités</span></div>
+     <div class="ex-stat"><strong>${nAge}</strong><span>Agences &amp; guides</span></div>
+     <div class="ex-stat"><strong>${communes.length}</strong><span>Communes</span></div>`;
+  fillCommunes();
+  render();
+}).catch(() => { document.getElementById('exCount').textContent = 'Impossible de charger les données : ouvrez le site avec un serveur local (ex. Live Server).'; });
+document.getElementById('exSearch').addEventListener('input', render);
+const _mm = document.querySelector('.gp-mobile-menu'); if (_mm) _mm.addEventListener('click', () => document.querySelector('.gp-nav').classList.toggle('open'));
+document.getElementById('exCommune').addEventListener('change', render);
+document.getElementById('exDept').addEventListener('change', () => { fillCommunes(); render(); });
+document.getElementById('exPills').addEventListener('click', e => {
+  const b = e.target.closest('.ex-pill'); if (!b || b.tagName === 'A') return;
+  famille = b.dataset.f;
+  document.querySelectorAll('.ex-pill').forEach(x => x.classList.toggle('on', x === b));
+  render();
+});
+
+// ====================================================================
+// Excursions d'une journée, hors de la région (données : sites_alentours.json)
+// ====================================================================
+const DESTINATIONS = {
+  'dakar':    { titre: 'Dakar et Gorée', icone: 'fa-landmark',
+                accroche: "Musées, monuments et lieux de mémoire de la capitale, avec l'île de Gorée.",
+                note: "L'île de Gorée se rejoint en bateau depuis Dakar." },
+  'lac-rose': { titre: 'Le Lac Rose', icone: 'fa-droplet',
+                accroche: 'Lagune salée à la teinte rosée, avec deux parcs de loisirs à proximité.' },
+  'saloum':   { titre: 'Delta du Saloum — Palmarin et Dangane', icone: 'fa-sailboat',
+                accroche: 'Salines artisanales, île aux oiseaux et sorties en pirogue dans les bolongs.' },
+  'lompoul':  { titre: 'Désert de Lompoul', icone: 'fa-sun',
+                accroche: "Mini-désert de dunes de sable ocre, en bordure de l'océan Atlantique." },
+};
+const DEPARTS = {   // centres-villes approximatifs
+  thies:     { nom: 'Thiès',     lat: 14.7886, lon: -16.9246, zone: 'Thiès' },
+  mbour:     { nom: 'Mbour',     lat: 14.4198, lon: -16.9640, zone: 'Mbour' },
+  saly:      { nom: 'Saly',      lat: 14.4490, lon: -17.0040, zone: 'Saly' },
+  tivaouane: { nom: 'Tivaouane', lat: 14.9519, lon: -16.8189, zone: 'Tivaouane' },
+};
+const TYPE_LABELS = { naturel: 'Naturel', culturel: 'Culturel', loisir: 'Loisir' };
+const OSRM = 'https://routing.openstreetmap.de/routed-car/route/v1/driving';
+let groupes = [], services = [], depart = { key: 'thies', ...DEPARTS.thies };
+const cacheRoutes = new Map();
+
+function km(a, b) {   // distance à vol d'oiseau (haversine)
+  const R = 6371, r = x => x * Math.PI / 180;
+  const dLat = r(b.lat - a.lat), dLon = r(b.lon - a.lon);
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(r(a.lat)) * Math.cos(r(b.lat)) * Math.sin(dLon / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(h));
+}
+const ptOf = f => ({ lon: f.geometry.coordinates[0], lat: f.geometry.coordinates[1] });
+function duree(s) { const m = Math.round(s / 60), h = Math.floor(m / 60); return h ? `${h} h ${String(m % 60).padStart(2, '0')}` : `${m} min`; }
+function phoneHref(t) { return 'tel:' + String(t).replace(/[^\d+]/g, ''); }
+// Lien vers la carte du portail : les sites de la destination en points numérotés, classés depuis le départ choisi
+function carteHref(key, f) {
+  let h = `carte.html?excursion=${encodeURIComponent(key)}&dep=${depart.lat.toFixed(5)},${depart.lon.toFixed(5)}&depnom=${encodeURIComponent(depart.nom)}`;
+  if (f) h += `&site=${encodeURIComponent(f.properties.nom)}`;
+  return h;
+}
+
+function horsCard(g) {
+  const a = g.ancre, p = ptOf(a), d = km(depart, p);
+  const sites = g.sites.map(f => { const q = f.properties; return `<div class="ex-hsite">
+      <strong>${esc(q.nom)}</strong>${q.type ? `<span class="ex-hchip">${esc(TYPE_LABELS[q.type] || q.type)}</span>` : ''}
+      ${q.description ? `<p>${esc(q.description)}</p>` : ''}
+      <a href="${carteHref(g.key, f)}"><i class="fa-solid fa-map-location-dot"></i> Voir sur la carte</a>
+      ${q.telephone ? `<a href="${phoneHref(q.telephone)}"><i class="fa-solid fa-phone"></i> ${esc(q.telephone)}</a>` : ''}</div>`; }).join('');
+  const n = g.sites.length;
+  return `<article class="ex-hcard">
+    <div class="ex-htop ${g.key}"><i class="fa-solid ${g.meta.icone} ex-hghost"></i><h3>${esc(g.meta.titre)}</h3><p>${esc(g.meta.accroche)}</p></div>
+    <div class="ex-hroute" id="hroute-${g.key}"><i class="fa-solid fa-route"></i>
+      <span>≈ ${Math.round(d)} km <small>à vol d'oiseau depuis ${esc(depart.nom)}</small></span></div>
+    <div class="ex-hbody">
+      ${g.meta.note ? `<div class="ex-hnote"><i class="fa-solid fa-ferry"></i>${esc(g.meta.note)}</div>` : ''}
+      <details><summary>${n} lieu${n > 1 ? 'x' : ''} à voir</summary>${sites}</details>
+    </div>
+    <div class="ex-actions">
+      <a class="main" href="${carteHref(g.key)}"><i class="fa-solid fa-map-location-dot"></i> Voir le parcours sur la carte</a>
+    </div></article>`;
+}
+function renderHors() {
+  const ordre = [...groupes].sort((x, y) => km(depart, ptOf(x.ancre)) - km(depart, ptOf(y.ancre)));   // les plus proches d'abord
+  document.getElementById('exHorsGrid').innerHTML = ordre.map(horsCard).join('');
+  document.getElementById('exHorsLead').textContent = ordre.length
+    ? `${ordre.length} destinations voisines, de la plus proche à la plus éloignée depuis ${depart.nom}.` : '';
+  ordre.forEach(chargerRoute);
+  renderTransportHors();
+}
+async function chargerRoute(g) {
+  const p = ptOf(g.ancre), cle = `${depart.lat.toFixed(3)},${depart.lon.toFixed(3)}>${g.key}`;
+  const afficher = r => { const el = document.getElementById('hroute-' + g.key); if (el && r) el.querySelector('span').innerHTML =
+    `≈ ${duree(r.duration)} <small>· ${Math.round(r.distance / 1000)} km par la route depuis ${esc(depart.nom)}</small>`; };
+  if (cacheRoutes.has(cle)) return afficher(cacheRoutes.get(cle));
+  const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 7000);
+  try {
+    const res = await fetch(`${OSRM}/${depart.lon},${depart.lat};${p.lon},${p.lat}?overview=false`, { signal: ctl.signal });
+    const j = await res.json();
+    if (j.routes && j.routes[0]) { cacheRoutes.set(cle, j.routes[0]); afficher(j.routes[0]); }
+  } catch (e) { /* on garde la distance à vol d'oiseau */ }
+  finally { clearTimeout(t); }
+}
+function renderTransportHors() {
+  const box = document.getElementById('exHorsTransport'), body = document.getElementById('exHorsTransportBody'), zone = depart.zone;
+  document.getElementById('exHorsTransportTitle').textContent = zone ? `Se faire transporter depuis ${depart.nom}` : 'Se faire transporter';
+  if (!zone) { body.innerHTML = '<p>Choisissez une ville de départ pour voir les services de transport recensés dans cette zone.</p>'; box.hidden = false; return; }
+  const liste = services.filter(s => (s.zones || []).includes(zone));
+  body.innerHTML = `<p>Aucun des services recensés dans ce portail ne déclare ces destinations dans ses zones de desserte. Ceux ci-dessous interviennent au départ de ${esc(depart.nom)} : contactez-les pour savoir si une excursion est possible et à quel prix.</p>` +
+    (liste.length ? liste.map(s => `<div class="ex-hsvc"><div><strong>${esc(s.nom)}</strong><small>${esc(s.type_service)}</small></div>
+        <div>${s.telephone ? `<a href="${phoneHref(s.telephone)}"><i class="fa-solid fa-phone"></i> ${esc(s.telephone)}</a>` : ''}
+        ${s.site_web ? `<a href="${esc(s.site_web)}" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> Site</a>` : ''}</div></div>`).join('')
+      : '<p>Aucun service recensé pour cette zone.</p>');
+  box.hidden = !services.length;
+}
+// La section n'apparaît que dans la vue complète (aucun filtre de département, de commune, de famille ni de recherche)
+function horsVisible(vue) { document.getElementById('hors-region').hidden = !(vue && groupes.length); }
+
+document.getElementById('exFrom').addEventListener('change', e => {
+  const k = e.target.value, lead = document.getElementById('exHorsLead');
+  if (k === 'gps') {
+    if (!navigator.geolocation) { lead.textContent = "La localisation n'est pas disponible sur cet appareil."; e.target.value = depart.key; return; }
+    lead.textContent = 'Localisation en cours…';
+    navigator.geolocation.getCurrentPosition(pos => {
+      depart = { key: 'gps', nom: 'votre position', lat: pos.coords.latitude, lon: pos.coords.longitude, zone: null }; renderHors();
+    }, () => { lead.textContent = 'Position refusée ou indisponible : choisissez une ville de départ.'; e.target.value = depart.key; });
+    return;
+  }
+  depart = { key: k, ...DEPARTS[k] }; renderHors();
+});
+document.getElementById('exHorsLink').addEventListener('click', e => {       // le raccourci du haut remet la vue complète puis descend
+  e.preventDefault();
+  document.getElementById('exSearch').value = ''; document.getElementById('exDept').value = ''; fillCommunes();
+  document.getElementById('exCommune').value = ''; famille = '';
+  document.querySelectorAll('.ex-pill').forEach(x => x.classList.toggle('on', x.dataset.f === ''));
+  render();
+  document.getElementById('hors-region').scrollIntoView({ behavior: 'smooth' });
+});
+Promise.all([
+  fetch('sites_alentours.json').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }),
+  fetch('data/transports.json').then(r => r.json()).catch(() => []),
+]).then(([fc, svc]) => {
+  services = svc;
+  const parCle = {};
+  fc.features.forEach(f => { const k = f.properties.destination; if (k && DESTINATIONS[k]) (parCle[k] = parCle[k] || []).push(f); });
+  groupes = Object.entries(parCle).map(([key, sites]) => ({ key, meta: DESTINATIONS[key], sites, ancre: sites.find(f => f.properties.ancre) || sites[0] }));
+  renderHors(); render();
+}).catch(() => { /* fichier absent : la section reste masquée */ });
+</script>
+</body>
+</html>

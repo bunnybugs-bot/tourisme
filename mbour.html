@@ -3,374 +3,1361 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mbour — Région de Thiès | Tourisme</title>
+<title>Mbour — Territoire & Patrimoine | Région de Thiès</title>
+<meta name="description" content="Découvrez le département de Mbour : son histoire de pêcheurs, son économie touristique, sa culture et son patrimoine.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Montserrat:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
 <style>
-
+/* ============================================================
+   MBOUR — Page Territoire
+   Palette : bleu (océan), sable (plage)
+   ============================================================ */
 :root {
-  --orange: #E8730A;
-  --orange-light: #F59B3B;
-  --orange-pale: #FDF0E0;
-  --green: #2D6A4F;
-  --green-light: #52B788;
-  --blue: #1B4F72;
-  --blue-mid: #2E86AB;
-  --cream: #FAF7F0;
-  --sand: #E8D5B7;
-  --dark: #0F1923;
+  --blue: #0D3B66;
+  --blue-mid: #1B6CA8;
+  --blue-ocean: #2E86AB;
+  --blue-light: #5DADE2;
+  --blue-pale: #E6F2FA;
+  --blue-deep: #0A2540;
+  --sand: #E8C766;
+  --sand-light: #F4D58D;
+  --sand-pale: #FFF9E8;
+  --white: #FFFFFF;
+  --white-soft: #F9FBFC;
   --charcoal: #1C2B39;
   --text: #2C3E50;
-  --text-muted: #8A9BB0;
-  --white: #FFFFFF;
+  --text-muted: #7F8C8D;
+  --text-soft: #95A5A6;
+  --dark: #0F1923;
   --nav-h: 68px;
-  --border: rgba(232,213,183,0.5);
+  --border: rgba(13,59,102,0.12);
+  --border-sand: rgba(232,199,102,0.35);
   --shadow: 0 2px 20px rgba(15,25,35,0.07);
-  --shadow-lg: 0 16px 56px rgba(15,25,35,0.18);
+  --shadow-md: 0 8px 32px rgba(15,25,35,0.10);
+  --shadow-lg: 0 20px 64px rgba(15,25,35,0.20);
   --radius: 20px;
+  --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
+html { scroll-behavior:smooth; scroll-padding-top: 130px; }
 body {
   font-family:'Montserrat',sans-serif;
-  background: var(--cream);
+  background: var(--white);
   color: var(--text);
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  overflow-x: hidden;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 100% 0%, rgba(46,134,171,0.05) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 0% 100%, rgba(232,199,102,0.04) 0%, transparent 60%);
+  background-attachment: fixed;
 }
 
-/* NAV */
+/* ============== NAV ============== */
 nav {
-  position: sticky; top: 0; z-index: 100;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
   height: var(--nav-h);
   display: flex; align-items: center; padding: 0 2.5rem; gap: 1rem;
-  background: rgba(250,247,240,0.92);
-  backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid var(--border);
+  background: rgba(10,37,64,0.85);
+  backdrop-filter: blur(16px) saturate(160%);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  transition: background var(--transition);
 }
+nav.solid { background: rgba(10,37,64,0.98); }
 .nav-back {
   display: flex; align-items: center; gap: 0.6rem;
-  color: var(--text-muted); text-decoration: none;
-  font-size: 0.78rem; font-weight: 600;
-  letter-spacing: 0.3px; transition: color 0.2s;
+  color: rgba(255,255,255,0.75); text-decoration: none;
+  font-size: 0.76rem; font-weight: 600;
+  letter-spacing: 0.3px; transition: color var(--transition);
   text-transform: uppercase;
 }
-.nav-back:hover { color: var(--orange); }
+.nav-back:hover { color: var(--sand-light); }
 .nav-back i { font-size: 0.72rem; }
-.nav-divider { color: var(--sand); }
-.nav-title { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--dark); font-weight: 700; }
-.nav-links-inline { margin-left: auto; display: flex; gap: 1.4rem; }
-.nav-links-inline a {
-  font-size: 0.76rem; font-weight: 600; color: var(--text-muted);
-  text-decoration: none; text-transform: uppercase; letter-spacing: 0.4px;
-  transition: color 0.2s;
-}
-.nav-links-inline a:hover { color: var(--orange); }
-
-/* PAGE HEADER */
-.page-header {
-  background: var(--dark);
-  padding: 4.5rem 2.5rem 3.5rem;
-  position: relative; overflow: hidden;
-}
-.page-header::before {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse 70% 90% at 90% 60%, rgba(46,134,171,0.25) 0%, transparent 65%), radial-gradient(ellipse 40% 60% at 10% 30%, rgba(232,115,10,0.1) 0%, transparent 60%);
-}
-.page-header-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 2; }
-.breadcrumb {
-  display: flex; align-items: center; gap: 0.5rem;
-  font-size: 0.72rem; color: rgba(255,255,255,0.4);
-  text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 1.2rem;
-}
-.breadcrumb span { color: var(--orange-light); }
-.page-header h1 {
+.nav-divider { color: rgba(255,255,255,0.25); }
+.nav-title {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(2rem, 5vw, 3.2rem);
-  color: white; line-height: 1.15; margin-bottom: 0.7rem; font-weight: 900;
+  font-size: 1rem; color: #fff; font-weight: 700;
 }
-.page-header h1 em { font-style: italic; color: var(--orange-light); }
-.page-header p.tagline { color: rgba(255,255,255,0.55); font-size: 0.95rem; max-width: 560px; line-height: 1.7; margin-bottom: 2rem; }
 
-.header-stats { display: flex; gap: 2.2rem; flex-wrap: wrap; }
-.header-stat-num {
-  display: block; font-family: 'Playfair Display', serif;
-  font-size: 1.8rem; font-weight: 800; color: var(--orange-light);
+/* ============== HERO MINI ============== */
+.hero-mini {
+  position: relative;
+  height: 55vh;
+  min-height: 400px;
+  overflow: hidden;
+  color: #fff;
+  z-index: 1;
 }
-.header-stat-label { font-size: 0.72rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.5px; }
+.hero-mini-bg {
+  position: absolute; inset: 0;
+  background-image: url('images/mbour-hero.jpg');
+  background-size: cover;
+  background-position: center;
+  background-color: var(--blue-deep);
+  transform: scale(1.05);
+  will-change: transform, filter;
+}
+.hero-mini-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(10,37,64,0.20) 0%, rgba(10,37,64,0.30) 55%, rgba(10,37,64,0.70) 100%);
+}
+.hero-mini-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+.hero-mini-content {
+  position: relative; z-index: 3;
+  max-width: 1280px; margin: 0 auto;
+  padding: calc(var(--nav-h) + 2rem) 2.5rem 2rem;
+  height: 100%; display: flex; flex-direction: column; justify-content: center;
+}
+.hero-mini-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 0.4rem 1rem; border-radius: 30px;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.35);
+  color: #fff; font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 1.2rem; backdrop-filter: blur(10px);
+  text-shadow: 0 1px 6px rgba(0,0,0,0.5); width: fit-content;
+}
+.hero-mini-tag .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--sand);
+  box-shadow: 0 0 0 3px rgba(232,199,102,0.3);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(232,199,102,0.3); }
+  50% { box-shadow: 0 0 0 8px rgba(232,199,102,0.1); }
+}
+.hero-mini h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 7vw, 5rem);
+  font-weight: 900; line-height: 0.95; letter-spacing: -0.02em;
+  margin-bottom: 0.8rem; text-shadow: 0 2px 12px rgba(0,0,0,0.75), 0 4px 32px rgba(0,0,0,0.5);
+}
+.hero-mini h1 em {
+  font-style: italic; color: var(--sand-light); font-weight: 400;
+  display: block; font-size: 0.55em; margin-top: 0.3rem;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.75), 0 4px 24px rgba(0,0,0,0.5);
+}
+.hero-mini-lead {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1rem, 1.8vw, 1.3rem); font-style: italic;
+  color: rgba(255,255,255,0.95); line-height: 1.5; max-width: 620px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.8), 0 4px 20px rgba(0,0,0,0.5);
+}
 
-/* MAIN */
-.main { max-width: 1200px; margin: 0 auto; padding: 3rem 2rem; }
+.content-envelope {
+  position: relative; z-index: 10;
+  background: var(--white); border-radius: 40px 40px 0 0;
+  margin-top: -50px; box-shadow: 0 -20px 60px rgba(10,37,64,0.18);
+  padding-top: 2rem; overflow: hidden;
+}
 
-.dept-section { margin-bottom: 4.5rem; }
-.dept-section-head { margin-bottom: 2rem; display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
-.section-eyebrow {
-  font-size: 0.72rem; font-weight: 700; letter-spacing: 1.5px;
-  text-transform: uppercase; color: var(--orange); margin-bottom: 0.4rem; display:block;
+/* ============== SOMMAIRE ============== */
+.sommaire {
+  position: sticky; top: var(--nav-h); z-index: 100;
+  background: rgba(255,255,255,0.97); backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border); box-shadow: 0 4px 20px rgba(13,59,102,0.05);
 }
-.section-h2 { font-family: 'Playfair Display', serif; font-size: 1.7rem; color: var(--dark); font-weight: 800; }
-.section-h2 em { font-style: italic; color: var(--orange); }
-.section-lead { font-size: 0.88rem; color: var(--text-muted); max-width: 650px; line-height: 1.8; margin-top: 0.6rem; }
+.sommaire-inner {
+  max-width: 1280px; margin: 0 auto; display: flex; align-items: center;
+  padding: 0.7rem 2.5rem; gap: 1.5rem; overflow-x: auto; scrollbar-width: none;
+}
+.sommaire-inner::-webkit-scrollbar { display: none; }
+.sommaire-label {
+  font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.5px; color: var(--text-muted); flex-shrink: 0;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.sommaire-label i { color: var(--blue); }
+.sommaire-links { display: flex; gap: 0.3rem; list-style: none; }
+.sommaire-links a {
+  display: inline-block; padding: 0.5rem 0.9rem; font-size: 0.78rem; font-weight: 600;
+  color: var(--text-muted); text-decoration: none; border-radius: 20px;
+  white-space: nowrap; transition: all var(--transition);
+}
+.sommaire-links a:hover { background: var(--blue-pale); color: var(--blue); }
+.sommaire-links a.active { background: var(--blue); color: #fff; }
+.sommaire-progress {
+  position: absolute; bottom: -1px; left: 0; height: 2px;
+  background: var(--sand); width: 0%; transition: width 0.1s linear;
+}
 
-.see-all-link {
-  font-size: 0.8rem; font-weight: 700; color: var(--dark);
-  text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
-  white-space: nowrap;
+/* ============== SECTIONS ============== */
+section { padding: 5rem 2.5rem; position: relative; }
+.section-inner { max-width: 1280px; margin: 0 auto; }
+.section-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 2rem; flex-wrap: wrap; margin-bottom: 2.5rem;
 }
-.see-all-link:hover { color: var(--orange); }
+.section-head > div { max-width: 720px; }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 0.7rem;
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--blue); margin-bottom: 0.7rem;
+}
+.eyebrow::before { content: ''; width: 28px; height: 2px; background: var(--sand); }
+.section-title {
+  font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800; line-height: 1.15; color: var(--blue-deep); letter-spacing: -0.01em;
+}
+.section-title em { font-style: italic; color: var(--sand); font-weight: 400; }
+.section-lead { font-size: 0.95rem; color: var(--text-muted); line-height: 1.8; max-width: 620px; margin-top: 0.8rem; }
 
-/* INTRO */
-.intro-box {
-  background: white; border-radius: var(--radius); padding: 2.2rem;
-  box-shadow: var(--shadow); margin-bottom: 4.5rem;
-  display: grid; grid-template-columns: 2fr 1fr; gap: 2.5rem; align-items: center;
+.section-white { background: var(--white); }
+.section-white-soft { background: var(--white-soft); }
+.section-pale-blue { background: linear-gradient(180deg, var(--white) 0%, var(--blue-pale) 100%); }
+.section-dark {
+  background: radial-gradient(ellipse 70% 60% at 100% 0%, rgba(93,173,226,0.25) 0%, transparent 60%), radial-gradient(ellipse 50% 40% at 0% 100%, rgba(232,199,102,0.15) 0%, transparent 60%), var(--blue-deep);
+  color: #fff;
 }
-.intro-box p { font-size: 0.92rem; line-height: 1.9; color: var(--text); }
-.intro-fact-list { display: flex; flex-direction: column; gap: 1rem; }
-.intro-fact {
-  display: flex; gap: 0.8rem; align-items: flex-start;
-  padding: 0.9rem; background: var(--cream); border-radius: 12px;
-}
-.intro-fact i { color: var(--orange); font-size: 0.95rem; margin-top: 2px; }
-.intro-fact b { display: block; font-size: 0.85rem; color: var(--dark); }
-.intro-fact span { font-size: 0.72rem; color: var(--text-muted); }
+.section-dark .section-title { color: #fff; }
+.section-dark .section-lead { color: rgba(255,255,255,0.7); }
+.section-dark .eyebrow { color: var(--sand-light); }
+.section-dark .eyebrow::before { background: var(--sand-light); }
 
-/* GRID CARDS (attractions / expériences) */
-.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.6rem; }
-.dept-card {
-  background: white; border-radius: 18px; overflow: hidden;
-  box-shadow: var(--shadow); transition: transform 0.3s, box-shadow 0.3s;
-}
-.dept-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
-.dept-card-img {
-  height: 170px; display: flex; align-items: center; justify-content: center;
-  font-size: 3.2rem; color: rgba(255,255,255,0.85); position: relative;
-}
-.dept-card-body { padding: 1.3rem 1.4rem 1.5rem; }
-.dept-card-tag {
-  font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 1px; color: var(--orange); margin-bottom: 0.4rem; display: block;
-}
-.dept-card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--dark); margin-bottom: 0.5rem; }
-.dept-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.7; }
+/* ============== INTRO GRID ============== */
+.intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; margin-top: 2rem; }
+@media (max-width: 860px) { .intro-grid { grid-template-columns: 1fr; gap: 2rem; } }
+.intro-text { font-size: 1rem; line-height: 1.85; color: var(--text); }
+.intro-text p { margin-bottom: 1.2rem; }
+.intro-text strong { color: var(--blue-deep); }
+.intro-text em { color: var(--blue-mid); font-style: italic; font-weight: 600; }
 
-/* PREVIEW ROW (hébergements / restaurants) */
-.preview-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem; }
-.preview-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); }
-.preview-img { height: 140px; display: flex; align-items: center; justify-content: center; font-size: 2.4rem; color: rgba(255,255,255,0.85); }
-.preview-body { padding: 1.1rem 1.2rem; }
-.preview-body h4 { font-family: 'Playfair Display', serif; font-size: 0.98rem; color: var(--dark); margin-bottom: 0.3rem; }
-.preview-body p { font-size: 0.76rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 0.6rem; }
-.preview-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; }
-.preview-price { font-weight: 700; color: var(--orange); }
-.preview-rating { color: var(--dark); font-weight: 700; }
-
-.btn-cta {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  background: var(--dark); color: white; text-decoration: none;
-  padding: 0.75rem 1.5rem; border-radius: 50px;
-  font-size: 0.82rem; font-weight: 700; transition: all 0.25s;
+/* ============== TIMELINE ============== */
+.timeline-wrap {
+  margin-top: 3rem; padding: 2.5rem 2rem 1.5rem;
+  background: linear-gradient(180deg, #fff 0%, var(--blue-pale) 100%);
+  border-radius: var(--radius); border: 1px solid var(--border); position: relative; overflow: hidden;
 }
-.btn-cta:hover { background: var(--orange); box-shadow: 0 6px 20px rgba(232,115,10,0.35); }
-.btn-cta.outline { background: transparent; border: 1.5px solid var(--border); color: var(--text); }
-.btn-cta.outline:hover { border-color: var(--dark); color: var(--dark); background: white; }
+.timeline-wrap::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--blue), var(--sand), var(--blue-light)); }
+.timeline-heading { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--blue-deep); margin-bottom: 2rem; display: flex; align-items: center; gap: 0.7rem; }
+.timeline-heading i { color: var(--blue); }
+.timeline { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.5rem; }
+.timeline::before { content: ''; position: absolute; top: 32px; left: 5%; right: 5%; height: 2px; background: linear-gradient(90deg, var(--blue), var(--sand), var(--blue-light)); opacity: 0.35; }
+.timeline-item { text-align: center; position: relative; padding-top: 60px; }
+.timeline-dot { position: absolute; top: 22px; left: 50%; transform: translateX(-50%); width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 4px solid var(--blue); box-shadow: 0 0 0 6px rgba(13,59,102,0.12); z-index: 2; transition: transform var(--transition); }
+.timeline-item:hover .timeline-dot { transform: translateX(-50%) scale(1.2); border-color: var(--sand); box-shadow: 0 0 0 10px rgba(232,199,102,0.15); }
+.timeline-year { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 800; color: var(--blue); line-height: 1; margin-bottom: 0.6rem; }
+.timeline-title { font-size: 0.85rem; font-weight: 700; color: var(--blue-deep); margin-bottom: 0.4rem; line-height: 1.3; }
+.timeline-desc { font-size: 0.76rem; color: var(--text-muted); line-height: 1.6; }
 
-/* PRACTICAL FOOTER CTA */
-.dept-footer-cta {
-  background: var(--charcoal); border-radius: var(--radius);
-  padding: 3rem 2.5rem; text-align: center; color: white;
-  margin-top: 1rem;
+/* ============== SAVIEZ-VOUS ============== */
+.saviez-vous { margin-top: 3rem; background: linear-gradient(135deg, #fff 0%, var(--sand-pale) 100%); border-radius: var(--radius); border: 1px solid var(--border-sand); padding: 2.2rem 2rem; position: relative; overflow: hidden; }
+.saviez-vous::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--blue), var(--sand), var(--blue-light)); }
+.sv-head { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.5rem; }
+.sv-head i { color: var(--sand); font-size: 1.4rem; }
+.sv-head h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--blue-deep); font-weight: 800; }
+.sv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.2rem; }
+.sv-item { background: #fff; border-radius: 12px; padding: 1.1rem 1.2rem; border-left: 3px solid var(--blue); display: flex; gap: 0.9rem; align-items: flex-start; transition: transform var(--transition), box-shadow var(--transition); }
+.sv-item:hover { transform: translateX(5px); box-shadow: var(--shadow); }
+.sv-num { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; color: var(--sand); line-height: 1; flex-shrink: 0; }
+.sv-item p { font-size: 0.84rem; line-height: 1.65; color: var(--text); margin: 0; }
+.sv-item strong { color: var(--blue-deep); font-weight: 700; }
+
+/* ============== CTA CIRCUIT ============== */
+.cta-circuit { text-align: center; max-width: 800px; margin: 0 auto; }
+.cta-circuit p { font-size: 1.05rem; color: rgba(255,255,255,0.8); line-height: 1.8; margin-bottom: 2rem; }
+.btn { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.9rem 1.8rem; border-radius: 50px; font-family: inherit; font-size: 0.85rem; font-weight: 600; text-decoration: none; cursor: pointer; border: none; letter-spacing: 0.3px; transition: transform var(--transition), box-shadow var(--transition); white-space: nowrap; }
+.btn-sand { background: linear-gradient(135deg, var(--sand) 0%, var(--sand-light) 100%); color: var(--blue-deep); box-shadow: 0 8px 24px rgba(232,199,102,0.4); font-weight: 700; }
+.btn-sand:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(232,199,102,0.55); }
+.btn-blue { background: linear-gradient(135deg, var(--blue) 0%, var(--blue-mid) 100%); color: #fff; box-shadow: 0 8px 24px rgba(13,59,102,0.4); }
+.btn-blue:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(13,59,102,0.55); }
+.btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--blue); }
+.btn-outline:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-pale); }
+
+/* ============== GALERIE ============== */
+.gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 200px; gap: 12px; }
+.g-item { position: relative; border-radius: 14px; overflow: hidden; cursor: pointer; background: var(--blue-deep); }
+.g-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+.g-item:nth-child(6) { grid-column: span 2; }
+.g-item:nth-child(9) { grid-row: span 2; }
+.g-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); display: block; }
+.g-item:hover img { transform: scale(1.08); }
+.g-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,37,64,0.8) 0%, transparent 50%); display: flex; align-items: flex-end; padding: 1rem 1.1rem; opacity: 0; transition: opacity var(--transition); }
+.g-item:hover .g-overlay { opacity: 1; }
+.g-label { color: #fff; font-size: 0.82rem; font-weight: 600; line-height: 1.35; }
+.g-label i { display: block; font-size: 0.65rem; color: var(--sand-light); margin-bottom: 0.3rem; letter-spacing: 1px; text-transform: uppercase; font-style: normal; }
+
+/* Lightbox */
+.lightbox { position: fixed; inset: 0; z-index: 999; background: rgba(6,20,35,0.96); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; padding: 2rem; opacity: 0; transition: opacity 0.3s ease; }
+.lightbox.open { display: flex; opacity: 1; }
+.lightbox-content { position: relative; max-width: 1000px; max-height: 85vh; width: 100%; border-radius: 16px; overflow: hidden; background: var(--blue-deep); animation: lbIn 0.4s ease; }
+@keyframes lbIn { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+.lightbox-img { width: 100%; height: 100%; max-height: 80vh; object-fit: contain; display: block; }
+.lightbox-caption { position: absolute; left: 0; right: 0; bottom: 0; padding: 1.5rem 2rem 1.3rem; background: linear-gradient(to top, rgba(10,37,64,0.95), transparent); color: #fff; font-size: 1rem; font-weight: 600; }
+.lightbox-caption small { display: block; font-size: 0.72rem; color: rgba(255,255,255,0.6); margin-top: 0.3rem; font-weight: 400; letter-spacing: 1px; text-transform: uppercase; }
+.lb-close, .lb-nav { position: absolute; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); color: #fff; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background var(--transition); backdrop-filter: blur(6px); z-index: 2; }
+.lb-close { top: 1rem; right: 1rem; }
+.lb-nav.prev { top: 50%; left: 1rem; transform: translateY(-50%); }
+.lb-nav.next { top: 50%; right: 1rem; transform: translateY(-50%); }
+.lb-close:hover, .lb-nav:hover { background: var(--sand); border-color: var(--sand); color: var(--blue-deep); }
+
+/* ============== SAISONNALITÉ ============== */
+.season-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 6px; margin: 2.5rem 0; }
+.season-month { border-radius: 10px; padding: 1rem 0.3rem; text-align: center; position: relative; transition: transform var(--transition), box-shadow var(--transition); }
+.season-month:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(13,59,102,0.15); }
+.season-month .m-name { display: block; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.5rem; }
+.season-month .m-icon { display: block; font-size: 1.1rem; margin-bottom: 0.4rem; }
+.season-month .m-temp { font-size: 0.72rem; font-weight: 500; opacity: 0.75; }
+.season-best { background: linear-gradient(160deg, var(--sand), var(--sand-light)); color: var(--blue-deep); font-weight: 600; }
+.season-good { background: linear-gradient(160deg, var(--blue-pale), #C8E0F0); color: var(--blue-deep); }
+.season-rain { background: linear-gradient(160deg, #D6E4F0, #A8C5DD); color: #1A3E5C; }
+.season-badge { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--blue-deep); color: var(--sand-light); font-size: 0.58rem; font-weight: 700; padding: 3px 9px; border-radius: 10px; letter-spacing: 0.8px; white-space: nowrap; }
+.season-legend { display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center; margin-top: 1rem; }
+.season-legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--text-muted); }
+.season-legend-dot { width: 14px; height: 14px; border-radius: 4px; }
+
+/* ============== ACCÈS ============== */
+.transport-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.3rem; }
+.transport-card { background: #fff; border-radius: 16px; padding: 1.6rem 1.4rem; border: 1px solid var(--border); transition: transform var(--transition), box-shadow var(--transition); }
+.transport-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.transport-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 1rem; color: #fff; }
+.ti-blue { background: linear-gradient(135deg, var(--blue), var(--blue-mid)); }
+.ti-sand { background: linear-gradient(135deg, var(--sand), var(--sand-light)); color: var(--blue-deep) !important; }
+.ti-ocean { background: linear-gradient(135deg, var(--blue-ocean), var(--blue-light)); }
+.ti-deep { background: linear-gradient(135deg, var(--blue-deep), var(--blue)); }
+.transport-card h4 { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--blue-deep); margin-bottom: 0.5rem; }
+.transport-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.65; }
+.transport-meta { display: flex; align-items: center; gap: 0.6rem; margin-top: 0.9rem; padding-top: 0.9rem; border-top: 1px dashed rgba(13,59,102,0.15); font-size: 0.72rem; color: var(--text-soft); font-weight: 600; }
+.transport-meta i { color: var(--blue); }
+
+/* ============== TÉMOIGNAGES ============== */
+.testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+.testi-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(93,173,226,0.25); border-radius: 18px; padding: 2rem 1.8rem; transition: background var(--transition), transform var(--transition), border-color var(--transition); }
+.testi-card:hover { background: rgba(255,255,255,0.10); border-color: rgba(232,199,102,0.4); transform: translateY(-4px); }
+.testi-quote-mark { font-family: 'Playfair Display', serif; font-size: 4rem; line-height: 0.7; color: var(--sand); margin-bottom: 0.5rem; opacity: 0.9; }
+.testi-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; color: rgba(255,255,255,0.88); line-height: 1.7; margin-bottom: 1.5rem; }
+.testi-author { display: flex; align-items: center; gap: 12px; padding-top: 1.2rem; border-top: 1px solid rgba(93,173,226,0.15); }
+.testi-avatar { width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; color: var(--blue-deep); flex-shrink: 0; }
+.testi-info h4 { color: #fff; font-size: 0.9rem; margin-bottom: 0.15rem; font-weight: 600; }
+.testi-info span { font-size: 0.74rem; color: rgba(255,255,255,0.5); }
+.testi-stars { color: var(--sand); font-size: 0.72rem; margin-top: 0.3rem; display: flex; gap: 2px; }
+
+/* ============== SOURCES ============== */
+.section-sources { background: var(--white-soft); padding: 3rem 2.5rem 1rem; }
+.sources-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.sources-list { list-style: none; padding: 0; margin: 0; }
+.sources-list li { font-size: 0.8rem; color: var(--text); line-height: 1.6; margin-bottom: 0.6rem; display: flex; align-items: flex-start; gap: 8px; }
+.sources-list li i { color: var(--blue-mid); font-size: 0.7rem; margin-top: 4px; }
+.sources-list li strong { color: var(--blue-deep); }
+.sources-list a { color: inherit; text-decoration: underline; text-decoration-color: rgba(13,59,102,0.3); transition: color var(--transition); }
+.sources-list a:hover { color: var(--blue); text-decoration-color: var(--blue); }
+
+/* ============== FOOTER ============== */
+footer { background: var(--blue-deep); color: rgba(255,255,255,0.65); padding: 3rem 2.5rem 1.5rem; margin-top: 2rem; }
+.footer-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(93,173,226,0.15); }
+.footer-brand h4 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #fff; margin-bottom: 0.6rem; }
+.footer-brand p { font-size: 0.82rem; line-height: 1.7; color: rgba(255,255,255,0.5); }
+.footer-col h5 { color: #fff; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 1.2rem; }
+.footer-col a { display: block; color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.82rem; padding: 0.35rem 0; transition: color var(--transition), transform var(--transition); }
+.footer-col a:hover { color: var(--sand-light); transform: translateX(4px); }
+.footer-bottom { max-width: 1280px; margin: 1.5rem auto 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.75rem; color: rgba(255,255,255,0.4); }
+.footer-bottom strong { color: var(--sand-light); }
+
+/* ============== REVEAL & BACK TO TOP ============== */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+#back-top { position: fixed; bottom: 2rem; right: 2rem; width: 46px; height: 46px; border-radius: 50%; background: var(--blue); color: #fff; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 24px rgba(13,59,102,0.4); opacity: 0; pointer-events: none; transform: translateY(10px); transition: all var(--transition); z-index: 500; font-size: 1rem; }
+#back-top.show { opacity: 1; pointer-events: all; transform: translateY(0); }
+#back-top:hover { background: var(--sand); color: var(--blue-deep); transform: translateY(-3px); }
+
+@media (max-width: 1024px) {
+  .timeline { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  .timeline::before { display: none; }
+  .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); grid-auto-rows: 160px; }
+  .g-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+  .g-item:nth-child(6) { grid-column: span 1; }
+  .g-item:nth-child(9) { grid-row: span 1; }
 }
-.dept-footer-cta h2 { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 0.8rem; }
-.dept-footer-cta h2 em { color: var(--orange-light); font-style: italic; }
-.dept-footer-cta p { color: rgba(255,255,255,0.55); font-size: 0.88rem; margin-bottom: 1.8rem; max-width: 480px; margin-left: auto; margin-right: auto; }
-.dept-footer-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-
-@media (max-width: 860px) {
-  .intro-box { grid-template-columns: 1fr; }
+@media (max-width: 768px) {
   nav { padding: 0 1.2rem; }
-  .nav-links-inline { display: none; }
-  .page-header { padding: 3rem 1.5rem 2.5rem; }
-  .main { padding: 2.5rem 1.2rem; }
+  section { padding: 3.5rem 1.2rem; }
+  .sommaire-inner { padding: 0.6rem 1rem; gap: 0.8rem; }
+  .sommaire-label { display: none; }
+  .season-grid { grid-template-columns: repeat(6, 1fr); }
+  .season-month { padding: 0.7rem 0.2rem; }
+  .season-month .m-name { font-size: 0.6rem; }
+  .season-month .m-temp { font-size: 0.62rem; }
+  .timeline { grid-template-columns: 1fr; }
+  .timeline-item { text-align: left; padding-top: 0; padding-left: 45px; }
+  .timeline-dot { top: 8px; left: 8px; transform: none; }
+  .timeline-item:hover .timeline-dot { transform: scale(1.2); }
+  .timeline::before { display: block; top: 0; bottom: 0; left: 17px; right: auto; width: 2px; height: auto; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 140px; gap: 8px; }
+  .g-item:nth-child(1) { grid-column: span 2; }
+  .g-item:nth-child(6), .g-item:nth-child(9) { grid-column: span 1; grid-row: span 1; }
+  .footer-inner { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
+  .lightbox { padding: 1rem; }
+  .lb-nav { width: 40px; height: 40px; }
+  .transport-grid { grid-template-columns: 1fr; }
+  .sources-grid { grid-template-columns: 1fr; gap: 0.5rem; }
+}
+@media (max-width: 480px) {
+  .hero-mini h1 { font-size: 2.6rem; }
+  .season-grid { grid-template-columns: repeat(4, 1fr); }
+  .section-head { flex-direction: column; align-items: flex-start; }
 }
 
+/* ============== MINI-MAP GÉOPORTAIL (CORRECTIF) ============== */
+.geo-block {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.geo-visual {
+  position: relative;
+  aspect-ratio: 4/3;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  background: linear-gradient(135deg, #061A30 0%, var(--blue-deep) 50%, #061A30 100%);
+  border: 1px solid rgba(93,173,226,0.2);
+}
+
+.mini-map {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: #E9ECEF;
+}
+
+.geo-overlay-info {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 500;
+}
+
+.geo-overlay-info .geo-coords {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(10,37,64,0.88);
+  color: rgba(255,255,255,0.9);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  backdrop-filter: blur(6px);
+  pointer-events: auto;
+}
+
+.geo-overlay-info .geo-coords i {
+  color: var(--sand-light);
+  margin-right: 4px;
+}
+
+.geo-map-hint {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  background: rgba(10,37,64,0.88);
+  color: rgba(255,255,255,0.9);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  backdrop-filter: blur(6px);
+  animation: hintFade 3s ease-in-out infinite;
+}
+
+.geo-map-hint i {
+  color: var(--sand-light);
+  margin-right: 5px;
+}
+
+@keyframes hintFade {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.6; }
+}
+
+.geo-content h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  color: #fff;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.geo-content h3 em {
+  color: var(--sand-light);
+  font-style: italic;
+}
+
+.geo-content > p {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.9rem;
+  line-height: 1.75;
+  margin-bottom: 1.5rem;
+}
+
+.geo-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+}
+
+.geo-feature {
+  padding: 0.9rem 1rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(93,173,226,0.2);
+  border-radius: 12px;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.geo-feature:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(232,199,102,0.4);
+}
+
+.geo-feature i {
+  color: var(--sand-light);
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.geo-feature strong {
+  display: block;
+  color: #fff;
+  font-size: 0.82rem;
+  margin-bottom: 0.15rem;
+  font-weight: 600;
+}
+
+.geo-feature span {
+  color: rgba(255,255,255,0.5);
+  font-size: 0.72rem;
+}
+
+/* Marqueurs de la carte */
+.mini-marker { background: transparent; border: none; }
+.mini-marker-inner {
+  width: 28px; height: 28px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.35);
+  border: 2px solid #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.mini-marker-inner i { transform: rotate(45deg); color: #fff; font-size: 12px; }
+.mini-marker:hover .mini-marker-inner {
+  transform: rotate(-45deg) scale(1.2);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+}
+.mini-map .leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(15,25,35,0.25);
+  padding: 0; background: #fff;
+}
+.mini-map .leaflet-popup-content {
+  margin: 0; padding: 0.9rem 1rem;
+  min-width: 180px; font-family: 'Montserrat', sans-serif;
+}
+.mini-map .leaflet-popup-tip { background: #fff; }
+
+.mini-popup-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem; font-weight: 700;
+  color: var(--blue-deep); margin: 0 0 0.5rem; line-height: 1.2;
+}
+
+.mini-popup-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 0.35rem 0.75rem;
+  background: var(--blue); color: #fff;
+  border: none; border-radius: 20px;
+  font-family: inherit; font-size: 0.7rem; font-weight: 600;
+  cursor: pointer; transition: background 0.2s;
+}
+.mini-popup-btn:hover { background: var(--sand); color: var(--blue-deep); }
+
+/* Responsive */
+@media (max-width: 860px) {
+  .geo-block { grid-template-columns: 1fr; gap: 2.5rem; }
+}
 </style>
 </head>
 <body>
-<nav>
-  <a href="n_index.html" class="nav-back"><i class="fa-solid fa-arrow-left"></i> Retour</a>
+
+<!-- ============== NAV ============== -->
+<nav id="navbar">
+  <a href="n_index.html" class="nav-back">
+    <i class="fa-solid fa-arrow-left"></i> Retour
+  </a>
   <span class="nav-divider">/</span>
   <span class="nav-title">Département de Mbour</span>
-  <div class="nav-links-inline">
-    <a href="hebergements.html#mbour">Hébergements</a>
-    <a href="restaurants.html#mbour">Restaurants</a>
-    <a href="n_index.html#region">Toute la région</a>
+</nav>
+
+<!-- ============== HERO MINI ============== -->
+<header class="hero-mini" id="hero">
+  <div class="hero-mini-bg"></div>
+  <div class="hero-mini-overlay"></div>
+  <div class="hero-mini-grid"></div>
+
+  <div class="hero-mini-content">
+    <div class="hero-mini-tag">
+      <span class="dot"></span>
+      La Petite Côte · Cœur balnéaire du Sénégal
+    </div>
+
+    <h1>
+      Mbour
+      <em>de la pêche au tourisme</em>
+    </h1>
+
+    <p class="hero-mini-lead">
+      Un ancien village de pêcheurs devenu un pôle touristique majeur. Découvrez le territoire qui relie les plages de la Petite Côte.
+    </p>
   </div>
-</nav><div class="page-header">
-  <div class="page-header-inner">
-    <div class="breadcrumb">Région de Thiès <i class="fa-solid fa-chevron-right" style="font-size:0.6rem"></i> <span>Mbour</span></div>
-    <h1>Mbour</h1>
-    <p class="tagline">La Petite Côte — épicentre balnéaire du Sénégal, avec 90,2% des réceptifs hôteliers de la région.</p>
-    <div class="header-stats"><div><span class="header-stat-num">90,2%</span><span class="header-stat-label">Réceptifs de la région</span></div>
-<div><span class="header-stat-num">6</span><span class="header-stat-label">Sites balnéaires majeurs</span></div>
-<div><span class="header-stat-num">1970s</span><span class="header-stat-label">Essor touristique</span></div></div>
+</header>
+
+<main class="content-envelope">
+
+<!-- ============== SOMMAIRE ============== -->
+<div class="sommaire" id="sommaire">
+  <div class="sommaire-inner">
+    <span class="sommaire-label"><i class="fa-solid fa-list-ul"></i> Sommaire</span>
+    <ul class="sommaire-links">
+      <li><a href="#histoire" data-target="histoire">Histoire</a></li>
+      <li><a href="#peche" data-target="peche">Pêche</a></li>
+      <li><a href="#tourisme" data-target="tourisme">Tourisme</a></li>
+      <li><a href="#culture" data-target="culture">Culture</a></li>
+      <li><a href="#circuit" data-target="circuit">Le Circuit</a></li>
+      <li><a href="#galerie" data-target="galerie">Galerie</a></li>
+      <li><a href="#saison" data-target="saison">Quand venir</a></li>
+      <li><a href="#acces" data-target="acces">Accès</a></li>
+            <li><a href="#geoportail" data-target="geoportail">Géoportail</a></li>
+    </ul>
+    <div class="sommaire-progress" id="sommaireProgress"></div>
   </div>
-</div><div class="main">
-  <div class="intro-box">
-    <p>Ancien village de pêcheurs lébou et sérère sur la Petite Côte, Mbour connaît un essor touristique à partir des années 1970 avec l'aménagement de Saly Portudal, aujourd'hui considérée comme l'épicentre de l'activité touristique au Sénégal. Le département concentre l'essentiel des réceptifs hôteliers de la région grâce à sa façade littorale : plages aménagées, grands hôtels, golf, sports nautiques et écotourisme se côtoient sur toute la côte, de Toubab Dialaw à Joal-Fadiouth.</p>
-    <div class="intro-fact-list">
-      <div class="intro-fact"><i class="fa-solid fa-umbrella-beach"></i><div><b>1970s</b><span>Aménagement de Saly Portudal</span></div></div>
-<div class="intro-fact"><i class="fa-solid fa-water"></i><div><b>Réserve</b><span>Lagune de Somone classée</span></div></div>
-<div class="intro-fact"><i class="fa-solid fa-hotel"></i><div><b>90,2%</b><span>Des réceptifs de la région</span></div></div>
-    </div>
-  </div>  <section class="dept-section">
-    <div class="dept-section-head">
+</div>
+
+<!-- ============== HISTOIRE ============== -->
+<section id="histoire" class="section-pale-blue">
+  <div class="section-inner">
+    <div class="section-head reveal">
       <div>
-        <span class="section-eyebrow">À voir</span>
-        <h2 class="section-h2">Sites & <em>attractions</em></h2>
+        <br>
+        <span class="eyebrow">Vue d'ensemble</span>
+        <h2 class="section-title">D'un village de pêcheurs <em>à la Petite Côte</em></h2>
+        <p class="section-lead">
+          Ancien village lébou et sérère devenu en quelques décennies un pôle touristique majeur au Sénégal, Mbour conjugue traditions de la pêche, mémoire coloniale et modernité.
+        </p>
       </div>
     </div>
-    <div class="card-grid">
-      <div class="dept-card">
-        <div class="dept-card-img" style="background:linear-gradient(135deg,#F39C12,#F5B041)"><i class="fa-solid fa-umbrella-beach"></i></div>
-        <div class="dept-card-body">
-          <span class="dept-card-tag">Balnéaire</span>
-          <h3>Saly Portudal</h3>
-          <p>Première station balnéaire du Sénégal : plages aménagées, hôtels, golf et sports nautiques au cœur de la Petite Côte.</p>
+
+    <div class="intro-text reveal">
+      <p>
+        <strong>Mbour est historiquement un village de pêcheurs lébou et sérère</strong>, installé sur la façade atlantique du Sénégal. Sa position au bord de l'océan, entre terre et mer, en a fait très tôt un lieu d'échanges et de vie communautaire intense. Aujourd'hui encore, le port de pêche de Mbour reste l'un des plus actifs du pays : chaque retour de pirogue est un spectacle de couleurs et de cris.
+      </p>
+      <p>
+        <strong>Le tournant majeur se joue dans les années 1970</strong>, avec l'aménagement de la station de <em>Saly Portudal</em>. Jusque-là modeste, ce qui deviendra la Petite Côte attire les investisseurs, les opérateurs touristiques et une clientèle internationale en quête de plages, de soleil et d'authenticité. Le littoral se couvre d'hôtels, de clubs de vacances et de résidences.
+      </p>
+      <p>
+        Depuis, le département n'a cessé d'attirer. Aujourd'hui, il <strong>concentre près de 90 % des réceptifs hôteliers de la région de Thiès</strong>. Le long de sa façade maritime, de Toubab Dialaw au nord à Joal-Fadiouth au sud, se succèdent stations balnéaires, réserves naturelles, lagunes, falaises et villages de pêcheurs préservés.
+      </p>
+    </div>
+
+    <div class="timeline-wrap reveal">
+      <h3 class="timeline-heading"><i class="fa-solid fa-clock-rotate-left"></i> Cinq moments-clés</h3>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">XVe s.</div>
+          <div class="timeline-title">Village lébou &amp; sérère</div>
+          <div class="timeline-desc">Mbour s'installe comme village de pêcheurs sur la côte atlantique, entre terre et mer.</div>
         </div>
-      </div>
-      <div class="dept-card">
-        <div class="dept-card-img" style="background:linear-gradient(135deg,#2E86AB,#5DADE2)"><i class="fa-solid fa-water"></i></div>
-        <div class="dept-card-body">
-          <span class="dept-card-tag">Nature</span>
-          <h3>Lagune de Somone</h3>
-          <p>Réserve naturelle classée, riche avifaune et balades en pirogue à la découverte des mangroves.</p>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">XIXe s.</div>
+          <div class="timeline-title">Comptoir colonial</div>
+          <div class="timeline-desc">Le village devient un point d'échange commercial : pêche, arachide, artisanat, lié à Gorée et Saint-Louis.</div>
         </div>
-      </div>
-      <div class="dept-card">
-        <div class="dept-card-img" style="background:linear-gradient(135deg,#F5B041,#F8C471)"><i class="fa-solid fa-sun"></i></div>
-        <div class="dept-card-body">
-          <span class="dept-card-tag">Balnéaire</span>
-          <h3>Nianing</h3>
-          <p>Longue plage tranquille bordée de filaos, station plus familiale à l'écart de l'agitation de Saly.</p>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">1970s</div>
+          <div class="timeline-title">Aménagement de Saly</div>
+          <div class="timeline-desc">L'État lance l'aménagement de la station de Saly Portudal, qui devient l'une des premières stations balnéaires du Sénégal.</div>
         </div>
-      </div>
-      <div class="dept-card">
-        <div class="dept-card-img" style="background:linear-gradient(135deg,#5D6D7E,#85929E)"><i class="fa-solid fa-shapes"></i></div>
-        <div class="dept-card-body">
-          <span class="dept-card-tag">Patrimoine</span>
-          <h3>Joal-Fadiouth</h3>
-          <p>Île aux coquillages reliée par une passerelle en bois, cimetière chrétien-musulman, ville natale de Senghor.</p>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">Années 2000</div>
+          <div class="timeline-title">Essor de la Petite Côte</div>
+          <div class="timeline-desc">Mbour concentre progressivement près de 90 % des réceptifs hôteliers de la région de Thiès.</div>
         </div>
-      </div>
-      <div class="dept-card">
-        <div class="dept-card-img" style="background:linear-gradient(135deg,#D68910,#F5CBA7)"><i class="fa-solid fa-mountain-sun"></i></div>
-        <div class="dept-card-body">
-          <span class="dept-card-tag">Balnéaire</span>
-          <h3>Pointe Sarène</h3>
-          <p>Site en développement, grandes plages sauvages et projets hôteliers de standing.</p>
-        </div>
-      </div>
-      <div class="dept-card">
-        <div class="dept-card-img" style="background:linear-gradient(135deg,#1B4F72,#2E86AB)"><i class="fa-solid fa-water-ladder"></i></div>
-        <div class="dept-card-body">
-          <span class="dept-card-tag">Culture</span>
-          <h3>Toubab Dialaw</h3>
-          <p>Village de pêcheurs devenu pôle culturel et artistique, falaises et éco-lodges.</p>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">Aujourd'hui</div>
+          <div class="timeline-desc">Côte devenue majeure, Mbour conjugue tourisme international, écotourisme et traditions de la pêche.</div>
         </div>
       </div>
     </div>
-  </section>  <section class="dept-section">
-    <div class="dept-section-head">
+  </div>
+</section>
+
+<!-- ============== PÊCHE ============== -->
+<section id="peche" class="section-white">
+  <div class="section-inner">
+    <div class="section-head reveal">
       <div>
-        <span class="section-eyebrow">À vivre</span>
-        <h2 class="section-h2"><em>Expériences</em></h2>
+        <span class="eyebrow">Économie & Traditions</span>
+        <h2 class="section-title">Un port de pêche <em>majeur</em></h2>
+        <p class="section-lead">Mbour n'est pas seulement une station balnéaire. C'est avant tout une ville portuaire dont l'activité façonne le quotidien de ses habitants.</p>
       </div>
     </div>
-    <div class="card-grid">
-      <div class="dept-card">
-        <div class="dept-card-img" style="background:#E8F0FB"><i class="fa-solid fa-umbrella-beach"></i></div>
-        <div class="dept-card-body">
-          <span class="dept-card-tag">Balnéaire · Journée</span>
-          <h3>Journée plage à Saly</h3>
-          <p>Farniente, sports nautiques et golf sur la première station balnéaire du Sénégal.</p>
-        </div>
+    <div class="intro-grid">
+      <div class="reveal">
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--blue-deep); margin-bottom: 1rem;">L'héritage des pêcheurs lébous et sérères</h3>
+        <p class="intro-text" style="margin-bottom: 1rem;">Historiquement installée sur la façade atlantique, la ville s'est construite autour de la pêche. Aujourd'hui encore, le port de Mbour figure parmi les plus actifs du Sénégal.</p>
+        <p class="intro-text">Chaque fin d'après-midi, le retour des pirogues colorées offre un spectacle vivant. Les pêcheurs débarquent leurs prises, qui alimentent les marchés locaux et une grande partie de la région. C'est une économie parallèle, essentielle à la vie de la cité, qui côtoie les grands complexes hôteliers de la Petite Côte.</p>
       </div>
-      <div class="dept-card">
-        <div class="dept-card-img" style="background:#E0F5F0"><i class="fa-solid fa-water"></i></div>
-        <div class="dept-card-body">
-          <span class="dept-card-tag">Écotourisme · 2h</span>
-          <h3>Balade en pirogue à Somone</h3>
-          <p>Naviguez sur la lagune classée réserve naturelle à la découverte des oiseaux migrateurs.</p>
-        </div>
-      </div>
-      <div class="dept-card">
-        <div class="dept-card-img" style="background:#F5EFE0"><i class="fa-solid fa-shapes"></i></div>
-        <div class="dept-card-body">
-          <span class="dept-card-tag">Culture · Demi-journée</span>
-          <h3>Visite de Joal-Fadiouth</h3>
-          <p>Traversez l'île aux coquillages et découvrez la ville natale de Léopold Sédar Senghor.</p>
-        </div>
-      </div>
-      <div class="dept-card">
-        <div class="dept-card-img" style="background:#FDF0E0"><i class="fa-solid fa-golf-ball-tee"></i></div>
-        <div class="dept-card-body">
-          <span class="dept-card-tag">Sport · 3–4h</span>
-          <h3>Golf de Saly</h3>
-          <p>18 trous en bord de mer, l'un des rares parcours de golf du Sénégal.</p>
-        </div>
+      <div class="reveal">
+        <!-- Image du port de pêche -->
+        <img src="images/mbour-pecheurs.webp" alt="Retour de pêche au port de Mbour" style="width: 100%; border-radius: 16px; box-shadow: var(--shadow-lg); object-fit: cover; height: 400px;" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22400%22%3E%3Crect width=%22600%22 height=%22400%22 fill=%22%230A2540%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-family=%22Arial%22 font-size=%2224%22 fill=%22%23ffffff%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EPort de Mbour%3C/text%3E%3C/svg%3E'">
       </div>
     </div>
-  </section>  <section class="dept-section">
-    <div class="dept-section-head">
+  </div>
+</section>
+
+<!-- ============== TOURISME ============== -->
+<section id="tourisme" class="section-pale-blue">
+  <div class="section-inner">
+    <div class="section-head reveal">
       <div>
-        <span class="section-eyebrow">Où dormir</span>
-        <h2 class="section-h2">Hébergements à <em>Mbour</em></h2>
+        <span class="eyebrow">Le moteur du département</span>
+        <h2 class="section-title">Le tourisme, <em>une transformation</em> du territoire</h2>
+        <p class="section-lead">Depuis les années 1970, l'aménagement de la station de Saly a profondément modifié le visage du département, faisant de Mbour le poumon économique de la région de Thiès.</p>
       </div>
-      <a href="hebergements.html#mbour" class="see-all-link">Voir tous les hébergements <i class="fa-solid fa-arrow-right"></i></a>
     </div>
-    <div class="preview-row">
-      <div class="preview-card">
-        <div class="preview-img" style="background:linear-gradient(135deg,#F39C12,#F5B041)"><i class="fa-solid fa-hotel"></i></div>
-        <div class="preview-body">
-          <h4>Résidence Saly Beach</h4>
-          <p>Front de mer · Saly Portudal</p>
-          <div class="preview-meta">
-            <span class="preview-price">28 000 FCFA/nuit</span>
-            <span class="preview-rating">★ 4.5</span>
+    <div class="intro-grid">
+      <div class="reveal">
+        <!-- Image de Saly -->
+        <img src="images/mbour-saly.jpg" alt="Station de Saly Portudal" style="width: 100%; border-radius: 16px; box-shadow: var(--shadow-lg); object-fit: cover; height: 400px;" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22400%22%3E%3Crect width=%22600%22 height=%22400%22 fill=%22%231B6CA8%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-family=%22Arial%22 font-size=%2224%22 fill=%22%23ffffff%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EStation de Saly%3C/text%3E%3C/svg%3E'">
+      </div>
+      <div class="reveal">
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--blue-deep); margin-bottom: 1rem;">Une concentration d'infrastructures</h3>
+        <p class="intro-text" style="margin-bottom: 1rem;">Selon les données de l'<strong>ANSD (2024)</strong>, le département de Mbour concentre près de 90 % des réceptifs hôteliers de toute la région de Thiès.</p>
+        <p class="intro-text">Le long de sa façade maritime, de Toubab Dialaw à Joal-Fadiouth, se succèdent des stations balnéaires internationales, des réserves naturelles et des villages de pêcheurs préservés. Ce dynamisme touristique soutient l'emploi local tout en posant des défis de préservation de l'environnement et des équilibres sociaux.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== CULTURE (KANKOURANG) ============== -->
+<section id="culture" class="section-white">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Patrimoine immatériel</span>
+        <h2 class="section-title">Le <em>Kankourang</em></h2>
+        <p class="section-lead">Inscrit au patrimoine culturel immatériel de l'UNESCO, ce rite initiatique mandingue rythme la vie de Mbour chaque année pendant la période des vacances.</p>
+      </div>
+    </div>
+    <div class="intro-grid">
+      <div class="reveal">
+        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--blue-deep); margin-bottom: 1rem;">Un rite d'initiation et de protection</h3>
+        <p class="intro-text" style="margin-bottom: 1rem;">Le Kankourang est un rite de circoncision et d'initiation mandingue. Le personnage central est un initié masqué, vêtu de fibres végétales et muni de machettes, qui incarne la protection de l'ordre social et spirituel.</p>
+        <p class="intro-text">Les sorties ont lieu chaque année pendant la période des vacances, généralement entre les mois d'août et de septembre, selon le calendrier lunaire. À Mbour, cette période est un temps fort de la vie culturelle locale, marquée par des processions et des veillées.</p>
+      </div>
+      <div class="reveal">
+        <!-- Image du Kankourang -->
+        <img src="images/mbour-kankourang.jpg" alt="Le Kankourang à Mbour" style="width: 100%; border-radius: 16px; box-shadow: var(--shadow-lg); object-fit: cover; height: 400px;" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22400%22%3E%3Crect width=%22600%22 height=%22400%22 fill=%22%23E8C766%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-family=%22Arial%22 font-size=%2224%22 fill=%22%230A2540%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EKankourang%3C/text%3E%3C/svg%3E'">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== CIRCUIT (Renvoi) ============== -->
+<section id="circuit" class="section-dark" style="padding: 5rem 2.5rem;">
+  <div class="section-inner cta-circuit reveal">
+    <span class="eyebrow" style="justify-content: center; color: var(--sand-light);">Découvrir les sites</span>
+    <h2 class="section-title" style="color: #fff; font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 1rem;">Le Circuit Balnéaire</h2>
+    <p>De la lagune de la Somone aux coquillages de l'île de Fadiouth, en passant par la réserve de Bandia et les falaises de Toubab Dialaw, découvrez les 12 sites emblématiques de la Petite Côte à travers notre circuit interactif.</p>
+    <a href="circuit-balneaire.html" class="btn btn-sand" style="padding: 1rem 2rem; font-size: 1rem;">
+      <i class="fa-solid fa-map-location-dot"></i> Explorer le circuit balnéaire
+    </a>
+  </div>
+</section>
+
+<!-- ============== GALERIE ============== -->
+<section id="galerie" class="section-dark">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Regards</span>
+        <h2 class="section-title">Mbour <em>en images</em></h2>
+        <p class="section-lead">
+          Océan, pirogues, vie de pêcheurs, plages dorées et paysages de lagune : la Petite Côte dans toute sa diversité.
+        </p>
+      </div>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="g-item" data-src="images/galerie-mbour-plage.jpg" data-label="Plage dorée de la Petite Côte" data-cat="Plages">
+        <img src="images/galerie-mbour-plage.jpg" alt="Plage" loading="lazy">
+        <div class="g-overlay"><div class="g-label"><i>Plages</i>Plage dorée de la Petite Côte</div></div>
+      </div>
+      <div class="g-item" data-src="images/galerie-mbour-pirogue.jpg" data-label="Pirogue au coucher du soleil" data-cat="Tradition">
+        <img src="images/galerie-mbour-pirogue.png" alt="Pirogue" loading="lazy">
+        <div class="g-overlay"><div class="g-label"><i>Tradition</i>Pirogue au coucher du soleil</div></div>
+      </div>
+      <div class="g-item" data-src="images/galerie-mbour-pecheurs.jpg" data-label="Retour de pêche au port" data-cat="Vie locale">
+        <img src="images/galerie-mbour-pecheurs.jpg" alt="Pêcheurs" loading="lazy">
+        <div class="g-overlay"><div class="g-label"><i>Vie locale</i>Retour de pêche au port</div></div>
+      </div>
+      <div class="g-item" data-src="images/galerie-mbour-somone.jpg" data-label="Lagune de la Somone" data-cat="Nature">
+        <img src="images/galerie-mbour-somone.jpg" alt="Lagune" loading="lazy">
+        <div class="g-overlay"><div class="g-label"><i>Nature</i>Lagune de la Somone</div></div>
+      </div>
+      <div class="g-item" data-src="images/galerie-mbour-fadiouth.jpg" data-label="Île de Fadiouth" data-cat="Patrimoine">
+        <img src="images/galerie-mbour-fadiouth.jpg" alt="Fadiouth" loading="lazy">
+        <div class="g-overlay"><div class="g-label"><i>Patrimoine</i>Île de Fadiouth</div></div>
+      </div>
+      <div class="g-item" data-src="images/galerie-mbour-poisson.jpg" data-label="Poissons frais au marché" data-cat="Gastronomie">
+        <img src="images/galerie-mbour-poisson.jpg" alt="Poissons" loading="lazy">
+        <div class="g-overlay"><div class="g-label"><i>Gastronomie</i>Poissons frais au marché</div></div>
+      </div>
+      <div class="g-item" data-src="images/galerie-mbour-filaos.jpg" data-label="Filaos sur la plage" data-cat="Plages">
+        <img src="images/galerie-mbour-filaos.jpg" alt="Filaos" loading="lazy">
+        <div class="g-overlay"><div class="g-label"><i>Plages</i>Filaos sur la plage</div></div>
+      </div>
+      <div class="g-item" data-src="images/galerie-mbour-golf.jpg" data-label="Golf de Saly en bord de mer" data-cat="Sport">
+        <img src="images/galerie-mbour-golf.jpeg" alt="Golf" loading="lazy">
+        <div class="g-overlay"><div class="g-label"><i>Sport</i>Golf de Saly en bord de mer</div></div>
+      </div>
+      <div class="g-item" data-src="images/galerie-mbour-artisanat.jpg" data-label="Artisanat local" data-cat="Artisanat">
+        <img src="images/galerie-mbour-artisanat.jpg" alt="Artisanat" loading="lazy">
+        <div class="g-overlay"><div class="g-label"><i>Artisanat</i>Artisanat local</div></div>
+      </div>
+      <div class="g-item" data-src="images/galerie-mbour-enfant-plage.jpg" data-label="Enfants sur la plage" data-cat="Vie locale">
+        <img src="images/galerie-mbour-enfant-plage.jpg" alt="Enfants" loading="lazy">
+        <div class="g-overlay"><div class="g-label"><i>Vie locale</i>Enfants sur la plage</div></div>
+      </div>
+      <div class="g-item" data-src="images/galerie-mbour-coucher-soleil.jpg" data-label="Coucher de soleil sur l'océan" data-cat="Ambiance">
+        <img src="images/galerie-mbour-coucher-soleil.jpeg" alt="Coucher de soleil" loading="lazy">
+        <div class="g-overlay"><div class="g-label"><i>Ambiance</i>Coucher de soleil sur l'océan</div></div>
+      </div>
+      <div class="g-item" data-src="images/galerie-mbour-oiseaux.jpg" data-label="Oiseaux de la lagune" data-cat="Nature">
+        <img src="images/galerie-mbour-oiseaux.jpg" alt="Oiseaux" loading="lazy">
+        <div class="g-overlay"><div class="g-label"><i>Nature</i>Oiseaux de la lagune</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== SAISONNALITÉ ============== -->
+<section id="saison" class="section-white">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Quand venir</span>
+        <h2 class="section-title">Le meilleur <em>moment</em></h2>
+        <p class="section-lead">
+          Mbour bénéficie d'un climat sahélien doux toute l'année, mais la saison sèche (novembre–mai) est idéale pour profiter pleinement des plages. Le littoral est baignable quasiment 12 mois sur 12.
+        </p>
+      </div>
+    </div>
+
+    <div class="season-grid reveal">
+      <div class="season-month season-best"><span class="season-badge"><i class="fa-solid fa-star"></i> Idéal</span><span class="m-icon"><i class="fa-solid fa-sun"></i></span><span class="m-name">Jan</span><span class="m-temp">25°C</span></div>
+      <div class="season-month season-best"><span class="season-badge"><i class="fa-solid fa-star"></i> Idéal</span><span class="m-icon"><i class="fa-solid fa-sun"></i></span><span class="m-name">Fév</span><span class="m-temp">26°C</span></div>
+      <div class="season-month season-best"><span class="season-badge"><i class="fa-solid fa-star"></i> Idéal</span><span class="m-icon"><i class="fa-solid fa-cloud-sun"></i></span><span class="m-name">Mar</span><span class="m-temp">28°C</span></div>
+      <div class="season-month season-good"><span class="m-icon"><i class="fa-solid fa-cloud-sun"></i></span><span class="m-name">Avr</span><span class="m-temp">30°C</span></div>
+      <div class="season-month season-good"><span class="m-icon"><i class="fa-solid fa-cloud-sun"></i></span><span class="m-name">Mai</span><span class="m-temp">31°C</span></div>
+      <div class="season-month season-rain"><span class="m-icon"><i class="fa-solid fa-cloud-rain"></i></span><span class="m-name">Juin</span><span class="m-temp">32°C</span></div>
+      <div class="season-month season-rain"><span class="m-icon"><i class="fa-solid fa-cloud-showers-heavy"></i></span><span class="m-name">Juil</span><span class="m-temp">30°C</span></div>
+      <div class="season-month season-rain"><span class="m-icon"><i class="fa-solid fa-cloud-showers-heavy"></i></span><span class="m-name">Août</span><span class="m-temp">29°C</span></div>
+      <div class="season-month season-rain"><span class="m-icon"><i class="fa-solid fa-cloud-rain"></i></span><span class="m-name">Sep</span><span class="m-temp">30°C</span></div>
+      <div class="season-month season-good"><span class="m-icon"><i class="fa-solid fa-cloud-sun"></i></span><span class="m-name">Oct</span><span class="m-temp">29°C</span></div>
+      <div class="season-month season-best"><span class="season-badge"><i class="fa-solid fa-star"></i> Idéal</span><span class="m-icon"><i class="fa-solid fa-sun"></i></span><span class="m-name">Nov</span><span class="m-temp">27°C</span></div>
+      <div class="season-month season-best"><span class="season-badge"><i class="fa-solid fa-star"></i> Idéal</span><span class="m-icon"><i class="fa-solid fa-sun"></i></span><span class="m-name">Déc</span><span class="m-temp">25°C</span></div>
+    </div>
+
+    <div class="season-legend reveal">
+      <div class="season-legend-item"><div class="season-legend-dot" style="background:linear-gradient(135deg,var(--sand),var(--sand-light))"></div>Période idéale</div>
+      <div class="season-legend-item"><div class="season-legend-dot" style="background:linear-gradient(135deg,var(--blue-pale),#C8E0F0)"></div>Bonne période</div>
+      <div class="season-legend-item"><div class="season-legend-dot" style="background:linear-gradient(135deg,#D6E4F0,#A8C5DD)"></div>Saison des pluies</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== ACCÈS ============== -->
+<section id="acces" class="section-white-soft">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Infos pratiques</span>
+        <h2 class="section-title">Comment <em>venir</em></h2>
+        <p class="section-lead">
+          Mbour est reliée aux principaux axes du pays. Que vous veniez de Dakar, de l'aéroport international ou des villes voisines, plusieurs options s'offrent à vous.
+        </p>
+      </div>
+    </div>
+
+    <div class="transport-grid">
+      <!-- 1. Route depuis Dakar -->
+      <div class="transport-card reveal">
+        <div class="transport-icon ti-sand"><i class="fa-solid fa-car"></i></div>
+        <h4>Route N1 depuis Dakar</h4>
+        <p>Environ 80 km par la route nationale 1. Comptez entre 1h15 et 2h selon le trafic. La sortie de Mbour permet de rejoindre la N1 sans traverser le centre-ville.</p>
+        <div class="transport-meta"><i class="fa-solid fa-road"></i> ~80 km · 1h15–2h</div>
+      </div>
+
+      <!-- 2. Gare routière (Bus / Taxis-brousse) -->
+      <div class="transport-card reveal">
+        <div class="transport-icon ti-blue"><i class="fa-solid fa-bus"></i></div>
+        <h4>Bus &amp; taxis-brousse</h4>
+        <p>Départs réguliers depuis la gare routière de Dakar (Beaux Maraîchers). La nouvelle gare routière de Mbour a été mise en service en décembre 2019 pour faciliter les correspondances.</p>
+        <div class="transport-meta"><i class="fa-solid fa-coins"></i> ~1 500 à 2 000 FCFA · Départs fréquents</div>
+      </div>
+
+      <!-- 3. Aéroport International -->
+      <div class="transport-card reveal">
+        <div class="transport-icon ti-ocean"><i class="fa-solid fa-plane"></i></div>
+        <h4>Aéroport international (AIBD)</h4>
+        <p>L'aéroport Blaise-Diagne (Diass) est situé à environ 40 km de Mbour. Des navettes et taxis privés assurent la liaison en 35 à 55 minutes selon le trafic.</p>
+        <div class="transport-meta"><i class="fa-solid fa-clock"></i> ~40 km · 35–55 min</div>
+      </div>
+
+      <!-- 4. Transports urbains -->
+      <div class="transport-card reveal">
+        <div class="transport-icon ti-deep"><i class="fa-solid fa-taxi"></i></div>
+        <h4>Transports urbains &amp; locaux</h4>
+        <p>Des taxis desservent la ville et les stations voisines (Saly, Ngaparou, Somone). Comptez environ 500 à 800 FCFA pour un trajet court, et 200 à 300 FCFA par personne pour les trajets en taxi collectif ("clando") vers Saly.</p>
+        <div class="transport-meta"><i class="fa-solid fa-coins"></i> 200 à 800 FCFA · Selon le trajet</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== TÉMOIGNAGES ============== -->
+<section class="section-dark">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Avis voyageurs</span>
+        <h2 class="section-title">Ce qu'ils <em>en disent</em></h2>
+        <p class="section-lead">Des retours authentiques de voyageurs ayant exploré la Petite Côte, collectés sur des plateformes communautaires.</p>
+      </div>
+    </div>
+
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="testi-quote-mark">"</div>
+        <p class="testi-text">Amazing day. very beautiful reserve with good staff. very knowleadgeble guide and super friendly. we loved how the animals were freely roaming.</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#0D3B66,#2E86AB)">V</div>
+          <div class="testi-info">
+            <h4>Voyageur anglophone</h4>
+            <span>Octobre 2024 · <a href="https://www.tripadvisor.com/Attractions-g3140029-Activities-a_allAttractions.true-Thies_Region.html" target="_blank" rel="noopener" style="color:var(--sand-light);">Tripadvisor</a></span>
+            <div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-quote-mark">"</div>
+        <p class="testi-text">Eagles, cormorants, fish, oyster beds, oyster fisher women and shallow lagoon waters surrounded by massive mangroves. Best done late afternoon so you can have a beer at Chez Rasta.</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#1B6CA8,#5DADE2)">V</div>
+          <div class="testi-info">
+            <h4>Voyageur anglophone</h4>
+            <span>Février 2025 · <a href="https://www.tripadvisor.com/Attractions-g3140029-Activities-a_allAttractions.true-Thies_Region.html" target="_blank" rel="noopener" style="color:var(--sand-light);">Tripadvisor</a></span>
+            <div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-quote-mark">"</div>
+        <p class="testi-text">Nous rentrons d’un séjour de 10 nuits à Thies à la Somone dans l’hôtel Royal Baobab. Superbe séjour, superbe hôtel !</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:linear-gradient(135deg,#E8C766,#F4D58D);color:var(--blue-deep);">R</div>
+          <div class="testi-info">
+            <h4>Voyageur francophone</h4>
+            <span>Forum Routard · <a href="https://www.routard.com/forums/t/biram-basse-excellent-guide-somone-et-alentours/269333/83?page=3#1" target="_blank" rel="noopener" style="color:var(--sand-light);">Routard.com</a></span>
+            <div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
           </div>
         </div>
       </div>
     </div>
-  </section>  <section class="dept-section">
-    <div class="dept-section-head">
-      <div>
-        <span class="section-eyebrow">Où manger</span>
-        <h2 class="section-h2">Restaurants à <em>Mbour</em></h2>
-      </div>
-      <a href="restaurants.html#mbour" class="see-all-link">Voir tous les restaurants <i class="fa-solid fa-arrow-right"></i></a>
-    </div>
-    <div class="preview-row">
-      <div class="preview-card">
-        <div class="preview-img" style="background:linear-gradient(135deg,#F39C12,#F5B041)"><i class="fa-solid fa-shrimp"></i></div>
-        <div class="preview-body">
-          <h4>La Terrasse de Saly</h4>
-          <p>Fruits de mer · Saly Portudal</p>
-          <div class="preview-meta">
-            <span class="preview-price">4 000–8 000 FCFA</span>
-            <span class="preview-rating">★ 4.6</span>
+  </div>
+</section>
+
+<!-- ============== MINI-MAP GÉOPORTAIL ============== -->
+<section id="geoportail" class="section-dark">
+  <div class="section-inner">
+    <div class="geo-block">
+      <div class="geo-visual reveal" id="geoVisual">
+        <div id="miniMap" class="mini-map"></div>
+        <div class="geo-overlay-info">
+          <div class="geo-coords"><i class="fa-solid fa-location-dot"></i> 14.42° N · 16.96° W</div>
+          <div class="geo-map-hint">
+            <i class="fa-solid fa-hand-pointer"></i> Cliquez sur un point
           </div>
         </div>
       </div>
+
+      <div class="geo-content reveal">
+        <span class="eyebrow">SIG &amp; Cartographie</span>
+        <h3>Explorez la Petite Côte <em>sur le Géoportail</em></h3>
+        <p>
+          Notre géoportail vous permet d'explorer interactivement Mbour et toute la Petite Côte :
+          plages, réserves, hébergements, restaurants, itinéraires, mesure de distances, export PDF.
+        </p>
+
+        <div class="geo-features">
+          <div class="geo-feature">
+            <i class="fa-solid fa-map"></i>
+            <strong>Cartographie SIG</strong>
+            <span>Couches superposables</span>
+          </div>
+          <div class="geo-feature">
+            <i class="fa-solid fa-umbrella-beach"></i>
+            <strong>Sites balnéaires</strong>
+            <span>Plages, lagunes, réserves</span>
+          </div>
+          <div class="geo-feature">
+            <i class="fa-solid fa-route"></i>
+            <strong>Itinéraires</strong>
+            <span>Multi-étapes Google Maps</span>
+          </div>
+          <div class="geo-feature">
+            <i class="fa-solid fa-file-pdf"></i>
+            <strong>Export PDF</strong>
+            <span>Cartes imprimables</span>
+          </div>
+        </div>
+
+        <a href="carte.html?lat=14.42&lon=-16.96&z=11" class="btn btn-sand">
+          <i class="fa-solid fa-map-location-dot"></i> Ouvrir le Géoportail
+        </a>
+      </div>
     </div>
-  </section>  <div class="dept-footer-cta">
-    <h2>Réservez votre séjour balnéaire sur la <em>Petite Côte</em></h2>
-    <p>Notre équipe vous aide à organiser votre séjour dans la région de Thiès.</p>
-    <div class="dept-footer-btns">
-      <a href="n_index.html#contact" class="btn-cta"><i class="fa-solid fa-envelope"></i> Nous contacter</a>
-      <a href="n_index.html#geoportail" class="btn-cta outline"><i class="fa-solid fa-location-dot"></i> Voir sur le Géoportail</a>
+  </div>
+</section>
+
+<!-- ============== SOURCES ============== -->
+<section class="section-sources">
+  <div class="section-inner">
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem;">
+      <i class="fa-solid fa-book-open" style="color: var(--blue); font-size: 1.2rem;"></i>
+      <h3 style="font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--blue-deep); margin: 0;">Sources & Références</h3>
+    </div>
+    
+    <div class="sources-grid">
+      <ul class="sources-list">
+        <li><i class="fa-solid fa-caret-right"></i> <strong>Statistiques touristiques :</strong> <a href="https://www.ansd.sn/sites/default/files/2026-02/SES%202024-THIES.pdf" target="_blank" rel="noopener">ANSD – Situation Économique et Sociale de Thiès (2024)</a>.</li>
+        <li><i class="fa-solid fa-caret-right"></i> <strong>Réserve de Bandia :</strong> <a href="http://www.reservedebandia.com/" target="_blank" rel="noopener">Site officiel de la Réserve</a>.</li>
+        <li><i class="fa-solid fa-caret-right"></i> <strong>Île de Fadiouth & Joal :</strong> <a href="https://aps.sn/" target="_blank" rel="noopener">Agence de Presse Sénégalaise (APS)</a> et <a href="https://lesoleil.sn/" target="_blank" rel="noopener">Le Soleil</a>.</li>
+      </ul>
+      <ul class="sources-list">
+        <li><i class="fa-solid fa-caret-right"></i> <strong>Lagune de la Somone :</strong> <a href="https://rsis.ramsar.org/RISapp/files/47444193/documents/SN2327_mgt161202.pdf" target="_blank" rel="noopener">Convention Ramsar (Fiche et plan de gestion)</a>.</li>
+        <li><i class="fa-solid fa-caret-right"></i> <strong>Le Kankourang :</strong> <a href="https://ich.unesco.org/fr/RL/le-kankourang-rite-d-initiation-mandingue-00143" target="_blank" rel="noopener">UNESCO, fiche du patrimoine immatériel</a>.</li>
+        <li><i class="fa-solid fa-caret-right"></i> <strong>Toubab Dialaw :</strong> <a href="https://ecoledessables.org/" target="_blank" rel="noopener">Site officiel de l'École des Sables</a>.</li>
+      </ul>
+    </div>
+    <p style="font-size: 0.7rem; color: var(--text-soft); margin-top: 1.5rem; text-align: right; font-style: italic;">
+      Dernière mise à jour des données : Février 2026.
+    </p>
+  </div>
+</section>
+</main>
+
+<!-- ============== FOOTER ============== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="n_index.html" style="display: inline-block; margin-bottom: 1rem;">
+        <img src="images/logo.png" alt="Thiès Kaay" style="height: 100px; width: auto; padding: 6px 14px; border-radius: 10px;">
+      </a>
+      <p>Découvrez la Petite Côte — plages mythiques, lagunes préservées et villages de pêcheurs au cœur du tourisme balnéaire sénégalais.</p>
+    </div>
+
+    <div class="footer-col">
+      <h5>Explorer</h5>
+      <a href="#histoire">Histoire</a>
+      <a href="#peche">Pêche</a>
+      <a href="#tourisme">Tourisme</a>
+      <a href="#culture">Culture</a>
+    </div>
+
+    <div class="footer-col">
+      <h5>Pratique</h5>
+      <a href="#acces">Accès & transports</a>
+      <a href="#saison">Quand venir</a>
+      <a href="carte.html">Géoportail SIG</a> 
+    </div>
+
+    <div class="footer-col">
+      <h5>Région</h5>
+      <a href="n_index.html">Vue d'ensemble</a>
+      <a href="thies.html">Département de Thiès</a>
+      <a href="tivaouane.html">Département de Tivaouane</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 Mbour Tourisme — Tous droits réservés.</span>
+    <span>Coordonnées SIG : <strong>14.42°N · 16.96°W</strong> · Sénégal</span>
+  </div>
+</footer>
+
+<!-- ============== LIGHTBOX ============== -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose" aria-label="Fermer"><i class="fa-solid fa-xmark"></i></button>
+  <button class="lb-nav prev" id="lbPrev" aria-label="Précédent"><i class="fa-solid fa-chevron-left"></i></button>
+  <button class="lb-nav next" id="lbNext" aria-label="Suivant"><i class="fa-solid fa-chevron-right"></i></button>
+  <div class="lightbox-content">
+    <img class="lightbox-img" id="lbImg" src="" alt="">
+    <div class="lightbox-caption">
+      <span id="lbLabel"></span>
+      <small id="lbCat"></small>
     </div>
   </div>
 </div>
+
+<!-- ============== BACK TO TOP ============== -->
+<button id="back-top" aria-label="Retour en haut"><i class="fa-solid fa-chevron-up"></i></button>
+
+<script>
+/* ============================================================
+   MBOUR — Interactions
+   ============================================================ */
+
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('solid', window.scrollY > 100);
+}, { passive: true });
+
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach((el, i) => {
+  el.style.transitionDelay = (i % 6) * 0.06 + 's';
+  revealObs.observe(el);
+});
+
+const sommaireLinks = document.querySelectorAll('.sommaire-links a');
+const sommaireProgress = document.getElementById('sommaireProgress');
+const sectionIds = ['histoire','peche','tourisme','culture','circuit','galerie','saison','acces'];
+const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+function updateSommaire() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  sommaireProgress.style.width = Math.min(100, (scrollTop / docHeight) * 100) + '%';
+  let current = null;
+  sections.forEach(sec => {
+    const rect = sec.getBoundingClientRect();
+    if (rect.top <= 180 && rect.bottom > 180) current = sec.id;
+  });
+  sommaireLinks.forEach(a => {
+    a.classList.toggle('active', a.dataset.target === current);
+  });
+}
+window.addEventListener('scroll', updateSommaire, { passive: true });
+updateSommaire();
+
+const galleryItems = document.querySelectorAll('.g-item');
+const lightbox = document.getElementById('lightbox');
+const lbImg = document.getElementById('lbImg');
+const lbLabel = document.getElementById('lbLabel');
+const lbCat = document.getElementById('lbCat');
+let lbIndex = 0;
+const galleryData = Array.from(galleryItems).map(el => ({
+  src: el.dataset.src, label: el.dataset.label, cat: el.dataset.cat
+}));
+function openLightbox(i) {
+  lbIndex = i; updateLightbox();
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function updateLightbox() {
+  const d = galleryData[lbIndex];
+  lbImg.src = d.src; lbLabel.textContent = d.label; lbCat.textContent = d.cat;
+}
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+}
+function navLightbox(dir) {
+  lbIndex = (lbIndex + dir + galleryData.length) % galleryData.length;
+  updateLightbox();
+}
+galleryItems.forEach((el, i) => el.addEventListener('click', () => openLightbox(i)));
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+document.getElementById('lbPrev').addEventListener('click', () => navLightbox(-1));
+document.getElementById('lbNext').addEventListener('click', () => navLightbox(1));
+lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', (e) => {
+  if (!lightbox.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') navLightbox(-1);
+  if (e.key === 'ArrowRight') navLightbox(1);
+});
+
+const backTop = document.getElementById('back-top');
+window.addEventListener('scroll', () => {
+  backTop.classList.toggle('show', window.scrollY > 600);
+}, { passive: true });
+backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', (e) => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      const y = target.getBoundingClientRect().top + window.scrollY - 120;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  });
+});
+
+/* ============================================================
+   HERO MINI — Effet enveloppe au scroll
+   ============================================================ */
+(function heroEnvelopeEffect() {
+  const hero = document.querySelector('.hero-mini');
+  if (!hero) return;
+  const bg = hero.querySelector('.hero-mini-bg');
+  if (!bg) return;
+
+  let ticking = false;
+
+  function update() {
+    const scrolled = window.scrollY;
+    const heroHeight = hero.offsetHeight;
+    const progress = Math.min(1, scrolled / heroHeight);
+
+    const scale = 1.05 - progress * 0.08;
+    const brightness = 1 - progress * 0.35;
+    bg.style.transform = `scale(${scale})`;
+    bg.style.filter = `brightness(${brightness})`;
+
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  update();
+})();
+
+/* ============================================================
+   MINI-CARTE GÉOPORTAIL
+   ============================================================ */
+const SITE_COORDS = {
+  saly:              { lat: 14.4447, lng: -17.0045, color: '#0D3B66', icon: 'fa-umbrella-beach' },
+  fadiouth:          { lat: 14.1545, lng: -16.8242, color: '#1B6CA8', icon: 'fa-shapes' },
+  joal:              { lat: 14.1642, lng: -16.8395, color: '#2E86AB', icon: 'fa-landmark' },
+  bandia:            { lat: 14.5589, lng: -17.0243, color: '#5DADE2', icon: 'fa-paw' },
+  somone:            { lat: 14.4985, lng: -17.0889, color: '#0D3B66', icon: 'fa-water' },
+  nianing:           { lat: 14.3546, lng: -16.9341, color: '#1B6CA8', icon: 'fa-sun' },
+  popenguine:        { lat: 14.5560, lng: -17.1086, color: '#2E86AB', icon: 'fa-mountain-sun' },
+  toubab:            { lat: 14.5684, lng: -17.1181, color: '#5DADE2', icon: 'fa-masks-theater' },
+  'pointe-sarene':   { lat: 14.2860, lng: -16.9193, color: '#0D3B66', icon: 'fa-water' }
+};
+
+let miniMapInitialized = false;
+
+function initMiniMap() {
+  if (miniMapInitialized || !window.L) return;
+  const el = document.getElementById('miniMap');
+  if (!el) return;
+
+  const map = L.map('miniMap', {
+    center: [14.42, -16.96],
+    zoom: 10,
+    zoomControl: false,
+    scrollWheelZoom: false,
+    dragging: true, touchZoom: true, doubleClickZoom: true
+  });
+
+  map.on('focus click', () => map.scrollWheelZoom.enable());
+  map.on('blur mouseout', () => map.scrollWheelZoom.disable());
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap', maxZoom: 19
+  }).addTo(map);
+
+  Object.keys(SITE_COORDS).forEach(key => {
+    const c = SITE_COORDS[key];
+    // On crée un faux objet site pour le popup de la carte, 
+    // puisqu'on a supprimé l'objet SITES global.
+    const titleMap = {
+      saly: 'Saly Portudal', fadiouth: 'Île de Fadiouth', joal: 'Joal-Fadiouth',
+      bandia: 'Réserve de Bandia', somone: 'Lagune de la Somone', nianing: 'Plage de Nianing',
+      popenguine: 'Réserve de Popenguine', toubab: 'Toubab Dialaw', 'pointe-sarene': 'Pointe Sarène'
+    };
+    
+    const icon = L.divIcon({
+      className: 'mini-marker',
+      html: `<div class="mini-marker-inner" style="background:${c.color}">
+               <i class="fa-solid ${c.icon}"></i>
+             </div>`,
+      iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -26]
+    });
+
+    const marker = L.marker([c.lat, c.lng], { icon }).addTo(map);
+    
+    // Le bouton renvoie maintenant vers la page circuit-balneaire avec l'ancre
+    const popupHtml = `
+      <h4 class="mini-popup-title">${titleMap[key]}</h4>
+      <a class="mini-popup-btn" href="circuit-balneaire.html#${key}" style="text-decoration:none;">
+        Voir la fiche <i class="fa-solid fa-arrow-right" style="font-size:0.6rem"></i>
+      </a>`;
+      
+    marker.bindPopup(popupHtml, { closeButton: false, offset: [0, -4], maxWidth: 220 });
+  });
+
+  miniMapInitialized = true;
+  setTimeout(() => map.invalidateSize(), 400);
+}
+
+(function setupMiniMapLazy() {
+  const target = document.getElementById('geoVisual');
+  if (!target) return;
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(initMiniMap, 150);
+          obs.disconnect();
+        }
+      });
+    }, { threshold: 0.15 });
+    obs.observe(target);
+  } else {
+    window.addEventListener('load', () => setTimeout(initMiniMap, 300));
+  }
+})();
+</script>
+
 </body>
 </html>

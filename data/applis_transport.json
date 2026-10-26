@@ -1,0 +1,4 @@
+[
+ {"id": "yango",  "nom": "Yango",  "zones": ["Thiès", "Mbour"], "site_web": "https://yango.com"},
+ {"id": "yassir", "nom": "Yassir", "zones": ["Thiès"],          "site_web": "https://yassir.com"}
+]

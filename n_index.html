@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Montserrat:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+<!-- Leaflet (carte interactive) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <link rel="stylesheet" href="n_style.css">
 </head>
 <body>
@@ -20,55 +23,36 @@
 <!-- NAVBAR -->
 <nav id="navbar">
   <a href="#hero" class="nav-logo">
-    <div class="nav-logo-icon"></div>
-    <div>
-      <span class="nav-logo-text">Thiès</span>
-      <span class="nav-logo-sub">Sénégal</span>
-    </div>
+    <img src="images/logo.png" alt="Thiès Kaay" class="site-logo-img">
   </a>
 
   <ul class="nav-links">
     <li><a href="#hero"><i class="fa-solid fa-house"></i> Accueil</a></li>
 
     <li>
-      <span>Région <i class="fa-solid fa-chevron-down nav-chevron"></i></span>
+      <span>La Région <i class="fa-solid fa-chevron-down nav-chevron"></i></span>
       <div class="dropdown">
         <a href="#region"><i class="fa-solid fa-map-location-dot"></i> Vue d'ensemble</a>
-        <a href="#departement-thies"><i class="fa-solid fa-building-columns"></i> Thiès — Tourisme d'affaires</a>
-        <a href="#departement-mbour"><i class="fa-solid fa-umbrella-beach"></i> Mbour — Tourisme balnéaire</a>
-        <a href="#departement-tivaouane"><i class="fa-solid fa-mosque"></i> Tivaouane — Tourisme religieux</a>
+        <a href="thies.html"><i class="fa-solid fa-building-columns"></i> Thiès</a>
+        <a href="mbour.html"><i class="fa-solid fa-umbrella-beach"></i> Mbour</a>
+        <a href="tivaouane.html"><i class="fa-solid fa-mosque"></i> Tivaouane</a>
       </div>
     </li>
 
     <li>
       <span>Découvrir <i class="fa-solid fa-chevron-down nav-chevron"></i></span>
       <div class="dropdown">
-        <a href="#region"><i class="fa-solid fa-book-open"></i> Présentation</a>
-        <a href="#region"><i class="fa-solid fa-clock-rotate-left"></i> Histoire</a>
-        <a href="#sites"><i class="fa-solid fa-masks-theater"></i> Culture</a>
+        <a href="#sites"><i class="fa-solid fa-landmark"></i> Sites incontournables</a>
+        <a href="#experiences"><i class="fa-solid fa-wand-magic-sparkles"></i> Expériences</a>
+        <a href="#saisons"><i class="fa-solid fa-calendar-days"></i> Quand partir</a>
+        <a href="galerie.html"><i class="fa-solid fa-images"></i> Galerie</a>
       </div>
     </li>
 
-    <li>
-      <span>Sites <i class="fa-solid fa-chevron-down nav-chevron"></i></span>
-      <div class="dropdown">
-        <a href="#sites"><i class="fa-solid fa-train"></i> Gare ferroviaire</a>
-        <a href="#sites"><i class="fa-solid fa-palette"></i> Manufactures MSAD</a>
-        <a href="#sites"><i class="fa-solid fa-landmark"></i> Musée régional</a>
-        <a href="#sites"><i class="fa-solid fa-mosque"></i> Mosquée & Cathédrale</a>
-        <a href="#sites"><i class="fa-solid fa-bag-shopping"></i> Marchés</a>
-      </div>
-    </li>
-
-    <li><a href="#experiences"><i class="fa-solid fa-wand-magic-sparkles"></i> Expériences</a></li>
-    <li><a href="#saisons"><i class="fa-solid fa-calendar-days"></i> Saisons</a></li>
-    <li><a href="hebergements.html"><i class="fa-solid fa-hotel"></i> Hébergements</a></li>
-    <li><a href="restaurants.html"><i class="fa-solid fa-utensils"></i> Restaurants</a></li>
-    <li><a href="#blog"><i class="fa-solid fa-newspaper"></i> Blog</a></li>
     <li><a href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a></li>
 
     <li>
-      <a href="#geoportail" class="nav-geoportail">
+      <a href="carte.html" class="nav-geoportail">
         <i class="fa-solid fa-location-dot"></i> Géoportail
       </a>
     </li>
@@ -81,21 +65,13 @@
 
 <!-- Mobile Menu -->
 <div class="mobile-menu" id="mobileMenu" role="menu" aria-hidden="true">
-  <a href="#hero" role="menuitem"><i class="fa-solid fa-house"></i> Accueil</a>
-  <a href="#region" role="menuitem"><i class="fa-solid fa-map-location-dot"></i> Région de Thiès</a>
-  <a href="#departement-thies" role="menuitem"><i class="fa-solid fa-building-columns"></i> Dép. Thiès</a>
-  <a href="#departement-mbour" role="menuitem"><i class="fa-solid fa-umbrella-beach"></i> Dép. Mbour</a>
-  <a href="#departement-tivaouane" role="menuitem"><i class="fa-solid fa-mosque"></i> Dép. Tivaouane</a>
-  <a href="#region" role="menuitem"><i class="fa-solid fa-book-open"></i> Découvrir Thiès</a>
-  <a href="#sites" role="menuitem"><i class="fa-solid fa-lightbulb"></i> Pourquoi visiter</a>
-  <a href="#sites" role="menuitem"><i class="fa-solid fa-landmark"></i> Sites touristiques</a>
-  <a href="#experiences" role="menuitem"><i class="fa-solid fa-wand-magic-sparkles"></i> Expériences</a>
-  <a href="hebergements.html" role="menuitem"><i class="fa-solid fa-hotel"></i> Hébergements</a>
-  <a href="restaurants.html" role="menuitem"><i class="fa-solid fa-utensils"></i> Restaurants</a>
-  <a href="#galerie" role="menuitem"><i class="fa-solid fa-images"></i> Galerie</a>
-  <a href="#blog" role="menuitem"><i class="fa-solid fa-newspaper"></i> Blog</a>
-  <a href="#contact" role="menuitem"><i class="fa-solid fa-envelope"></i> Contact</a>
-  <a href="#geoportail" class="mobile-geoportail" role="menuitem"><i class="fa-solid fa-location-dot"></i> Accéder au Géoportail</a>
+  <a href="#hero"><i class="fa-solid fa-house"></i> Accueil</a>
+  <a href="#region"><i class="fa-solid fa-map-location-dot"></i> La Région</a>
+  <a href="#sites"><i class="fa-solid fa-landmark"></i> Sites</a>
+<a href="#gastronomie"><i class="fa-solid fa-utensils"></i> Gastronomie</a>  <a href="#saisons"><i class="fa-solid fa-calendar-days"></i> Quand partir</a>
+  <a href="#galerie"><i class="fa-solid fa-images"></i> Galerie</a>
+  <a href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a>
+  <a href="carte.html" class="mobile-geoportail"><i class="fa-solid fa-location-dot"></i> Géoportail</a>
 </div>
 
 <!-- HERO -->
@@ -132,26 +108,11 @@
     <p class="hero-sub">Tourisme d'affaires, balnéaire et religieux — au cœur du Sénégal</p>
     <p class="hero-slogan">Authenticité · Culture · Patrimoine · Modernité</p>
 
-    <!-- BARRE DE RECHERCHE -->
-    <div class="hero-search">
-      <div class="hero-search-box">
-        <span style="font-size:1rem;opacity:0.6"><i class="fa-solid fa-magnifying-glass"></i></span>
-        <input type="text" placeholder="Rechercher un site, une expérience, un restaurant…" id="heroSearch">
-        <button class="hero-search-btn" onclick="document.getElementById('sites').scrollIntoView({behavior:'smooth'})">Rechercher</button>
-      </div>
-      <div class="hero-search-hints">
-        <span class="search-hint" onclick="filterSitesFromHero('heritage')"><i class="fa-solid fa-landmark"></i> Gare historique</span>
-        <span class="search-hint" onclick="filterSitesFromHero('culture')"><i class="fa-solid fa-paintbrush"></i> Tapisseries MSAD</span>
-        <span class="search-hint" onclick="filterSitesFromHero('marche')"><i class="fa-solid fa-bag-shopping"></i> Marchés</span>
-        <span class="search-hint" onclick="document.getElementById('hebergements').scrollIntoView({behavior:'smooth'})"><i class="fa-solid fa-hotel"></i> Hébergements</span>
-      </div>
-    </div>
-
     <div class="hero-btns">
       <a href="#region" class="btn-primary">
         <i class="fa-solid fa-map"></i> Explorer la ville
       </a>
-      <a href="#geoportail" class="btn-secondary">
+      <a href="carte.html" class="btn-secondary">
         <i class="fa-solid fa-location-dot"></i> Voir le Géoportail
       </a>
     </div>
@@ -185,37 +146,6 @@
     <span class="hero-scroll-text">Découvrir</span>
   </div>
 </section>
-
-<!-- COUP DE CŒUR / GÉOPORTAIL — bandeau défilant (2 messages, 5s) -->
-<div class="coup-coeur-banner">
-  <div class="coup-coeur-viewport">
-    <div class="coup-coeur-track" id="coupCoeurTrack">
-      <div class="coup-coeur-inner">
-        <span style="font-size:1.2rem"><i class="fa-solid fa-trophy"></i></span>
-        <p><strong>Coup de cœur :</strong> Les Manufactures MSAD — l'art sénégalais reconnu dans les plus grands musées du monde. Visites guidées disponibles.</p>
-        <a href="#sites">Découvrir →</a>
-      </div>
-      <div class="coup-coeur-inner">
-        <span style="font-size:1.2rem"><i class="fa-solid fa-location-dot"></i></span>
-        <p><strong>Géoportail :</strong> Explorez la région de Thiès sur notre carte SIG interactive — sites, hébergements et routes géolocalisés.</p>
-        <a href="#geoportail">Explorer →</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ACCÈS RAPIDE -->
-<div class="quick-access">
-  <div class="quick-access-inner">
-    <a href="#sites" class="qa-item"><span class="qa-item-icon"><i class="fa-solid fa-landmark"></i></span><span class="qa-item-label">Sites</span></a>
-    <a href="#experiences" class="qa-item"><span class="qa-item-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></span><span class="qa-item-label">Expériences</span></a>
-    <a href="hebergements.html" class="qa-item"><span class="qa-item-icon"><i class="fa-solid fa-hotel"></i></span><span class="qa-item-label">Hébergements</span></a>
-    <a href="restaurants.html" class="qa-item"><span class="qa-item-icon"><i class="fa-solid fa-utensils"></i></span><span class="qa-item-label">Restaurants</span></a>
-    <a href="#saisons" class="qa-item"><span class="qa-item-icon"><i class="fa-solid fa-calendar-days"></i></span><span class="qa-item-label">Meilleure période</span></a>
-    <a href="#geoportail" class="qa-item"><span class="qa-item-icon"><i class="fa-solid fa-map"></i></span><span class="qa-item-label">Carte SIG</span></a>
-    <a href="#contact" class="qa-item"><span class="qa-item-icon"><i class="fa-solid fa-envelope"></i></span><span class="qa-item-label">Contact</span></a>
-  </div>
-</div>
 
 <!-- RÉGION DE THIÈS — VUE D'ENSEMBLE -->
 <section id="region">
@@ -251,13 +181,7 @@
     </div>
 
     <!-- MBOUR -->
-    <div class="dept-columns" id="departement-mbour" style="margin-top:4rem">
-      <div class="dept-col-visual">
-        <div class="dept-tilt-card tilt-right">
-          <img class="dept-tilt-img" src="images/plage-saly.png" alt="Plage de Saly Portudal, vue aérienne">
-          <div class="dept-tilt-caption">Épicentre balnéaire</div>
-        </div>
-      </div>
+    <div class="dept-columns dept-columns-swap" id="departement-mbour" style="margin-top:4rem">
       <div class="dept-col-text">
         <span class="dept-tag">Département de Mbour</span>
         <h3 style="font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--charcoal);margin:0.6rem 0 1rem;">La Petite Côte, <em style="color:var(--orange);font-style:normal">épicentre balnéaire</em></h3>
@@ -270,6 +194,12 @@
           <span>Saly Portudal</span><span>Somone</span><span>Nianing</span><span>Joal-Fadiouth</span><span>Pointe Sarène</span><span>Toubab Dialaw</span>
         </div>
         <a href="mbour.html" class="btn-primary"><i class="fa-solid fa-umbrella-beach"></i> Découvrir la Petite Côte en détail</a>
+      </div>
+      <div class="dept-col-visual">
+        <div class="dept-tilt-card tilt-right">
+          <img class="dept-tilt-img" src="images/plage-saly.png" alt="Plage de Saly Portudal, vue aérienne">
+          <div class="dept-tilt-caption">Épicentre balnéaire</div>
+        </div>
       </div>
     </div>
 
@@ -391,7 +321,7 @@
           </div>
         </div>
         <div class="why-slide">
-          <img class="why-slide-bg" src="images/cathedrale-thies.png" alt="Cathédrale Sainte-Anne de Thiès">
+          <img class="why-slide-bg" src="images/cathedrale-thies.jpg" alt="Cathédrale Sainte-Anne de Thiès">
           <div class="why-slide-overlay"></div>
           <div class="why-slide-card">
             <span class="dept-badge thies">Thiès</span>
@@ -464,46 +394,22 @@
       <button class="filter-btn" onclick="filterByDept('tivaouane', this, '#galerie')"><i class="fa-solid fa-mosque"></i> Tivaouane</button>
     </div>
 
-    <div class="gallery-grid">
+    <div class="gallery-grid gallery-grid-4">
       <div class="g-item" data-index="0" data-dept="thies" role="button" tabindex="0" aria-label="Agrandir : Gare historique de Thiès">
-        <div class="g-bg bg-rail"><i class="fa-solid fa-train"></i></div>
+        <img class="g-bg" src="images/gare-thies.png" alt="Gare historique de Thiès">
         <div class="g-overlay"><span class="g-label">Gare historique de Thiès</span></div>
       </div>
-      <div class="g-item" data-index="1" data-dept="thies" role="button" tabindex="0" aria-label="Agrandir : Manufactures MSAD">
-        <div class="g-bg bg-tapisserie"><i class="fa-solid fa-paintbrush"></i></div>
-        <div class="g-overlay"><span class="g-label">Manufactures MSAD</span></div>
-      </div>
-      <div class="g-item" data-index="2" data-dept="thies" role="button" tabindex="0" aria-label="Agrandir : Marché de Nguinth">
-        <div class="g-bg bg-marche"><i class="fa-solid fa-bag-shopping"></i></div>
-        <div class="g-overlay"><span class="g-label">Marché de Nguinth</span></div>
-      </div>
-      <div class="g-item" data-index="3" data-dept="thies" role="button" tabindex="0" aria-label="Agrandir : Avenues ombragées">
-        <div class="g-bg bg-avenue"><i class="fa-solid fa-tree"></i></div>
-        <div class="g-overlay"><span class="g-label">Avenues ombragées</span></div>
-      </div>
-      <div class="g-item" data-index="4" data-dept="thies" role="button" tabindex="0" aria-label="Agrandir : Village artisanal">
-        <div class="g-bg bg-artisanat"><i class="fa-solid fa-hammer"></i></div>
-        <div class="g-overlay"><span class="g-label">Village artisanal</span></div>
-      </div>
-      <div class="g-item" data-index="5" data-dept="thies" role="button" tabindex="0" aria-label="Agrandir : Grande Mosquée de Thiès">
-        <div class="g-bg bg-mosquee"><i class="fa-solid fa-mosque"></i></div>
-        <div class="g-overlay"><span class="g-label">Grande Mosquée de Thiès</span></div>
-      </div>
-      <div class="g-item" data-index="6" data-dept="mbour" role="button" tabindex="0" aria-label="Agrandir : Plage de Saly Portudal">
-        <div class="g-bg bg-saly"><i class="fa-solid fa-umbrella-beach"></i></div>
+      <div class="g-item" data-index="1" data-dept="mbour" role="button" tabindex="0" aria-label="Agrandir : Plage de Saly Portudal">
+        <img class="g-bg" src="images/saly-plage-mer.jpg" alt="Plage de Saly Portudal">
         <div class="g-overlay"><span class="g-label">Plage de Saly Portudal</span></div>
       </div>
-      <div class="g-item" data-index="7" data-dept="mbour" role="button" tabindex="0" aria-label="Agrandir : Lagune de Somone">
-        <div class="g-bg bg-somone"><i class="fa-solid fa-water"></i></div>
-        <div class="g-overlay"><span class="g-label">Lagune de Somone</span></div>
-      </div>
-      <div class="g-item" data-index="8" data-dept="tivaouane" role="button" tabindex="0" aria-label="Agrandir : Grande Mosquée de Tivaouane">
-        <div class="g-bg bg-mosquee-tiv"><i class="fa-solid fa-mosque"></i></div>
+      <div class="g-item" data-index="2" data-dept="tivaouane" role="button" tabindex="0" aria-label="Agrandir : Grande Mosquée de Tivaouane">
+        <img class="g-bg" src="images/mosquee-tivaouane.png" alt="Grande Mosquée de Tivaouane">
         <div class="g-overlay"><span class="g-label">Grande Mosquée de Tivaouane</span></div>
       </div>
-      <div class="g-item" data-index="9" data-dept="tivaouane" role="button" tabindex="0" aria-label="Agrandir : Zawiya Tijaniyya">
-        <div class="g-bg bg-zawiya"><i class="fa-solid fa-place-of-worship"></i></div>
-        <div class="g-overlay"><span class="g-label">Zawiya Tijaniyya</span></div>
+      <div class="g-item" data-index="3" data-dept="thies" role="button" tabindex="0" aria-label="Agrandir : Lutteurs de l'écurie Mbolo">
+        <img class="g-bg" src="images/lutteurs-ecurie-mbolo-1.jpg" alt="Lutteurs de l'écurie Mbolo">
+        <div class="g-overlay"><span class="g-label">Lutteurs de l'écurie Mbolo</span></div>
       </div>
     </div>
 
@@ -520,259 +426,24 @@
         </div>
       </div>
     </div>
-
-    <div class="gallery-cta" style="margin-top:2rem;">
-      <a href="#" class="btn-primary" style="display:inline-flex">
-        <i class="fa-solid fa-images"></i> Voir toute la galerie
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- HÉBERGEMENTS -->
-<section id="hebergements">
-  <div class="container">
-    <span class="section-label">Où dormir</span>
-    <h2 class="section-title">Hébergements dans la <em>région</em></h2>
-    <div class="sep"></div>
-    <p class="section-desc">Un aperçu par département — la liste complète des 864 réceptifs hôteliers de la région est disponible sur la page dédiée.</p>
-
-    <div class="lodging-grid lodging-grid-preview">
-      <div class="lodging-card" data-dept="thies">
-        <div class="lodging-img" style="background:linear-gradient(135deg,#6C5CE7,#A29BFE);position:relative">
-          <i class="fa-solid fa-house-chimney"></i>
-          <div class="lodging-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-          <div class="lodging-badge" style="background:var(--green)">Coup de <i class="fa-solid fa-heart"></i></div>
-        </div>
-        <div class="lodging-body">
-          <span class="dept-badge thies">Thiès</span>
-          <h3>Villa Coloniale Ballabey</h3>
-          <p>Ancienne demeure coloniale rénovée avec goût, au cœur du quartier historique. Architecture d'époque, mobilier soigné et atmosphère unique.</p>
-          <div class="lodging-amenities">
-            <span class="lodging-amenity"><i class="fa-solid fa-landmark"></i> Historique</span>
-            <span class="lodging-amenity"><i class="fa-solid fa-leaf"></i> Piscine</span>
-            <span class="lodging-amenity"><i class="fa-solid fa-egg"></i> Cuisine équip.</span>
-          </div>
-          <div class="lodging-price" style="margin-top:0.8rem">35 000 FCFA <span>/ nuit</span></div>
-        </div>
-        <div class="lodging-footer">
-          <span class="lodging-footer-rating">⭐ <strong>4.9</strong> · 43 avis</span>
-          <a href="#contact" class="lodging-btn">En savoir plus</a>
-        </div>
-      </div>
-
-      <div class="lodging-card" data-dept="mbour">
-        <div class="lodging-img" style="background:linear-gradient(135deg,#F39C12,#F5B041);position:relative">
-          <i class="fa-solid fa-hotel"></i>
-          <div class="lodging-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-          <div class="lodging-badge">Populaire</div>
-        </div>
-        <div class="lodging-body">
-          <span class="dept-badge mbour">Mbour</span>
-          <h3>Résidence Saly Beach</h3>
-          <p>Complexe hôtelier en bord de plage à Saly Portudal, piscine, restaurant et accès direct au sable fin de la Petite Côte.</p>
-          <div class="lodging-amenities">
-            <span class="lodging-amenity"><i class="fa-solid fa-umbrella-beach"></i> Front de mer</span>
-            <span class="lodging-amenity"><i class="fa-solid fa-person-swimming"></i> Piscine</span>
-            <span class="lodging-amenity"><i class="fa-solid fa-signal"></i> Wi-Fi</span>
-          </div>
-          <div class="lodging-price" style="margin-top:0.8rem">28 000 FCFA <span>/ nuit</span></div>
-        </div>
-        <div class="lodging-footer">
-          <span class="lodging-footer-rating">⭐ <strong>4.5</strong> · 210 avis</span>
-          <a href="#contact" class="lodging-btn">En savoir plus</a>
-        </div>
-      </div>
-
-      <div class="lodging-card" data-dept="tivaouane">
-        <div class="lodging-img" style="background:linear-gradient(135deg,#1B4F30,#2E8B57);position:relative">
-          <i class="fa-solid fa-house"></i>
-          <div class="lodging-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-        </div>
-        <div class="lodging-body">
-          <span class="dept-badge tivaouane">Tivaouane</span>
-          <h3>Auberge de la Zawiya</h3>
-          <p>Hébergement simple et accueillant à quelques pas des lieux saints, prisé des pèlerins lors du Gamou et des visiteurs de passage.</p>
-          <div class="lodging-amenities">
-            <span class="lodging-amenity"><i class="fa-solid fa-mosque"></i> Proche zawiya</span>
-            <span class="lodging-amenity"><i class="fa-solid fa-bread-slice"></i> Pdéj inclus</span>
-            <span class="lodging-amenity">🅿️ Parking</span>
-          </div>
-          <div class="lodging-price" style="margin-top:0.8rem">9 000 FCFA <span>/ nuit</span></div>
-        </div>
-        <div class="lodging-footer">
-          <span class="lodging-footer-rating">⭐ <strong>4.4</strong> · 56 avis</span>
-          <a href="#contact" class="lodging-btn">En savoir plus</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="section-preview-cta">
-      <a href="hebergements.html" class="btn-primary"><i class="fa-solid fa-hotel"></i> Voir tous les hébergements de la région</a>
-    </div>
-  </div>
-</section>
-
-<!-- RESTAURANTS -->
-<section id="restaurants">
-  <div class="container">
-    <span class="section-label">Gastronomie</span>
-    <h2 class="section-title">Restaurants & <em>Saveurs</em> de la région</h2>
-    <div class="sep"></div>
-    <p class="section-desc">Un aperçu par département — la carte complète des adresses gourmandes se trouve sur la page dédiée.</p>
-
-    <div class="resto-grid resto-grid-preview">
-      <div class="resto-card" data-dept="thies">
-        <div class="resto-img" style="background:linear-gradient(135deg,#27AE60,#2ECC71)"><i class="fa-solid fa-drumstick-bite"></i></div>
-        <div class="resto-body">
-          <span class="dept-badge thies">Thiès</span>
-          <span class="resto-cuisine">Dibiterie & grillades</span>
-          <h3>Chez Moussa Dibiterie</h3>
-          <p>L'incontournable grillade de rue thiéssoise. Brochettes fumantes, agneau grillé et thiou dégustés en plein air dans une atmosphère conviviale.</p>
-        </div>
-        <div class="resto-footer">
-          <span class="resto-price">~2 500 FCFA / pers.</span>
-          <span class="resto-rating-badge"><i class="fa-solid fa-star"></i> 4.8</span>
-        </div>
-      </div>
-
-      <div class="resto-card" data-dept="mbour">
-        <div class="resto-img" style="background:linear-gradient(135deg,#F39C12,#F5B041)"><i class="fa-solid fa-shrimp"></i></div>
-        <div class="resto-body">
-          <span class="dept-badge mbour">Mbour</span>
-          <span class="resto-cuisine">Fruits de mer</span>
-          <h3>La Terrasse de Saly</h3>
-          <p>Poissons et fruits de mer grillés servis face à l'océan, dans une ambiance décontractée typique de la Petite Côte.</p>
-        </div>
-        <div class="resto-footer">
-          <span class="resto-price">~6 000 FCFA / pers.</span>
-          <span class="resto-rating-badge"><i class="fa-solid fa-star"></i> 4.6</span>
-        </div>
-      </div>
-
-      <div class="resto-card" data-dept="tivaouane">
-        <div class="resto-img" style="background:linear-gradient(135deg,#1B4F30,#2E8B57)"><i class="fa-solid fa-bowl-food"></i></div>
-        <div class="resto-body">
-          <span class="dept-badge tivaouane">Tivaouane</span>
-          <span class="resto-cuisine">Cuisine traditionnelle</span>
-          <h3>Chez Sokhna</h3>
-          <p>Table familiale servant plats traditionnels et thé à la menthe, très fréquentée par les pèlerins de passage lors du Gamou.</p>
-        </div>
-        <div class="resto-footer">
-          <span class="resto-price">~2 000 FCFA / pers.</span>
-          <span class="resto-rating-badge"><i class="fa-solid fa-star"></i> 4.4</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="section-preview-cta">
-      <a href="restaurants.html" class="btn-primary"><i class="fa-solid fa-utensils"></i> Voir tous les restaurants de la région</a>
-    </div>
-  </div>
-</section>
-
-<!-- TÉMOIGNAGES -->
-<section id="temoignages">
-  <div class="container">
-    <div style="text-align:center;max-width:500px;margin:0 auto;">
-      <span class="section-label" style="justify-content:center;">Avis voyageurs</span>
-      <h2 class="section-title section-title-light">Ce qu'ils <em>disent</em></h2>
-      <div class="sep sep-center"></div>
-    </div>
-
-    <div class="testi-grid">
-      <div class="testi-card">
-        <div class="testi-quote">"</div>
-        <p class="testi-text">Thiès m'a complètement surpris. J'y suis allé par deux fois. Les avenues bordées d'arbres, le marché artisanal, les artisans authentiques… C'est l'exact opposé de Dakar — une vraie bouffée d'air frais !</p>
-        <div class="testi-author">
-          <div class="testi-avatar" style="background:rgba(232,115,10,0.3)">Y</div>
-          <div class="testi-info">
-            <h4>Yohann</h4>
-            <span>Blogueur voyage, France</span>
-            <div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testi-card">
-        <div class="testi-quote">"</div>
-        <p class="testi-text">La visite des manufactures MSAD est une expérience inoubliable. Voir ces tapisseries naître sous les doigts des liciers, c'est un art vivant d'une beauté absolue. Une destination culturelle majeure.</p>
-        <div class="testi-author">
-          <div class="testi-avatar" style="background:rgba(45,106,79,0.3)">M</div>
-          <div class="testi-info">
-            <h4>Marie-Claire D.</h4>
-            <span>Historienne de l'art, Belgique</span>
-            <div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testi-card">
-        <div class="testi-quote">"</div>
-        <p class="testi-text">La gare coloniale de Thiès est un véritable bijou architectural. L'atmosphère du quartier Ballabey avec ses vieilles demeures coloniales est hors du temps. Je comprends pourquoi on parle d'une future capitale.</p>
-        <div class="testi-author">
-          <div class="testi-avatar" style="background:rgba(27,79,114,0.3)">A</div>
-          <div class="testi-info">
-            <h4>Amadou S.</h4>
-            <span>Architecte, Sénégal</span>
-            <div class="testi-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </section>
 
 <!-- GÉOPORTAIL -->
 <section id="geoportail">
   <div class="container">
     <div class="geo-grid">
-      <div class="geo-map">
-        <div class="geo-map-bg"></div>
-
-        <!-- Routes stylisées -->
-        <div class="map-road" style="top:50%;left:0;width:100%;"></div>
-        <div class="map-road" style="top:0;left:40%;height:100%;width:2px;"></div>
-        <div class="map-road" style="top:30%;left:0;width:60%;transform:rotate(-8deg);"></div>
-
-        <!-- Points d'intérêt -->
-        <div class="map-pin" style="top:48%;left:40%;">
-          <div class="map-pin-dot"></div>
-          <div class="map-pin-label"><i class="fa-solid fa-train"></i> Gare</div>
-        </div>
-        <div class="map-pin" style="top:38%;left:55%;">
-          <div class="map-pin-dot" style="background:#2D6A4F"></div>
-          <div class="map-pin-label"><i class="fa-solid fa-paintbrush"></i> MSAD</div>
-        </div>
-        <div class="map-pin" style="top:62%;left:30%;">
-          <div class="map-pin-dot" style="background:#1B4F72"></div>
-          <div class="map-pin-label"><i class="fa-solid fa-landmark"></i> Musée</div>
-        </div>
-        <div class="map-pin" style="top:42%;left:65%;">
-          <div class="map-pin-dot" style="background:#9B59B6"></div>
-          <div class="map-pin-label"><i class="fa-solid fa-mosque"></i> Mosquée</div>
-        </div>
-        <div class="map-pin" style="top:70%;left:50%;">
-          <div class="map-pin-dot" style="background:#E74C3C"></div>
-          <div class="map-pin-label"><i class="fa-solid fa-bag-shopping"></i> Marché</div>
-        </div>
-
-        <!-- Label carte -->
-        <div style="position:absolute;top:12px;left:12px;background:rgba(0,0,0,0.6);color:rgba(255,255,255,0.8);font-size:0.65rem;padding:4px 10px;border-radius:6px;backdrop-filter:blur(4px);letter-spacing:1px;text-transform:uppercase;">
-          <i class="fa-solid fa-location-dot"></i> Thiès — 14.79°N, 16.93°W
-        </div>
-
-        <!-- Légende -->
-        <div style="position:absolute;bottom:12px;right:12px;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);border-radius:8px;padding:8px 12px;font-size:0.65rem;color:rgba(255,255,255,0.7);">
-          <div style="margin-bottom:3px;"><i class="fa-solid fa-map"></i> Aperçu Géoportail</div>
-          <div style="color:rgba(255,255,255,0.4);font-size:0.6rem;">Données SIG · OpenStreetMap</div>
+      <div class="geo-map geo-map-real" id="homeMap">
+        <div id="miniMap" class="mini-map"></div>
+        <div class="geo-overlay-info">
+          <div class="geo-coords"><i class="fa-solid fa-location-dot"></i> Région de Thiès</div>
+          <div class="geo-map-hint"><i class="fa-solid fa-hand-pointer"></i> Cliquez sur un département</div>
         </div>
       </div>
 
       <div class="geo-content">
         <span class="section-label" style="color:rgba(255,255,255,0.5)">SIG & Cartographie</span>
         <h2>Explorez la région<br>via le <em style="color:var(--orange-light)">Géoportail</em></h2>
-        <p>Notre géoportail intègre des données SIG (Système d'Information Géographique) pour vous offrir une exploration cartographique interactive et précise de la région de Thiès. Aperçu ci-contre sur Thiès-ville ; la couverture de Mbour et Tivaouane sera ajoutée avec leurs pages dédiées.</p>
+        <p>Notre géoportail intègre des données SIG (Système d'Information Géographique) pour vous offrir une exploration cartographique interactive et précise de la région de Thiès.</p>
 
         <div class="geo-features">
           <div class="geo-feature">
@@ -797,65 +468,10 @@
           </div>
         </div>
 
-        <a href="#" class="btn-geo">
+        <a href="carte.html" class="btn-geo">
           <i class="fa-solid fa-location-dot"></i> Accéder au Géoportail
           <span style="font-size:0.75rem;opacity:0.8">→</span>
         </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- BLOG -->
-<section id="blog">
-  <div class="container">
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1rem;">
-      <div>
-        <span class="section-label">Actualités</span>
-        <h2 class="section-title">Blog & <em>Articles</em></h2>
-        <div class="sep"></div>
-      </div>
-      <a href="#" class="btn-primary" style="font-size:0.8rem;padding:0.7rem 1.5rem">Voir tous les articles <i class="fa-solid fa-arrow-right"></i></a>
-    </div>
-
-    <div class="blog-grid">
-      <div class="blog-card">
-        <div class="blog-img" style="height:280px;font-size:4rem;background:linear-gradient(135deg,#1a1a2e,#4a3728)">
-          <i class="fa-solid fa-train"></i>
-          <div class="blog-date">Avr 2025</div>
-          <div class="blog-tag">Patrimoine</div>
-        </div>
-        <div class="blog-body">
-          <h3>L'épopée ferroviaire de Thiès : quand les rails ont bâti une ville</h3>
-          <p>De la ligne Dakar-Niger aux ateliers de réparation, comment le chemin de fer a façonné l'identité et l'essor économique de la Capitale du Rail sénégalaise.</p>
-          <button class="blog-read">Lire l'article <i class="fa-solid fa-arrow-up-right-from-square"></i></button>
-        </div>
-      </div>
-
-      <div class="blog-card">
-        <div class="blog-img" style="height:160px;font-size:3rem;background:linear-gradient(135deg,#2D1B69,#E8730A)">
-          <i class="fa-solid fa-paintbrush"></i>
-          <div class="blog-date">Mars 2025</div>
-          <div class="blog-tag">Artisanat</div>
-        </div>
-        <div class="blog-body">
-          <h3>Les tapisseries MSAD : l'art sénégalais tissé à la main</h3>
-          <p>Comment les Manufactures de Senghor perpétuent un savoir-faire d'exception reconnu dans les plus grands musées du monde.</p>
-          <button class="blog-read">Lire <i class="fa-solid fa-arrow-up-right-from-square"></i></button>
-        </div>
-      </div>
-
-      <div class="blog-card">
-        <div class="blog-img" style="height:160px;font-size:3rem;background:linear-gradient(135deg,#27AE60,#2ECC71)">
-          <i class="fa-solid fa-bag-shopping"></i>
-          <div class="blog-date">Fév 2025</div>
-          <div class="blog-tag">Gastronomie</div>
-        </div>
-        <div class="blog-body">
-          <h3>Le guide culinaire des marchés de Thiès</h3>
-          <p>Du thiéboudienne au yassa, partez à la découverte des saveurs authentiques de la cuisine sénégalaise dans les marchés de la ville.</p>
-          <button class="blog-read">Lire <i class="fa-solid fa-arrow-up-right-from-square"></i></button>
-        </div>
       </div>
     </div>
   </div>
@@ -954,31 +570,12 @@
   </div>
 </section>
 
-<!-- NEWSLETTER -->
-<div class="newsletter-section">
-  <div class="newsletter-inner">
-    <h3>Restez <em style="color:var(--orange-light)">informé</em></h3>
-    <p>Recevez nos actualités touristiques, événements et bons plans directement dans votre boîte mail.</p>
-    <div class="newsletter-form">
-      <input type="email" placeholder="votre@email.com">
-      <button type="button">S'abonner <i class="fa-solid fa-paper-plane"></i></button>
-    </div>
-    <div class="newsletter-trust">
-      <span><i class="fa-solid fa-lock"></i></span> Pas de spam · Désabonnement en un clic
-    </div>
-  </div>
-</div>
-
 <!-- FOOTER -->
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <a href="#hero" class="nav-logo" style="margin:0 0 1rem;">
-        <div class="nav-logo-icon"></div>
-        <div>
-          <span class="nav-logo-text">Thiès Tourisme</span>
-          <span class="nav-logo-sub">Sénégal</span>
-        </div>
+      <a href="#hero" class="nav-logo" style="margin:0 0 1rem; display: inline-block;">
+        <img src="images/logo.png" alt="Thiès Kaay" style="height: 110px; width: auto;">
       </a>
       <p>Thiès, la Capitale du Rail, deuxième ville du Sénégal, vous accueille dans son authenticité culturelle, son patrimoine ferroviaire et son artisanat d'exception. Explorez une ville vraiment hors des sentiers battus.</p>
     </div>
@@ -991,14 +588,11 @@
     </div>
     <div class="footer-col">
       <h4>Pratique</h4>
-      <a href="hebergements.html">Hébergements</a>
-      <a href="restaurants.html">Restaurants</a>
       <a href="#contact">Accès & transports</a>
       <a href="#geoportail">Géoportail SIG</a>
     </div>
     <div class="footer-col">
       <h4>Ressources</h4>
-      <a href="#blog">Blog & actualités</a>
       <a href="#contact">Contact</a>
       <a href="#">Guide PDF</a>
       <a href="#">Mentions légales</a>

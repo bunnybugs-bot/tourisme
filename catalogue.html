@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catalogue — Tourisme région de Thiès</title>
+<meta name="theme-color" content="#A16D32">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="assets/css/carte.css">
+<style>
+  body { overflow: auto; background: var(--cream); }
+  .cat-wrap { max-width: 1320px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  .cat-hero { text-align: center; padding: 2rem 0 2.5rem; }
+  .cat-hero h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; margin: 0 0 0.5rem; }
+  .cat-hero p { color: var(--text-muted); font-size: 1rem; margin: 0; }
+
+  .cat-filters {
+    background: #fff; border-radius: 14px; padding: 1.3rem 1.4rem;
+    box-shadow: var(--shadow-sm); margin-bottom: 1rem;
+  }
+  .cat-filters-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 0.8rem;
+    margin-bottom: 0.9rem;
+  }
+  .cat-filters-row.secondary {
+    grid-template-columns: 1fr 1fr auto;
+    align-items: end;
+  }
+  @media (max-width: 900px) {
+    .cat-filters-row { grid-template-columns: 1fr 1fr; }
+    .cat-filters-row.secondary { grid-template-columns: 1fr; }
+  }
+  .cat-field { display: flex; flex-direction: column; gap: 0.35rem; }
+  .cat-field label {
+    font-size: 0.7rem; font-weight: 700; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .cat-field input, .cat-field select {
+    padding: 0.6rem 0.8rem; border: 1.5px solid var(--border);
+    border-radius: 8px; font-family: inherit; font-size: 0.88rem;
+    background: #fff; width: 100%;
+  }
+  .cat-field input:focus, .cat-field select:focus { outline: none; border-color: var(--orange); }
+
+  .cat-active-chips {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+    margin-bottom: 1rem; min-height: 0;
+  }
+  .cat-active-chips:empty { display: none; }
+  .cat-chip-removable {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: #F0E8DA; color: var(--orange);
+    padding: 0.35rem 0.7rem; border-radius: 20px;
+    font-size: 0.75rem; font-weight: 600;
+    cursor: pointer; border: none; font-family: inherit;
+    transition: all var(--transition);
+  }
+  .cat-chip-removable:hover { background: var(--orange); color: #fff; }
+
+  .cat-toolbar {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 1.5rem; gap: 1rem; flex-wrap: wrap;
+  }
+  .cat-count { font-size: 0.88rem; color: var(--text-muted); }
+  .cat-count strong { color: var(--charcoal); font-size: 1rem; }
+
+  .cat-view-toggle {
+    display: inline-flex;
+    background: #fff; border-radius: 10px; padding: 3px;
+    box-shadow: var(--shadow-sm);
+  }
+  .cat-view-toggle button {
+    padding: 0.5rem 0.9rem;
+    background: transparent; border: none;
+    border-radius: 8px; cursor: pointer;
+    color: var(--text-muted); font-size: 0.85rem;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: inherit; font-weight: 600;
+    transition: all var(--transition);
+  }
+  .cat-view-toggle button.active {
+    background: var(--orange); color: #fff;
+  }
+
+  /* Vue grille */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.2rem;
+  }
+  .cat-card {
+    background: #fff; border-radius: 14px; overflow: hidden;
+    transition: all var(--transition); box-shadow: var(--shadow-sm);
+    display: flex; flex-direction: column;
+  }
+  .cat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .cat-card-hero {
+    height: 130px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 2.4rem; position: relative;
+  }
+  .cat-card-dept {
+    position: absolute; top: 10px; left: 10px;
+    background: rgba(28,43,57,0.85); color: #fff;
+    padding: 0.25rem 0.6rem; border-radius: 20px;
+    font-size: 0.68rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .cat-card-body { padding: 1rem 1.1rem; flex: 1; display: flex; flex-direction: column; }
+  .cat-card-type {
+    font-size: 0.68rem; font-weight: 700; color: var(--orange);
+    text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 0.3rem;
+  }
+  .cat-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem; margin: 0 0 0.4rem; line-height: 1.25;
+  }
+  .cat-card-loc {
+    font-size: 0.78rem; color: var(--text-muted);
+    display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0.7rem;
+  }
+  .cat-card-meta {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+    margin-top: auto; padding-top: 0.7rem; border-top: 1px solid var(--border);
+  }
+  .cat-chip {
+    font-size: 0.68rem; font-weight: 600; padding: 0.2rem 0.5rem;
+    border-radius: 12px; background: #F2F7F4; color: var(--green);
+  }
+  .cat-card-actions {
+    padding: 0.8rem 1.1rem; border-top: 1px solid var(--border);
+    display: flex; gap: 0.5rem; background: #F8FAFC;
+  }
+  .cat-card-actions a {
+    flex: 1; font-size: 0.75rem; font-weight: 600; padding: 0.5rem;
+    border-radius: 8px; text-align: center; text-decoration: none;
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem;
+    transition: all var(--transition);
+  }
+  .cat-card-actions a.primary { background: var(--orange); color: #fff; }
+  .cat-card-actions a.primary:hover { background: #7F5528; }
+  .cat-card-actions a.secondary {
+    background: #fff; color: var(--charcoal); border: 1.5px solid var(--border);
+  }
+  .cat-card-actions a.secondary:hover { border-color: var(--orange); color: var(--orange); }
+
+  /* Vue liste */
+  .cat-list { display: flex; flex-direction: column; gap: 0.7rem; }
+  .cat-list-item {
+    background: #fff; border-radius: 12px; padding: 1rem 1.2rem;
+    display: grid;
+    grid-template-columns: 56px 1fr auto auto;
+    gap: 1.2rem; align-items: center;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition);
+  }
+  .cat-list-item:hover { box-shadow: var(--shadow-md); transform: translateX(3px); }
+  @media (max-width: 700px) {
+    .cat-list-item {
+      grid-template-columns: 44px 1fr;
+      gap: 0.8rem;
+    }
+    .cat-list-item .cat-list-meta,
+    .cat-list-item .cat-list-actions { grid-column: 2; }
+  }
+  .cat-list-icon {
+    width: 56px; height: 56px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 1.4rem;
+  }
+  @media (max-width: 700px) {
+    .cat-list-icon { width: 44px; height: 44px; font-size: 1.1rem; }
+  }
+  .cat-list-main { min-width: 0; }
+  .cat-list-main h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem; margin: 0 0 0.2rem;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .cat-list-main .loc {
+    font-size: 0.78rem; color: var(--text-muted);
+    display: flex; align-items: center; gap: 0.35rem;
+  }
+  .cat-list-meta {
+    display: flex; gap: 0.4rem; flex-wrap: wrap;
+    max-width: 220px;
+  }
+  .cat-list-actions {
+    display: flex; gap: 0.4rem;
+  }
+  .cat-list-actions a {
+    width: 38px; height: 38px; border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; text-decoration: none;
+    transition: all var(--transition);
+  }
+  .cat-list-actions a.primary { background: var(--orange); color: #fff; }
+  .cat-list-actions a.primary:hover { background: #7F5528; }
+  .cat-list-actions a.secondary {
+    background: #fff; color: var(--charcoal);
+    border: 1.5px solid var(--border);
+  }
+  .cat-list-actions a.secondary:hover { border-color: var(--orange); color: var(--orange); }
+
+  /* Pagination */
+  .cat-pagination {
+    display: flex; justify-content: center; align-items: center;
+    gap: 0.4rem; margin-top: 2.5rem; flex-wrap: wrap;
+  }
+  .cat-pagination button {
+    min-width: 40px; height: 40px; padding: 0 0.7rem;
+    background: #fff; border: 1.5px solid var(--border);
+    border-radius: 8px; cursor: pointer;
+    font-family: inherit; font-size: 0.85rem; font-weight: 600;
+    color: var(--charcoal); transition: all var(--transition);
+  }
+  .cat-pagination button:hover:not(:disabled):not(.active) {
+    border-color: var(--orange); color: var(--orange);
+  }
+  .cat-pagination button.active {
+    background: var(--orange); color: #fff; border-color: var(--orange);
+  }
+  .cat-pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .cat-pagination .dots {
+    color: var(--text-muted); padding: 0 0.3rem;
+  }
+
+  .cat-empty { text-align: center; padding: 4rem 1rem; color: var(--text-muted); }
+  .cat-empty i { font-size: 3rem; opacity: 0.3; margin-bottom: 1rem; display: block; }
+</style>
+</head>
+<body>
+
+<header class="gp-header">
+  <div class="gp-header-left">
+    <a href="carte.html" class="gp-logo">
+      <span class="gp-logo-mark">T</span>
+      <span class="gp-logo-text">
+        <strong>Géoportail</strong>
+        <small>Tourisme — Région de Thiès</small>
+      </span>
+    </a>
+  </div>
+  <nav class="gp-nav">
+    <a href="carte.html"><i class="fa-solid fa-map"></i> Carte</a>
+    <a href="catalogue.html" class="active"><i class="fa-solid fa-list"></i> Catalogue</a>
+    <a href="excursions.html"><i class="fa-solid fa-route"></i> Excursions</a>
+    <a href="statistiques.html"><i class="fa-solid fa-chart-column"></i> Statistiques</a>
+    <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact</a>
+  </nav>
+  <button class="gp-mobile-menu" id="gpMobileMenu"><i class="fa-solid fa-bars"></i></button>
+</header>
+
+<main class="cat-wrap">
+  <div class="cat-hero">
+    <h1>Catalogue touristique</h1>
+    <p>Hébergements, restaurants et sites de la région de Thiès</p>
+  </div>
+
+  <div class="cat-filters">
+    <div class="cat-filters-row">
+      <div class="cat-field">
+        <label>Recherche</label>
+        <input type="text" id="catSearch" placeholder="Nom, commune, type…">
+      </div>
+      <div class="cat-field">
+        <label>Catégorie</label>
+        <select id="catCat">
+          <option value="">Toutes</option>
+          <option value="hebergement">Hébergements</option>
+          <option value="restaurant">Restaurants</option>
+          <option value="site">Sites touristiques</option>
+        </select>
+      </div>
+      <div class="cat-field">
+        <label>Département</label>
+        <select id="catDept">
+          <option value="">Tous</option>
+          <option value="THIES">Thiès</option>
+          <option value="MBOUR">Mbour</option>
+          <option value="TIVAOUANE">Tivaouane</option>
+        </select>
+      </div>
+      <div class="cat-field">
+        <label>Commune</label>
+        <select id="catCommune"><option value="">Toutes</option></select>
+      </div>
+    </div>
+    <div class="cat-filters-row secondary">
+      <div class="cat-field">
+        <label>Trier par</label>
+        <select id="catSort">
+          <option value="nom-asc">Nom (A → Z)</option>
+          <option value="nom-desc">Nom (Z → A)</option>
+          <option value="dept">Département</option>
+          <option value="commune">Commune</option>
+          <option value="chambres">Nombre de chambres (décroissant)</option>
+        </select>
+      </div>
+      <div class="cat-field">
+        <label>Équipements</label>
+        <select id="catAmenity">
+          <option value="">Tous</option>
+          <option value="piscine">Piscine</option>
+          <option value="wifi">Wi-Fi</option>
+          <option value="parking">Parking</option>
+          <option value="accessible_handicap">Accès handicap</option>
+        </select>
+      </div>
+      <div class="cat-field">
+        <label>&nbsp;</label>
+        <button class="gp-btn gp-btn-outline" id="catReset">
+          <i class="fa-solid fa-rotate-left"></i> Réinitialiser
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-active-chips" id="catActiveChips"></div>
+
+  <div class="cat-toolbar">
+    <div class="cat-count" id="catCount">Chargement…</div>
+    <div class="cat-view-toggle">
+      <button class="active" data-view="grid"><i class="fa-solid fa-grip"></i> Grille</button>
+      <button data-view="list"><i class="fa-solid fa-list"></i> Liste</button>
+    </div>
+  </div>
+
+  <div id="catResults"></div>
+
+  <div class="cat-pagination" id="catPagination"></div>
+</main>
+
+<script>
+/* ============================================================
+   CATALOGUE — version avancée
+   ============================================================ */
+const URLS = {
+  hebergement: 'hebergements.geojson',
+  restaurant:  'restaurants.geojson',
+  site:        'sites.json',
+};
+const ICONS = { hebergement: 'fa-hotel', restaurant: 'fa-utensils', site: 'fa-mountain-sun' };
+const LABELS = { hebergement: 'Hébergement', restaurant: 'Restauration', site: 'Site touristique' };
+const COLORS = { THIES: '#A16D32', MBOUR: '#2F4A5E', TIVAOUANE: '#4D5E43' };
+const PER_PAGE = 24;
+
+let allFeatures = [];
+let currentPage = 1;
+let currentView = 'grid';
+
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function getState() {
+  return {
+    q: document.getElementById('catSearch').value.trim().toLowerCase(),
+    cat: document.getElementById('catCat').value,
+    dept: document.getElementById('catDept').value,
+    commune: document.getElementById('catCommune').value,
+    sort: document.getElementById('catSort').value,
+    amenity: document.getElementById('catAmenity').value,
+  };
+}
+
+function filterAndSort() {
+  const s = getState();
+  let results = allFeatures.filter(f => {
+    const p = f.properties;
+    if (s.cat && p.categorie !== s.cat) return false;
+    if (s.dept && p.departement !== s.dept) return false;
+    if (s.commune && p.commune !== s.commune) return false;
+    if (s.amenity && p[s.amenity] !== true) return false;
+    if (s.q) {
+      const h = `${p.nom || ''} ${p.commune || ''} ${p.type || ''} ${p.departement || ''}`.toLowerCase();
+      if (!h.includes(s.q)) return false;
+    }
+    return true;
+  });
+
+  const sorters = {
+    'nom-asc':  (a, b) => (a.properties.nom || '').localeCompare(b.properties.nom || '', 'fr'),
+    'nom-desc': (a, b) => (b.properties.nom || '').localeCompare(a.properties.nom || '', 'fr'),
+    'dept':     (a, b) => (a.properties.departement || '').localeCompare(b.properties.departement || '', 'fr')
+                          || (a.properties.commune || '').localeCompare(b.properties.commune || '', 'fr'),
+    'commune':  (a, b) => (a.properties.commune || '').localeCompare(b.properties.commune || '', 'fr'),
+    'chambres': (a, b) => (b.properties.nb_chambres || 0) - (a.properties.nb_chambres || 0),
+  };
+  results.sort(sorters[s.sort] || sorters['nom-asc']);
+  return results;
+}
+
+function renderChips() {
+  const s = getState();
+  const chips = [];
+  if (s.q) chips.push({ label: `« ${s.q} »`, reset: () => document.getElementById('catSearch').value = '' });
+  if (s.cat) chips.push({ label: LABELS[s.cat], reset: () => document.getElementById('catCat').value = '' });
+  if (s.dept) chips.push({ label: s.dept, reset: () => document.getElementById('catDept').value = '' });
+  if (s.commune) chips.push({ label: s.commune, reset: () => document.getElementById('catCommune').value = '' });
+  if (s.amenity) chips.push({ label: s.amenity, reset: () => document.getElementById('catAmenity').value = '' });
+
+  const el = document.getElementById('catActiveChips');
+  el.innerHTML = chips.map((c, i) =>
+    `<button class="cat-chip-removable" data-idx="${i}">
+      ${escapeHtml(c.label)} <i class="fa-solid fa-xmark"></i>
+    </button>`
+  ).join('');
+  el.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      chips[parseInt(btn.dataset.idx)].reset();
+      currentPage = 1;
+      update();
+    });
+  });
+}
+
+function renderCard(f) {
+  const p = f.properties;
+  const [lon, lat] = f.geometry.coordinates;
+  const color = COLORS[p.departement] || '#64748B';
+  const icon = ICONS[p.categorie] || 'fa-location-dot';
+  const chips = [];
+  if (p.piscine) chips.push('Piscine');
+  if (p.wifi) chips.push('Wi-Fi');
+  if (p.nb_chambres) chips.push(`${p.nb_chambres} ch.`);
+  if (p.modalite) chips.push(p.modalite.split('/')[0]);
+  return `
+    <article class="cat-card">
+      <div class="cat-card-hero" style="background:linear-gradient(135deg, ${color}33, ${color}99)">
+        <span class="cat-card-dept">${escapeHtml(p.departement || '')}</span>
+        <i class="fa-solid ${icon}"></i>
+      </div>
+      <div class="cat-card-body">
+        <div class="cat-card-type">${escapeHtml(p.type || LABELS[p.categorie])}</div>
+        <h3>${escapeHtml(p.nom)}</h3>
+        <div class="cat-card-loc">
+          <i class="fa-solid fa-location-dot"></i>
+          ${escapeHtml(p.commune || '')}${p.commune ? ', ' : ''}${escapeHtml(p.departement || '')}
+        </div>
+        ${chips.length ? `<div class="cat-card-meta">${chips.map(c => `<span class="cat-chip">${escapeHtml(c)}</span>`).join('')}</div>` : ''}
+      </div>
+      <div class="cat-card-actions">
+        <a class="primary" href="carte.html?lat=${lat}&lon=${lon}&z=17" target="_blank">
+          <i class="fa-solid fa-map"></i> Voir sur la carte
+        </a>
+        <a class="secondary" href="carte.html?lieu=${encodeURIComponent(p.nom)}&lat=${lat}&lon=${lon}&itineraire=1" target="_blank">
+          <i class="fa-solid fa-diamond-turn-right"></i> Itinéraire
+        </a>
+      </div>
+    </article>`;
+}
+
+function renderListItem(f) {
+  const p = f.properties;
+  const [lon, lat] = f.geometry.coordinates;
+  const color = COLORS[p.departement] || '#64748B';
+  const icon = ICONS[p.categorie] || 'fa-location-dot';
+  const chips = [];
+  if (p.piscine) chips.push('Piscine');
+  if (p.wifi) chips.push('Wi-Fi');
+  if (p.nb_chambres) chips.push(`${p.nb_chambres} ch.`);
+  return `
+    <div class="cat-list-item">
+      <div class="cat-list-icon" style="background:${color}"><i class="fa-solid ${icon}"></i></div>
+      <div class="cat-list-main">
+        <h3>${escapeHtml(p.nom)}</h3>
+        <div class="loc">
+          <i class="fa-solid fa-location-dot"></i>
+          ${escapeHtml(p.commune || '')}${p.commune ? ', ' : ''}${escapeHtml(p.departement || '')}
+          · ${escapeHtml(p.type || LABELS[p.categorie])}
+        </div>
+      </div>
+      <div class="cat-list-meta">
+        ${chips.map(c => `<span class="cat-chip">${escapeHtml(c)}</span>`).join('')}
+      </div>
+      <div class="cat-list-actions">
+        <a class="primary" href="carte.html?lat=${lat}&lon=${lon}&z=17" target="_blank" title="Voir sur la carte">
+          <i class="fa-solid fa-map"></i>
+        </a>
+        <a class="secondary" href="carte.html?lieu=${encodeURIComponent(p.nom)}&lat=${lat}&lon=${lon}&itineraire=1" target="_blank" title="Itinéraire">
+          <i class="fa-solid fa-diamond-turn-right"></i>
+        </a>
+      </div>
+    </div>`;
+}
+
+function renderPagination(total, page) {
+  const totalPages = Math.ceil(total / PER_PAGE);
+  const el = document.getElementById('catPagination');
+  if (totalPages <= 1) { el.innerHTML = ''; return; }
+
+  const buttons = [];
+  buttons.push(`<button ${page === 1 ? 'disabled' : ''} data-page="${page - 1}">
+    <i class="fa-solid fa-chevron-left"></i>
+  </button>`);
+
+  const pages = [];
+  if (totalPages <= 7) {
+    for (let i = 1; i <= totalPages; i++) pages.push(i);
+  } else {
+    pages.push(1);
+    if (page > 3) pages.push('…');
+    for (let i = Math.max(2, page - 1); i <= Math.min(totalPages - 1, page + 1); i++) pages.push(i);
+    if (page < totalPages - 2) pages.push('…');
+    pages.push(totalPages);
+  }
+  pages.forEach(p => {
+    if (p === '…') buttons.push(`<span class="dots">…</span>`);
+    else buttons.push(`<button ${p === page ? 'class="active"' : ''} data-page="${p}">${p}</button>`);
+  });
+
+  buttons.push(`<button ${page === totalPages ? 'disabled' : ''} data-page="${page + 1}">
+    <i class="fa-solid fa-chevron-right"></i>
+  </button>`);
+
+  el.innerHTML = buttons.join('');
+  el.querySelectorAll('button[data-page]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentPage = parseInt(btn.dataset.page);
+      update();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+}
+
+function render() {
+  const results = filterAndSort();
+  const total = results.length;
+  const start = (currentPage - 1) * PER_PAGE;
+  const pageItems = results.slice(start, start + PER_PAGE);
+  const container = document.getElementById('catResults');
+  const count = document.getElementById('catCount');
+
+  if (total === 0) {
+    container.innerHTML = `<div class="cat-empty"><i class="fa-solid fa-magnifying-glass"></i>Aucun résultat pour ces critères</div>`;
+    count.innerHTML = `0 résultat`;
+    document.getElementById('catPagination').innerHTML = '';
+    return;
+  }
+
+  const first = start + 1;
+  const last = Math.min(start + PER_PAGE, total);
+  count.innerHTML = `<strong>${total}</strong> résultat${total > 1 ? 's' : ''} · affichage ${first}–${last}`;
+
+  if (currentView === 'grid') {
+    container.className = 'cat-grid';
+    container.innerHTML = pageItems.map(renderCard).join('');
+  } else {
+    container.className = 'cat-list';
+    container.innerHTML = pageItems.map(renderListItem).join('');
+  }
+
+  renderPagination(total, currentPage);
+}
+
+function update() {
+  renderChips();
+  render();
+}
+
+function populateCommunes() {
+  const select = document.getElementById('catCommune');
+  const communes = [...new Set(allFeatures.map(f => f.properties.commune).filter(Boolean))].sort();
+  select.innerHTML = '<option value="">Toutes</option>' +
+    communes.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+}
+
+async function init() {
+  ['catSearch', 'catCat', 'catDept', 'catCommune', 'catSort', 'catAmenity'].forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', () => {
+      currentPage = 1;
+      update();
+    });
+  });
+
+  document.getElementById('catReset').addEventListener('click', () => {
+    document.getElementById('catSearch').value = '';
+    document.getElementById('catCat').value = '';
+    document.getElementById('catDept').value = '';
+    document.getElementById('catCommune').value = '';
+    document.getElementById('catAmenity').value = '';
+    document.getElementById('catSort').value = 'nom-asc';
+    currentPage = 1;
+    update();
+  });
+
+  document.querySelectorAll('.cat-view-toggle button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentView = btn.dataset.view;
+      document.querySelectorAll('.cat-view-toggle button')
+        .forEach(b => b.classList.toggle('active', b === btn));
+      render();
+    });
+  });
+
+  document.getElementById('gpMobileMenu').addEventListener('click', () => {
+    document.querySelector('.gp-nav').classList.toggle('open');
+  });
+
+  try {
+    const [heb, resto, sites] = await Promise.all([
+      fetch(URLS.hebergement).then(r => r.json()),
+      fetch(URLS.restaurant).then(r => r.json()),
+      fetch(URLS.site).then(r => r.json()).catch(() => ({ features: [] })),
+    ]);
+    allFeatures = [...heb.features, ...resto.features, ...sites.features];
+    populateCommunes();
+    update();
+  } catch (err) {
+    console.error(err);
+    document.getElementById('catCount').textContent = 'Erreur de chargement';
+  }
+}
+init();
+</script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+  }
+</script>
+</body>
+</html>

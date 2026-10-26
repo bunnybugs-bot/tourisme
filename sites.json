@@ -1,0 +1,919 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -16.934296,
+        14.794334
+       ]
+      },
+      "properties": {
+       "nom": "Manufactures Sénégalaises des Arts Décoratifs (MSAD)",
+       "categorie": "site",
+       "type": "culturel",
+       "theme": "Culturel et historique",
+       "commune": "THIES",
+       "departement": "THIES",
+       "adresse": "Quartier 10e RIAOM, Thiès",
+       "description": "Atelier-musée de tapisserie fondé en 1966 à l'initiative de L.S. Senghor ; production artisanale de tapisseries murales.",
+       "site_web": "",
+       "telephone": "+221 33 951 08 62",
+       "horaires": "Du lundi au vendredi : de 8h00 à 14h00 et de 15h00 à 17h00.Le samedi : de 9h00 à 13h00",
+       "circuits": [
+        "Artisanal et culturel"
+       ]
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -16.933096,
+        14.79601
+       ]
+      },
+      "properties": {
+       "nom": "Musée régional de Thiès",
+       "categorie": "site",
+       "type": "culturel",
+       "theme": "Culturel et historique",
+       "commune": "THIES",
+       "departement": "THIES",
+       "adresse": "Quartier 10e, près du marché central, Thiès",
+       "description": "Musée classé patrimoine national, retrace l'histoire et la culture de la ville et de la région.",
+       "site_web": "",
+       "telephone": "+221 33 951 05 43",
+       "horaires": "Du lundi au vendredi : de 9h00 à 13h00 et de 15h00 à 17h00 (ou 8h00 à 17h00 en continu selon les périodes de l'administration).Le samedi : de 9h00 à 13h00.Dimanche : Fermé",
+       "circuits": [
+        "Artisanal et culturel"
+       ]
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -16.929281,
+        14.797447
+       ]
+      },
+      "properties": {
+       "nom": "Gare de Thiès (patrimoine ferroviaire)",
+       "categorie": "site",
+       "type": "culturel",
+       "theme": "Culturel et historique",
+       "commune": "THIES",
+       "departement": "THIES",
+       "adresse": "Avenue Général de Gaulle, Thiès",
+       "description": "Gare historique, carrefour ferroviaire vers Dakar, Saint-Louis et Bamako ; Thiès est surnommée « la capitale du rail ».",
+       "site_web": "",
+       "telephone": "",
+       "horaires": "Lun-Ven : 08h00-17h00",
+       "circuits": [
+        "Artisanal et culturel"
+       ]
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -16.926712,
+        14.791349
+       ]
+      },
+      "properties": {
+       "nom": "Promenade des Thiessois",
+       "categorie": "site",
+       "type": "loisir",
+       "theme": "Loisirs et détente",
+       "commune": "THIES",
+       "departement": "THIES",
+       "adresse": "Centre-ville, Thiès",
+       "description": "Grande esplanade aménagée (25 000 m²), espace public de détente et de rassemblement.",
+       "site_web": "",
+       "telephone": "",
+       "horaires": "Accès libre",
+       "circuits": []
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -16.914107,
+        14.779488
+       ]
+      },
+      "properties": {
+       "nom": "Champ de courses hippique Ndiaw Macodou Diop",
+       "categorie": "site",
+       "type": "loisir",
+       "theme": "Sport",
+       "commune": "THIES",
+       "departement": "THIES",
+       "adresse": "Thiès",
+       "description": "Hippodrome, site d'attraction sportive lié aux courses hippiques.",
+       "site_web": "",
+       "telephone": "",
+       "horaires": "Accès libre",
+       "circuits": []
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -16.938442,
+        14.792611
+       ]
+      },
+      "properties": {
+       "nom": "Village Artisanal de Thiès",
+       "categorie": "site",
+       "type": "culturel",
+       "theme": "Artisanat",
+       "commune": "THIES",
+       "departement": "THIES",
+       "adresse": "Thiès",
+       "description": "Grand marché à ciel ouvert où des dizaines d’artisans façonnent et exposent en direct des œuvres uniques en bois, cuir et argent, offrant une immersion vivante dans les savoir-faire ancestraux du Sénégal.",
+       "site_web": "",
+       "telephone": "+221 77 651 12 34",
+       "horaires": "Tous les jours de 08:30 à 19:00",
+       "circuits": [
+        "Artisanal et culturel"
+       ]
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -17.124119,
+        14.778535
+       ]
+      },
+      "properties": {
+       "nom": "Abbaye de Keur Moussa (monastère bénédictin)",
+       "categorie": "site",
+       "type": "culturel",
+       "theme": "Religieux",
+       "commune": "THIES",
+       "departement": "THIES",
+       "adresse": "Route de Abbes, ~23 km à l'ouest de Thiès",
+       "description": "Monastère connu pour les chants des moines accompagnés à la kora.",
+       "site_web": "",
+       "telephone": "+221 33 836 16 17",
+       "horaires": "Tlj 09:30-12:00 ; Ma, Ve-Di 15:00-17:00 ; Lu, Me 15:00-18:00",
+       "circuits": [
+        "Religieux"
+       ],
+       "pole": "Keur Moussa"
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -17.104343,
+        14.540412
+       ]
+      },
+      "properties": {
+       "nom": "Réserve naturelle de Popenguine",
+       "categorie": "site",
+       "type": "naturel",
+       "theme": "Nature et réserves",
+       "commune": "POPENGUINE",
+       "departement": "MBOUR",
+       "adresse": "GVRW+572, Route de Popenguine, Popenguine",
+       "description": "Réserve naturelle communautaire d'environ 1 000 ha (créée en 1986), gérée avec la population locale : savane arbustive, côte à falaises, sentiers de randonnée. Visite à pied ou à cheval, guide obligatoire.",
+       "site_web": "",
+       "telephone": "",
+       "horaires": "Tous les jours de 08:00 à 18:00",
+       "circuits": [
+        "Écotouristique"
+       ]
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -17.105114,
+        14.541851
+       ]
+      },
+      "properties": {
+       "nom": "Falaises de Popenguine",
+       "categorie": "site",
+       "type": "naturel",
+       "theme": "Nature et réserves",
+       "commune": "POPENGUINE",
+       "departement": "MBOUR",
+       "adresse": "GVRV+PXC la maison de Adama Sidibé, Popenguine",
+       "description": "Falaises côtières aux tons variés, au sein de la réserve naturelle de Popenguine, longées par des sentiers de randonnée avec vue sur l'océan.",
+       "site_web": "",
+       "telephone": "",
+       "horaires": "Tous les jours de 06h00 à 19h30",
+       "circuits": [
+        "Écotouristique"
+       ]
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -17.103776,
+        14.540729
+       ]
+      },
+      "properties": {
+       "nom": "Site d'observation des oiseaux de falaise",
+       "categorie": "site",
+       "type": "naturel",
+       "theme": "Nature et réserves",
+       "commune": "POPENGUINE",
+       "departement": "MBOUR",
+       "adresse": "GVRW+7FH, Popenguine",
+       "description": "Observation d'oiseaux et initiation à l'ornithologie dans la réserve naturelle communautaire de Popenguine, avec guide.",
+       "site_web": "",
+       "telephone": "",
+       "horaires": "",
+       "circuits": [
+        "Écotouristique"
+       ]
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -17.061256,
+        14.494898
+       ]
+      },
+      "properties": {
+       "nom": "Lagune de la Somone",
+       "categorie": "site",
+       "type": "naturel",
+       "theme": "Nature et réserves",
+       "commune": "SOMONE",
+       "departement": "MBOUR",
+       "adresse": "FWVQ+XJ, Somone",
+       "description": "Réserve naturelle d'intérêt communautaire créée en 1999 : environ 700 ha de lagune et de mangrove, plus de 170 espèces d'oiseaux. Visite en pirogue et sentier écologique de 1,2 km.",
+       "site_web": "",
+       "telephone": "+221 78 162 99 78",
+       "horaires": "Ouvert 24h/24",
+       "circuits": [
+        "Écotouristique",
+        "Balnéaire"
+       ]
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -17.065766,
+        14.53585
+       ]
+      },
+      "properties": {
+       "nom": "Thiafoura (terrain)",
+       "categorie": "site",
+       "type": "naturel",
+       "theme": "Nature et réserves",
+       "commune": "SINDIA",
+       "departement": "MBOUR",
+       "adresse": "GWPM+8MH, Piste de Guereo, Guéréo",
+       "description": "À préciser (nom de type « terrain »). Thiafoura est l'un des villages d'accès à la réserve naturelle de la Somone, dans la commune de Sindia.",
+       "site_web": "",
+       "telephone": "",
+       "horaires": "",
+       "circuits": [
+        "Écotouristique"
+       ]
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -17.008592,
+        14.558184
+       ]
+      },
+      "properties": {
+       "nom": "Réserve de Bandia",
+       "categorie": "site",
+       "type": "naturel",
+       "theme": "Nature et réserves",
+       "commune": "SINDIA",
+       "departement": "MBOUR",
+       "adresse": "Km 65, route de Mbour, Sindia 23000",
+       "description": "Un safari inoubliable lors de votre séjour au Sénégal, dans la réserve de Bandia, où vous pourrez rencontrer tous les grands mammifères d'Afrique au cœur d'une nature grandiose de 3 500 hectares : baobabs géants, buissons épineux, lianes aux formes fantaisistes…",
+       "site_web": "",
+       "telephone": "+221 33 959 15 40",
+       "horaires": "Lundi au Dimanche 08:00–18:00",
+       "circuits": [
+        "Écotouristique"
+       ]
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -16.920817,
+        14.347287
+       ]
+      },
+      "properties": {
+       "nom": "Baobab sacré de Nianing",
+       "categorie": "site",
+       "type": "naturel",
+       "theme": "Nature et réserves",
+       "commune": "MBOUR",
+       "departement": "MBOUR",
+       "adresse": "83WH+VMV, M'bour",
+       "description": "Baobab sacré à environ 8 km de Mbour, ancien lieu de sépulture des griots sérères (jusqu'à l'interdiction décidée sous Senghor) ; le tronc creux est accessible par une ouverture. Site vénéré et visité.",
+       "site_web": "",
+       "telephone": "",
+       "horaires": "Tous les jours : 08h00 - 18h30",
+       "circuits": [
+        "Écotouristique"
+       ]
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -16.929834,
+        14.343073
+       ]
+      },
+      "properties": {
+       "nom": "Sunugal Coast",
+       "categorie": "site",
+       "type": "loisir",
+       "theme": "Loisirs et détente",
+       "commune": "MBOUR",
+       "departement": "MBOUR",
+       "adresse": "Nianing, Rte Mbour -Joal, Mbour 23000",
+       "description": "Établissement balnéaire de Nianing (route Mbour–Joal) proposant bungalows et loisirs.",
+       "site_web": "",
+       "telephone": "+221 76 470 18 75",
+       "horaires": "",
+       "circuits": [
+        "Balnéaire"
+       ]
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -17.113897,
+        14.662253
+       ]
+      },
+      "properties": {
+       "nom": "Boukhou village",
+       "categorie": "site",
+       "type": "culturel",
+       "theme": "Culturel et historique",
+       "commune": "DIASS",
+       "departement": "MBOUR",
+       "adresse": "MV6P+VC, Mbourouk",
+       "description": "Village à vocation écotouristique, zone de Mbourouk (commune de Diass).",
+       "site_web": "",
+       "telephone": "",
+       "horaires": "Ouvert 24h/24",
+       "circuits": [
+        "Écotouristique"
+       ]
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -17.014153,
+        14.545346
+       ]
+      },
+      "properties": {
+       "nom": "Accrobaobab",
+       "categorie": "site",
+       "type": "loisir",
+       "theme": "Loisirs et détente",
+       "commune": "SINDIA",
+       "departement": "MBOUR",
+       "adresse": "Sindia",
+       "description": "Parc d'accrobranche ouvert en 2004 dans une forêt de baobabs : parcours Fouta Djallon (dès 11 ans, 18 ateliers dont 14 tyroliennes), Mamelles (5-10 ans), tyrolienne de 315 m, espace aquatique Aquabaobab.",
+       "site_web": "",
+       "telephone": "+221 77 638 74 74",
+       "horaires": "Mar-Dim: 09:00–19:00",
+       "circuits": []
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -16.823507,
+        14.15276
+       ]
+      },
+      "properties": {
+       "nom": "Île aux coquillages de Fadiouth",
+       "categorie": "site",
+       "type": "culturel",
+       "theme": "Culturel et historique",
+       "commune": "JOAL FADIOUTH",
+       "departement": "MBOUR",
+       "adresse": "553G+3HQ, Joal Fadiouth",
+       "description": "Île artificielle de coquillages accumulés, reliée à Joal par un pont en bois ; cimetière mixte chrétien et musulman, greniers à mil sur pilotis, artisanat local.",
+       "site_web": "",
+       "telephone": "+221 77 633 86 21",
+       "horaires": "",
+       "circuits": [
+        "Religieux",
+        "Artisanal et culturel"
+       ],
+       "pole": "Fadiouth"
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -17.015449,
+        14.441461
+       ]
+      },
+      "properties": {
+       "nom": "Village artisanal de Mbour",
+       "categorie": "site",
+       "type": "culturel",
+       "theme": "Artisanat",
+       "commune": "SALY PORTUDAL",
+       "departement": "MBOUR",
+       "adresse": "CXRM+HR7, Rte Saly-Ngaparou, Saly",
+       "description": "Marché d'artisanat de la zone de Saly : sculptures, peintures sous verre, tissus et souvenirs.",
+       "site_web": "",
+       "telephone": "",
+       "horaires": "Tous les jours de 08h30 à 20h00",
+       "circuits": [
+        "Artisanal et culturel"
+       ]
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -16.892379,
+        14.405565
+       ]
+      },
+      "properties": {
+       "nom": "Bush evening",
+       "categorie": "site",
+       "type": "loisir",
+       "theme": "Loisirs et détente",
+       "commune": "MBOULEM",
+       "departement": "MBOUR",
+       "adresse": "C445+62, Mboulem",
+       "description": "Animation de soirée en brousse à Mboulem (feu de camp, musique, repas).",
+       "site_web": "",
+       "telephone": "",
+       "horaires": "",
+       "circuits": []
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -16.777313,
+        14.173612
+       ]
+      },
+      "properties": {
+       "nom": "Baobab sacré de Fadial",
+       "categorie": "site",
+       "type": "naturel",
+       "theme": "Nature et réserves",
+       "commune": "NGUENIENE",
+       "departement": "MBOUR",
+       "adresse": "56FF+C3G, fadial",
+       "description": "Grand baobab sacré de la commune de Nguéniène, âgé de plus de 850 ans selon le conservateur du site ; vaste cavité intérieure, ancienne sépulture de griots. Visites guidées.",
+       "site_web": "",
+       "telephone": "",
+       "horaires": "Lun-Dim: 09:00–19:00, Jeu:Ouvert 24h/24",
+       "circuits": [
+        "Écotouristique"
+       ]
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -17.023677,
+        14.453013
+       ]
+      },
+      "properties": {
+       "nom": "Golf de Saly",
+       "categorie": "site",
+       "type": "loisir",
+       "theme": "Sport",
+       "commune": "SALY PORTUDAL",
+       "departement": "MBOUR",
+       "adresse": "Saly",
+       "description": "Golf public de 18 trous, par 72, 6 038 m, fondé en 1994, avec baobabs centenaires ; 7 trous comportent un obstacle d'eau ; practice couvert de 16 postes.",
+       "site_web": "",
+       "telephone": "+221 33 957 24 88",
+       "horaires": "Lun-Dim: 08:00–19:00",
+       "circuits": [
+        "Balnéaire"
+       ]
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -17.0148,
+        14.441472
+       ]
+      },
+      "properties": {
+       "nom": "Casino Terrou Saly",
+       "categorie": "site",
+       "type": "loisir",
+       "theme": "Loisirs et détente",
+       "commune": "SALY PORTUDAL",
+       "departement": "MBOUR",
+       "adresse": "Rond point Diakhao, M'bour",
+       "description": "Casino de la station balnéaire de Saly, situé au rond-point Diakhao.",
+       "site_web": "",
+       "telephone": "+221 33 939 72 72",
+       "horaires": "Lun-JEU: 12:00–04:00, Ven-Sam: 12:00–03:00, Dim: 12:00–04:00",
+       "circuits": [
+        "Balnéaire"
+       ]
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -17.005871,
+        14.443532
+       ]
+      },
+      "properties": {
+       "nom": "Musée Khelcom",
+       "categorie": "site",
+       "type": "culturel",
+       "theme": "Culturel et historique",
+       "commune": "MBOUR",
+       "departement": "MBOUR",
+       "adresse": "CXVV+9MR, M'bour",
+       "description": "Musée privé d'art africain traditionnel : terres cuites, masques, fétiches et instruments de musique ; parc de sculptures en extérieur.",
+       "site_web": "",
+       "telephone": "",
+       "horaires": "Lun-Sam : 09h00 - 18h00",
+       "circuits": [
+        "Artisanal et culturel"
+       ]
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -17.018582,
+        14.55673
+       ]
+      },
+      "properties": {
+       "nom": "Ranch de Bandia",
+       "categorie": "site",
+       "type": "naturel",
+       "theme": "Nature et réserves",
+       "commune": "NGUEKHOKH",
+       "departement": "MBOUR",
+       "adresse": "Nguékhokh",
+       "description": "Parc animalier ouvert en janvier 2017, où l'on observe des lions en liberté depuis un véhicule 4x4 grillagé ; mini-ferme et lodge en face de la réserve de Bandia.",
+       "site_web": "",
+       "telephone": "+221 78 017 09 30",
+       "horaires": "Tous les jours : 08h30 - 17h30",
+       "circuits": [
+        "Écotouristique"
+       ]
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -17.036179,
+        14.464478
+       ]
+      },
+      "properties": {
+       "nom": "La Palmeraie Sporting club",
+       "categorie": "site",
+       "type": "loisir",
+       "theme": "Loisirs et détente",
+       "commune": "NGAPAROU",
+       "departement": "MBOUR",
+       "adresse": "Derrière Saly Center, Piste des Milliardaires, Ngaparou",
+       "description": "Club sportif et de loisirs de Ngaparou (installations sportives, piscine).",
+       "site_web": "",
+       "telephone": "+221 78 013 45 45",
+       "horaires": "Lun-Sam: 09:00–12:00 16:00–00:00",
+       "circuits": [
+        "Balnéaire"
+       ]
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -16.812213,
+        14.952599
+       ]
+      },
+      "properties": {
+       "nom": "La Grande Mosquée de Tivaouane",
+       "categorie": "site",
+       "type": "culturel",
+       "theme": "Religieux",
+       "commune": "TIVAOUANE",
+       "departement": "TIVAOUANE",
+       "adresse": "X53Q+24F, Tivaouane 26381",
+       "description": "Construite en 1904 par El Hadj Malick Sy, symbole de la Tijaniyya au Sénégal ; abrite les veillées du Gamou (Mawlid). Extension en 1979, travaux de finition relancés en 2020.",
+       "site_web": "",
+       "telephone": "+221 78 011 07 68",
+       "horaires": "Lun-Dim: 05:00–22:00",
+       "circuits": [
+        "Religieux"
+       ],
+       "pole": "Tivaouane"
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -16.81369,
+        14.950867
+       ]
+      },
+      "properties": {
+       "nom": "La Mosquée de Serigne Babacar SY",
+       "categorie": "site",
+       "type": "culturel",
+       "theme": "Religieux",
+       "commune": "TIVAOUANE",
+       "departement": "TIVAOUANE",
+       "adresse": "X52P+8GM, Tivaouane",
+       "description": "Mosquée et zawiya liées à Serigne Babacar Sy (1885-1957), sur l'allée de la grande mosquée ; prière du vendredi très fréquentée et affluence lors du Gamou.",
+       "site_web": "",
+       "telephone": "",
+       "horaires": "Lun-Dim: 04:00–00:00",
+       "circuits": [
+        "Religieux"
+       ],
+       "pole": "Tivaouane"
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -16.813983,
+        14.949576
+       ]
+      },
+      "properties": {
+       "nom": "Zawiya Mame Elhadji Malick SY",
+       "categorie": "site",
+       "type": "culturel",
+       "theme": "Religieux",
+       "commune": "TIVAOUANE",
+       "departement": "TIVAOUANE",
+       "adresse": "W5XP+RFJ, Tivaouane",
+       "description": "Zawiya d'El Hadj Malick Sy (1855-1922), fondateur de la cité tidiane de Tivaouane, voisine de la Grande Mosquée.",
+       "site_web": "",
+       "telephone": "",
+       "horaires": "Lun-Dim: 04:00–00:00",
+       "circuits": [
+        "Religieux"
+       ],
+       "pole": "Tivaouane"
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -17.036186,
+        14.466304
+       ]
+      },
+      "properties": {
+       "nom": "Bubble Square Spa",
+       "categorie": "site",
+       "type": "loisir",
+       "theme": "Loisirs et détente",
+       "commune": "SINDIA",
+       "departement": "MBOUR",
+       "adresse": "Piste Du Saly Center Suivre KEUR FEGU Lodge Nguerign, 23002",
+       "description": "Spa de la zone de Saly (massages et soins de bien-être).",
+       "site_web": "",
+       "telephone": "+221 77 237 98 68",
+       "horaires": "Lun-JEU: 10:00–20:00, Ven-Sam: 09:30–20:00, Dim: 10:00–20:00",
+       "circuits": [
+        "Balnéaire"
+       ]
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -16.828759,
+        14.918151
+       ]
+      },
+      "properties": {
+       "nom": "Mosquée de Ndiassane",
+       "categorie": "site",
+       "type": "culturel",
+       "theme": "Religieux",
+       "commune": "",
+       "departement": "TIVAOUANE",
+       "adresse": "Ndiassane",
+       "description": "Sanctuaire religieux central de la sainte cité de Ndiassane, il constitue la capitale spirituelle de la confrérie soufie des Qadiriyya au Sénégal",
+       "site_web": "",
+       "telephone": "772865777",
+       "horaires": "Ouvert 24h/24",
+       "circuits": [
+        "Religieux"
+       ],
+       "pole": "Ndiassane"
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -16.815795,
+        14.940582
+       ]
+      },
+      "properties": {
+       "nom": "Mausolée Serigne Cheikh Tidiane SY Al Maktoum",
+       "categorie": "site",
+       "type": "culturel",
+       "theme": "Religieux",
+       "commune": "TIVAOUANE",
+       "departement": "TIVAOUANE",
+       "adresse": "",
+       "description": "Le mausolée de Serigne Cheikh Ahmed Tidiane Sy Al Maktoum est un sanctuaire de lumière et de sérénité, où la sobriété de l'architecture moderne s'unit à la ferveur intemporelle de la Tidjaniya.",
+       "site_web": "",
+       "telephone": "",
+       "horaires": "",
+       "circuits": [
+        "Religieux"
+       ],
+       "pole": "Tivaouane"
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -16.813838,
+        14.951352
+       ]
+      },
+      "properties": {
+       "nom": "Mausolée Serigne Mansour SY Borom Daaradji",
+       "categorie": "site",
+       "type": "culturel",
+       "theme": "Religieux",
+       "commune": "TIVAOUANE",
+       "departement": "TIVAOUANE",
+       "adresse": "",
+       "description": "Le mausolée de Serigne Mansour Sy Borom Daaradji est un sanctuaire de prière et d'humilité situé dans sa concession résidentielle à Tivaouane, où les fidèles se recueillent en mémoire de ce grand maître de l'enseignement islamique.",
+       "site_web": "",
+       "telephone": "",
+       "horaires": "",
+       "circuits": [
+        "Religieux"
+       ],
+       "pole": "Tivaouane"
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -16.732293,
+        15.012396
+       ]
+      },
+      "properties": {
+       "nom": "Pire Goureye",
+       "categorie": "site",
+       "type": "culturel",
+       "theme": "Religieux",
+       "commune": "TIVAOUANE",
+       "departement": "TIVAOUANE",
+       "adresse": "",
+       "description": "Berceau historique de l'enseignement islamique au Sénégal, célèbre pour avoir abrité dès 1603 la toute première université coranique et l'une des plus anciennes mosquées du pays.",
+       "site_web": "",
+       "telephone": "",
+       "horaires": "",
+       "circuits": [
+        "Religieux"
+       ],
+       "pole": "Pire"
+      }
+     },
+     {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+       "coordinates": [
+        -16.798442,
+        14.76457
+       ]
+      },
+      "properties": {
+       "nom": "La grande mosquée de Thienaba",
+       "categorie": "site",
+       "type": "culturel",
+       "theme": "Religieux",
+       "commune": "TIVAOUANE",
+       "departement": "THIES",
+       "adresse": "",
+       "description": "Sanctuaire central d'une cité sainte réputée pour sa rigueur morale, gardienne de l'orthodoxie pure de la charia et de l'héritage spirituel de Serigne Amary Ngoné Ndack Seck",
+       "site_web": "",
+       "telephone": "339531441",
+       "horaires": "",
+       "circuits": [
+        "Religieux"
+       ],
+       "pole": "Thiénaba"
+      }
+     }
+    ]
+   }

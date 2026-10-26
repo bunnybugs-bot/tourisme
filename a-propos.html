@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>À propos — Tourisme région de Thiès</title>
+<meta name="theme-color" content="#A16D32">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="assets/css/carte.css">
+<style>
+  body { overflow: auto; background: var(--cream); }
+  .page-wrap { max-width: 980px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+  .page-hero { text-align: center; margin-bottom: 3rem; }
+  .page-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem; margin: 0 0 0.8rem;
+  }
+  .page-hero p {
+    color: var(--text-muted); font-size: 1.05rem;
+    max-width: 620px; margin: 0 auto; line-height: 1.7;
+  }
+  .page-section { margin-bottom: 3rem; }
+  .page-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; margin: 0 0 1rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .page-section h2 i { color: var(--orange); font-size: 1.2rem; }
+  .page-section p { line-height: 1.8; color: #3a4a5c; font-size: 0.95rem; }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem; margin: 2rem 0;
+  }
+  .stat-card {
+    background: #fff; border-radius: 14px;
+    padding: 1.5rem 1rem; text-align: center;
+    box-shadow: var(--shadow-sm);
+  }
+  .stat-card .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem; font-weight: 700;
+    color: var(--orange); line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .stat-card .lbl {
+    font-size: 0.78rem; font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.6px;
+  }
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .info-card {
+    background: #fff; border-radius: 12px;
+    padding: 1.2rem 1.3rem;
+    box-shadow: var(--shadow-sm);
+    border-left: 3px solid var(--orange);
+  }
+  .info-card h3 {
+    font-size: 0.95rem; margin: 0 0 0.4rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .info-card h3 i { color: var(--orange); }
+  .info-card p { font-size: 0.85rem; margin: 0; color: var(--text-muted); line-height: 1.6; }
+  .sources-list { list-style: none; padding: 0; margin: 0; }
+  .sources-list li {
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.88rem;
+    display: flex; align-items: flex-start; gap: 0.7rem;
+  }
+  .sources-list li:last-child { border-bottom: none; }
+  .sources-list i { color: var(--orange); margin-top: 3px; }
+  .cta-row {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    justify-content: center; margin-top: 2rem;
+  }
+  .cta-row a {
+    padding: 0.9rem 1.6rem; border-radius: 10px;
+    font-weight: 600; font-size: 0.9rem;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    transition: all var(--transition);
+  }
+  .cta-row a.primary { background: var(--orange); color: #fff; }
+  .cta-row a.primary:hover { background: #7F5528; }
+  .cta-row a.secondary {
+    background: #fff; color: var(--charcoal);
+    border: 1.5px solid var(--border);
+  }
+  .cta-row a.secondary:hover { border-color: var(--orange); color: var(--orange); }
+</style>
+</head>
+<body>
+
+<header class="gp-header">
+  <div class="gp-header-left">
+    <a href="carte.html" class="gp-logo">
+      <span class="gp-logo-mark">T</span>
+      <span class="gp-logo-text">
+        <strong>Géoportail</strong>
+        <small>Tourisme — Région de Thiès</small>
+      </span>
+    </a>
+  </div>
+  <nav class="gp-nav">
+    <a href="carte.html"><i class="fa-solid fa-map"></i> Carte</a>
+    <a href="catalogue.html"><i class="fa-solid fa-list"></i> Catalogue</a>
+    <a href="excursions.html"><i class="fa-solid fa-route"></i> Excursions</a>
+    <a href="a-propos.html" class="active"><i class="fa-solid fa-circle-info"></i> À propos</a>
+    <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact</a>
+  </nav>
+  <button class="gp-mobile-menu" id="gpMobileMenu"><i class="fa-solid fa-bars"></i></button>
+</header>
+
+<main class="page-wrap">
+
+  <div class="page-hero">
+    <h1>À propos du géoportail</h1>
+    <p>Un outil cartographique au service du tourisme dans la région de Thiès, pour valoriser et faciliter l'accès aux hébergements, restaurants et sites remarquables du territoire.</p>
+  </div>
+
+  <section class="page-section">
+    <h2><i class="fa-solid fa-bullseye"></i> Notre mission</h2>
+    <p>
+      Le géoportail touristique de la région de Thiès a pour vocation de rendre visible et accessible
+      l'ensemble de l'offre touristique du territoire : hébergements, restauration, sites culturels
+      et naturels. Il s'adresse aux visiteurs, aux professionnels du tourisme et aux acteurs
+      institutionnels qui souhaitent disposer d'une vision claire et actualisée de la région.
+    </p>
+  </section>
+
+  <section class="page-section">
+    <h2><i class="fa-solid fa-chart-simple"></i> Le territoire en chiffres</h2>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="num" id="statHeb">—</div>
+        <div class="lbl">Hébergements</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" id="statResto">—</div>
+        <div class="lbl">Restaurants</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" id="statSites">—</div>
+        <div class="lbl">Sites touristiques</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" id="statCommunes">—</div>
+        <div class="lbl">Communes couvertes</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section">
+    <h2><i class="fa-solid fa-layer-group"></i> Ce que vous trouverez</h2>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3><i class="fa-solid fa-hotel"></i> Hébergements</h3>
+        <p>Hôtels, villas, lodges, campements, maisons d'hôtes et chambres d'hôtes référencés dans la région.</p>
+      </div>
+      <div class="info-card">
+        <h3><i class="fa-solid fa-utensils"></i> Restauration</h3>
+        <p>Restaurants, bars, cafés et glaciers, avec type de cuisine, modalités et horaires lorsque disponibles.</p>
+      </div>
+      <div class="info-card">
+        <h3><i class="fa-solid fa-mountain-sun"></i> Sites remarquables</h3>
+        <p>Sites naturels, culturels et de loisir : réserves, falaises, lagunes, plages, monuments, artisanat.</p>
+      </div>
+      <div class="info-card">
+        <h3><i class="fa-solid fa-location-crosshairs"></i> Outils cartographiques</h3>
+        <p>Recherche, filtres, mesure de distance et de surface, itinéraires multi-étapes, export PDF, mode hors-ligne.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section">
+    <h2><i class="fa-solid fa-database"></i> Sources et méthode</h2>
+    <ul class="sources-list">
+      <li><i class="fa-solid fa-check"></i><div><strong>Recensement de terrain</strong> — Collecte menée directement auprès des établissements de la région de Thiès.</div></li>
+      <li><i class="fa-solid fa-check"></i><div><strong>Coordonnées WGS84</strong> — Les positions sont exprimées dans le système géodésique mondial WGS84 (EPSG:4326).</div></li>
+      <li><i class="fa-solid fa-check"></i><div><strong>Fonds de carte</strong> — OpenStreetMap, Esri World Imagery, OpenTopoMap.</div></li>
+      <li><i class="fa-solid fa-check"></i><div><strong>Mise à jour</strong> — Les données sont actualisées régulièrement. La date de dernière mise à jour de chaque fiche est indiquée.</div></li>
+    </ul>
+  </section>
+
+  <section class="page-section">
+    <h2><i class="fa-solid fa-triangle-exclamation"></i> Signalements</h2>
+    <p>
+      Une information erronée, un établissement manquant, un doublon ? Nous vous invitons à
+      nous contacter pour nous signaler toute correction. Chaque retour contribue à améliorer
+      la qualité et la fiabilité de l'outil.
+    </p>
+    <div class="cta-row">
+      <a href="contact.html" class="primary"><i class="fa-solid fa-envelope"></i> Nous contacter</a>
+      <a href="carte.html" class="secondary"><i class="fa-solid fa-map"></i> Explorer la carte</a>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // Chargement des stats
+  async function loadStats() {
+    try {
+      const [h, r, s] = await Promise.all([
+        fetch('hebergements.geojson').then(x => x.json()),
+        fetch('restaurants.geojson').then(x => x.json()),
+        fetch('sites.json').then(x => x.json()).catch(() => ({ features: [] })),
+      ]);
+      const all = [...h.features, ...r.features, ...s.features];
+      document.getElementById('statHeb').textContent = h.features.length;
+      document.getElementById('statResto').textContent = r.features.length;
+      document.getElementById('statSites').textContent = s.features.length;
+      const communes = new Set(all.map(f => f.properties.commune).filter(Boolean));
+      document.getElementById('statCommunes').textContent = communes.size;
+    } catch (e) {
+      console.error(e);
+    }
+  }
+  loadStats();
+
+  document.getElementById('gpMobileMenu').addEventListener('click', () => {
+    document.querySelector('.gp-nav').classList.toggle('open');
+  });
+</script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+  }
+</script>
+</body>
+</html>

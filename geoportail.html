@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Géoportail — Tourisme région de Thiès</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+  :root {
+    --orange: #E8730A;
+    --orange-light: #F5A25C;
+    --charcoal: #1C2B39;
+    --cream: #F7F3EA;
+    --green: #2D6A4F;
+    --blue: #1B4F72;
+    --text-muted: #8A9BB0;
+    --border: rgba(28,43,57,0.12);
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; font-family: 'Montserrat', sans-serif; color: var(--charcoal); }
+
+  .geo-app { display: flex; height: 100vh; width: 100vw; overflow: hidden; }
+
+  /* ===== SIDEBAR ===== */
+  .geo-sidebar {
+    width: 320px; flex-shrink: 0; background: #fff; border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; z-index: 500;
+    transition: margin-left 0.3s ease;
+  }
+  .geo-sidebar-header {
+    padding: 1.3rem 1.4rem 1rem; border-bottom: 1px solid var(--border);
+  }
+  .geo-sidebar-header a {
+    display: inline-flex; align-items: center; gap: 8px; color: var(--charcoal);
+    text-decoration: none; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.8rem;
+  }
+  .geo-sidebar-header a:hover { color: var(--orange); }
+  .geo-sidebar-header h1 {
+    font-family: 'Playfair Display', serif; font-size: 1.25rem; margin: 0 0 0.3rem;
+  }
+  .geo-count {
+    font-size: 0.8rem; color: var(--text-muted);
+  }
+  .geo-count strong { color: var(--orange); }
+
+  .geo-sidebar-body { flex: 1; overflow-y: auto; padding: 1.2rem 1.4rem; }
+
+  .geo-filter-group { margin-bottom: 1.6rem; }
+  .geo-filter-group h3 {
+    font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;
+    color: var(--text-muted); margin: 0 0 0.7rem;
+  }
+  .geo-check {
+    display: flex; align-items: center; gap: 9px; padding: 0.4rem 0;
+    font-size: 0.88rem; cursor: pointer; user-select: none;
+  }
+  .geo-check input { accent-color: var(--orange); width: 16px; height: 16px; cursor: pointer; }
+  .geo-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .geo-dot.thies { background: var(--orange); }
+  .geo-dot.mbour { background: var(--blue); }
+  .geo-dot.tivaouane { background: var(--green); }
+
+  .geo-reset {
+    width: 100%; padding: 0.65rem; border-radius: 10px; border: 1.5px solid var(--border);
+    background: #fff; color: var(--charcoal); font-family: inherit; font-size: 0.82rem;
+    font-weight: 600; cursor: pointer; transition: border-color 0.2s, background 0.2s;
+  }
+  .geo-reset:hover { border-color: var(--orange); background: #FFF6EE; }
+
+  .geo-sidebar-footer {
+    padding: 1rem 1.4rem; border-top: 1px solid var(--border); font-size: 0.72rem;
+    color: var(--text-muted); line-height: 1.6;
+  }
+
+  /* ===== MAP ===== */
+  .geo-map-wrap { flex: 1; position: relative; }
+  #geoMap { width: 100%; height: 100%; background: #E9ECEF; }
+
+  .geo-mobile-toggle {
+    display: none; position: absolute; top: 14px; left: 14px; z-index: 600;
+    width: 44px; height: 44px; border-radius: 10px; border: none;
+    background: #fff; box-shadow: 0 4px 16px rgba(15,25,35,0.18); cursor: pointer;
+    align-items: center; justify-content: center; font-size: 1.1rem; color: var(--charcoal);
+  }
+
+  /* ===== POPUP ===== */
+  .leaflet-popup-content-wrapper { border-radius: 12px; }
+  .geo-popup .geo-popup-type {
+    display: inline-block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.5px; color: var(--orange); margin-bottom: 0.25rem;
+  }
+  .geo-popup h4 {
+    font-family: 'Playfair Display', serif; margin: 0 0 0.4rem; font-size: 1.05rem;
+  }
+  .geo-popup .geo-popup-meta {
+    font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.6rem;
+  }
+  .geo-popup .geo-popup-row {
+    display: flex; align-items: center; gap: 7px; font-size: 0.82rem; margin-bottom: 0.35rem;
+  }
+  .geo-popup .geo-popup-row i { width: 14px; color: var(--orange); }
+  .geo-popup .geo-popup-links { display: flex; gap: 8px; margin-top: 0.7rem; flex-wrap: wrap; }
+  .geo-popup .geo-popup-links a {
+    font-size: 0.74rem; font-weight: 600; color: var(--orange); text-decoration: none;
+    border: 1px solid var(--orange); border-radius: 20px; padding: 0.3rem 0.7rem;
+  }
+  .geo-popup .geo-popup-links a:hover { background: var(--orange); color: #fff; }
+  .geo-popup .geo-popup-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 0.5rem; }
+  .geo-popup .geo-popup-badge {
+    font-size: 0.68rem; font-weight: 600; padding: 0.2rem 0.55rem; border-radius: 20px;
+    background: #F2F7F4; color: var(--green);
+  }
+
+  /* ===== CLUSTER COLOR (surcharge Leaflet.markercluster) ===== */
+  .marker-cluster-small, .marker-cluster-medium, .marker-cluster-large { background: rgba(232,115,10,0.25) !important; }
+  .marker-cluster-small div, .marker-cluster-medium div, .marker-cluster-large div {
+    background: var(--orange) !important; color: #fff !important; font-family: 'Montserrat', sans-serif; font-weight: 700;
+  }
+
+  @media (max-width: 860px) {
+    .geo-sidebar { position: absolute; top: 0; bottom: 0; left: 0; margin-left: -320px; box-shadow: 0 0 30px rgba(0,0,0,0.2); }
+    .geo-sidebar.open { margin-left: 0; }
+    .geo-mobile-toggle { display: flex; }
+  }
+</style>
+</head>
+<body>
+
+<div class="geo-app">
+
+  <aside class="geo-sidebar" id="geoSidebar">
+    <div class="geo-sidebar-header">
+      <a href="index.html"><i class="fa-solid fa-arrow-left"></i> Retour au site</a>
+      <h1>Géoportail régional</h1>
+      <div class="geo-count"><strong id="geoCount">0</strong> établissement(s) affiché(s)</div>
+    </div>
+
+    <div class="geo-sidebar-body">
+
+      <div class="geo-filter-group">
+        <h3>Catégorie</h3>
+        <label class="geo-check">
+          <input type="checkbox" class="geo-cat-filter" value="hebergement" checked>
+          <i class="fa-solid fa-hotel" style="width:16px;color:var(--text-muted)"></i> Hébergements
+        </label>
+        <label class="geo-check">
+          <input type="checkbox" class="geo-cat-filter" value="restaurant" checked>
+          <i class="fa-solid fa-utensils" style="width:16px;color:var(--text-muted)"></i> Restaurants
+        </label>
+        <label class="geo-check" style="opacity:0.45">
+          <input type="checkbox" disabled>
+          <i class="fa-solid fa-mountain-sun" style="width:16px;color:var(--text-muted)"></i> Sites &amp; attractions <span style="font-size:0.7rem">(bientôt)</span>
+        </label>
+      </div>
+
+      <div class="geo-filter-group" id="geoRestoTypeGroup">
+        <h3>Type de restaurant</h3>
+        <label class="geo-check"><input type="checkbox" class="geo-resto-type-filter" value="Restaurant" checked> Restaurant</label>
+        <label class="geo-check"><input type="checkbox" class="geo-resto-type-filter" value="Bar" checked> Bar</label>
+        <label class="geo-check"><input type="checkbox" class="geo-resto-type-filter" value="Café" checked> Café</label>
+        <label class="geo-check"><input type="checkbox" class="geo-resto-type-filter" value="Glacier" checked> Glacier</label>
+        <label class="geo-check"><input type="checkbox" class="geo-resto-type-filter" value="Autre" checked> Autre</label>
+      </div>
+
+      <div class="geo-filter-group">
+        <h3>Département</h3>
+        <label class="geo-check"><input type="checkbox" class="geo-dept-filter" value="THIES" checked> Thiès</label>
+        <label class="geo-check"><input type="checkbox" class="geo-dept-filter" value="MBOUR" checked> Mbour</label>
+        <label class="geo-check"><input type="checkbox" class="geo-dept-filter" value="TIVAOUANE" checked> Tivaouane</label>
+      </div>
+
+      <div class="geo-filter-group">
+        <h3>Milieu</h3>
+        <label class="geo-check"><input type="checkbox" class="geo-milieu-filter" value="URBAIN" checked> Urbain</label>
+        <label class="geo-check"><input type="checkbox" class="geo-milieu-filter" value="RURAL" checked> Rural</label>
+      </div>
+
+      <div class="geo-filter-group">
+        <h3>Équipements</h3>
+        <label class="geo-check"><input type="checkbox" class="geo-amenity-filter" value="piscine"> <i class="fa-solid fa-water" style="width:16px;color:var(--text-muted)"></i> Piscine</label>
+        <label class="geo-check"><input type="checkbox" class="geo-amenity-filter" value="wifi"> <i class="fa-solid fa-wifi" style="width:16px;color:var(--text-muted)"></i> Wi-Fi</label>
+        <label class="geo-check"><input type="checkbox" class="geo-amenity-filter" value="parking"> <i class="fa-solid fa-square-parking" style="width:16px;color:var(--text-muted)"></i> Parking</label>
+        <label class="geo-check"><input type="checkbox" class="geo-amenity-filter" value="accessible_handicap"> <i class="fa-solid fa-wheelchair" style="width:16px;color:var(--text-muted)"></i> Accès handicap</label>
+      </div>
+
+      <button class="geo-reset" id="geoReset"><i class="fa-solid fa-rotate-left"></i> Réinitialiser les filtres</button>
+    </div>
+
+    <div class="geo-sidebar-footer">
+      Sources : recensement de terrain, région de Thiès — 2025 (213 hébergements, 202 restaurants). Coordonnées WGS84.
+    </div>
+  </aside>
+
+  <div class="geo-map-wrap">
+    <button class="geo-mobile-toggle" id="geoMobileToggle" aria-label="Ouvrir les filtres"><i class="fa-solid fa-sliders"></i></button>
+    <div id="geoMap"></div>
+  </div>
+
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script>
+/* ============================================================
+   GÉOPORTAIL — chargement des données
+   Pour l'instant : fichiers GeoJSON statiques exportés des shapefiles
+   sources (Hotelerie.shp, RESTAURANT_*.shp — reprojetés UTM28N→WGS84).
+   À terme, remplacer ces deux URLs par les endpoints Django REST
+   correspondants (/api/hebergements/?format=geojson,
+   /api/restaurants/?format=geojson) — la structure GeoJSON étant
+   identique, aucun autre changement de ce fichier n'est requis.
+   ============================================================ */
+const GEOJSON_URLS = {
+  hebergement: 'hebergements.geojson',
+  restaurant: 'restaurants.geojson',
+};
+
+const DEPT_COLORS = { THIES: '#E8730A', MBOUR: '#1B4F72', TIVAOUANE: '#2D6A4F' };
+const CAT_ICONS = { hebergement: 'fa-hotel', restaurant: 'fa-utensils' };
+
+// Regroupe les variantes de type resto ("Restaurant ethiopien", "Restaurant et Bar"...)
+// sous les 5 cases à cocher du filtre "Type de restaurant".
+function normaliseRestoType(type) {
+  const t = (type || '').toLowerCase();
+  if (t.includes('bar') && !t.includes('restaurant')) return 'Bar';
+  if (t.includes('café') || t.includes('cafe')) return 'Café';
+  if (t.includes('glacier')) return 'Glacier';
+  if (t.includes('restaurant')) return 'Restaurant';
+  return 'Autre';
+}
+
+const map = L.map('geoMap', { zoomControl: false }).setView([14.6, -16.95], 10);
+L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+const baseOSM = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap contributors', maxZoom: 19
+}).addTo(map);
+const baseSat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+  attribution: 'Tiles &copy; Esri', maxZoom: 19
+});
+L.control.layers({ 'Plan': baseOSM, 'Satellite': baseSat }, {}, { position: 'bottomleft' }).addTo(map);
+
+function makeDivIcon(dept, cat) {
+  const color = DEPT_COLORS[dept] || '#8A9BB0';
+  const icon = CAT_ICONS[cat] || 'fa-location-dot';
+  return L.divIcon({
+    className: '',
+    html: `<div style="background:${color};width:30px;height:30px;border-radius:50% 50% 50% 0;
+           transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;
+           box-shadow:0 3px 10px rgba(0,0,0,0.35);border:2px solid #fff;">
+           <i class="fa-solid ${icon}" style="transform:rotate(45deg);color:#fff;font-size:13px;"></i></div>`,
+    iconSize: [30, 30], iconAnchor: [15, 30], popupAnchor: [0, -28],
+  });
+}
+
+function triLabel(v, yes = 'Oui', no = 'Non') {
+  if (v === true) return yes;
+  if (v === false) return no;
+  return 'Non renseigné';
+}
+
+function buildPopup(p) {
+  if (p.categorie === 'restaurant') return buildRestoPopup(p);
+  return buildHebergementPopup(p);
+}
+
+function buildHebergementPopup(p) {
+  const links = [];
+  if (p.site_web) links.push(`<a href="${p.site_web}" target="_blank" rel="noopener">Site web</a>`);
+  if (p.booking) links.push(`<a href="${p.booking}" target="_blank" rel="noopener">Booking</a>`);
+  if (p.tripadvisor) links.push(`<a href="${p.tripadvisor}" target="_blank" rel="noopener">TripAdvisor</a>`);
+
+  const badges = [];
+  if (p.piscine) badges.push('Piscine');
+  if (p.wifi) badges.push('Wi-Fi');
+  if (p.parking) badges.push('Parking');
+  if (p.accessible_handicap) badges.push('Accès handicap');
+
+  return `
+    <div class="geo-popup">
+      <span class="geo-popup-type">${p.type || 'Hébergement'}</span>
+      <h4>${p.nom}</h4>
+      <div class="geo-popup-meta">${p.commune || ''}${p.commune ? ', ' : ''}${p.departement || ''}</div>
+      ${p.adresse ? `<div class="geo-popup-row"><i class="fa-solid fa-location-dot"></i>${p.adresse}</div>` : ''}
+      ${p.telephone ? `<div class="geo-popup-row"><i class="fa-solid fa-phone"></i>${p.telephone}</div>` : ''}
+      ${p.nb_chambres ? `<div class="geo-popup-row"><i class="fa-solid fa-bed"></i>${p.nb_chambres} chambre(s)</div>` : ''}
+      ${badges.length ? `<div class="geo-popup-badges">${badges.map(b => `<span class="geo-popup-badge">${b}</span>`).join('')}</div>` : ''}
+      ${links.length ? `<div class="geo-popup-links">${links.join('')}</div>` : ''}
+    </div>`;
+}
+
+function buildRestoPopup(p) {
+  const links = [];
+  if (p.site_web) links.push(`<a href="${p.site_web}" target="_blank" rel="noopener">Site / réseau</a>`);
+
+  return `
+    <div class="geo-popup">
+      <span class="geo-popup-type">${p.type || 'Restaurant'}</span>
+      <h4>${p.nom}</h4>
+      <div class="geo-popup-meta">${p.departement || ''}</div>
+      ${p.adresse ? `<div class="geo-popup-row"><i class="fa-solid fa-location-dot"></i>${p.adresse}</div>` : ''}
+      ${p.telephone ? `<div class="geo-popup-row"><i class="fa-solid fa-phone"></i>${p.telephone}</div>` : ''}
+      ${p.modalite ? `<div class="geo-popup-row"><i class="fa-solid fa-utensils"></i>${p.modalite}</div>` : ''}
+      ${p.horaires ? `<div class="geo-popup-row"><i class="fa-solid fa-clock"></i>${p.horaires}</div>` : ''}
+      ${links.length ? `<div class="geo-popup-links">${links.join('')}</div>` : ''}
+    </div>`;
+}
+
+const clusterGroup = L.markerClusterGroup({ maxClusterRadius: 45 });
+map.addLayer(clusterGroup);
+
+let allFeatures = [];
+
+function currentFilters() {
+  return {
+    cats: [...document.querySelectorAll('.geo-cat-filter:checked')].map(el => el.value),
+    depts: [...document.querySelectorAll('.geo-dept-filter:checked')].map(el => el.value),
+    milieux: [...document.querySelectorAll('.geo-milieu-filter:checked')].map(el => el.value),
+    amenities: [...document.querySelectorAll('.geo-amenity-filter:checked')].map(el => el.value),
+    restoTypes: [...document.querySelectorAll('.geo-resto-type-filter:checked')].map(el => el.value),
+  };
+}
+
+function featureMatches(f, filters) {
+  const p = f.properties;
+  if (!filters.cats.includes(p.categorie)) return false;
+  if (!filters.depts.includes(p.departement)) return false;
+
+  if (p.categorie === 'hebergement') {
+    if (p.milieu && !filters.milieux.includes(p.milieu)) return false;
+    for (const a of filters.amenities) {
+      if (p[a] !== true) return false;
+    }
+  }
+
+  if (p.categorie === 'restaurant') {
+    if (!filters.restoTypes.includes(normaliseRestoType(p.type))) return false;
+  }
+
+  return true;
+}
+
+function render() {
+  const filters = currentFilters();
+  clusterGroup.clearLayers();
+  let count = 0;
+
+  allFeatures.forEach(f => {
+    if (!featureMatches(f, filters)) return;
+    const [lon, lat] = f.geometry.coordinates;
+    const marker = L.marker([lat, lon], { icon: makeDivIcon(f.properties.departement, f.properties.categorie) });
+    marker.bindPopup(buildPopup(f.properties));
+    clusterGroup.addLayer(marker);
+    count++;
+  });
+
+  document.getElementById('geoCount').textContent = count;
+}
+
+document.querySelectorAll('.geo-cat-filter, .geo-dept-filter, .geo-milieu-filter, .geo-amenity-filter, .geo-resto-type-filter')
+  .forEach(el => el.addEventListener('change', render));
+
+document.getElementById('geoReset').addEventListener('click', () => {
+  document.querySelectorAll('.geo-cat-filter, .geo-dept-filter, .geo-milieu-filter, .geo-resto-type-filter').forEach(el => el.checked = true);
+  document.querySelectorAll('.geo-amenity-filter').forEach(el => el.checked = false);
+  render();
+});
+
+const mobileToggle = document.getElementById('geoMobileToggle');
+const sidebar = document.getElementById('geoSidebar');
+mobileToggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+
+Promise.all([
+  fetch(GEOJSON_URLS.hebergement).then(r => r.json()),
+  fetch(GEOJSON_URLS.restaurant).then(r => r.json()),
+])
+  .then(([hebergements, restaurants]) => {
+    allFeatures = [...hebergements.features, ...restaurants.features];
+    render();
+  })
+  .catch(err => {
+    console.error('Impossible de charger les données du géoportail :', err);
+    document.getElementById('geoCount').textContent = '0';
+  });
+</script>
+</body>
+</html>

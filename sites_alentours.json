@@ -1,0 +1,347 @@
+{
+  "type": "FeatureCollection",
+  "destinations": {
+    "dakar": {
+      "titre": "Dakar et Gorée",
+      "icone": "fa-landmark",
+      "accroche": "Musées, monuments et lieux de mémoire de la capitale, avec l'île de Gorée.",
+      "embarcadere": {
+        "nom": "Embarcadère de Gorée (port de Dakar)",
+        "lat": 14.674637,
+        "lon": -17.430776,
+        "note": "Gorée se rejoint en bateau depuis le port de Dakar (traversée d'environ 20 minutes). Position de l'embarcadère à confirmer sur place."
+      }
+    },
+    "lac-rose": {
+      "titre": "Le Lac Rose",
+      "icone": "fa-droplet",
+      "accroche": "Lagune salée à la teinte rosée, avec deux parcs de loisirs à proximité."
+    },
+    "saloum": {
+      "titre": "Delta du Saloum — Palmarin et Dangane",
+      "icone": "fa-sailboat",
+      "accroche": "Salines artisanales, île aux oiseaux et sorties en pirogue dans les bolongs."
+    },
+    "lompoul": {
+      "titre": "Désert de Lompoul",
+      "icone": "fa-sun",
+      "accroche": "Mini-désert de dunes de sable ocre, en bordure de l'océan Atlantique."
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.433592,
+          14.724993
+        ]
+      },
+      "properties": {
+        "nom": "Parc zoologique de Hann",
+        "categorie": "site",
+        "type": "loisir",
+        "commune": "",
+        "departement": "",
+        "description": "Parc forestier d'environ 60 hectares à Dakar, qui réunit un jardin botanique et un zoo.",
+        "site_web": "",
+        "telephone": "+221 33 831 01 01",
+        "destination": "dakar",
+        "periode_ideale": "novembre à mars"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.474699,
+          14.69224
+        ]
+      },
+      "properties": {
+        "nom": "Place du Souvenir Africain",
+        "categorie": "site",
+        "type": "culturel",
+        "commune": "",
+        "departement": "",
+        "description": "Esplanade de la Corniche Ouest, à Dakar, inaugurée en 2009 en mémoire des figures et martyrs d'Afrique.",
+        "site_web": "",
+        "telephone": "+221 33 825 96 59",
+        "destination": "dakar",
+        "periode_ideale": "novembre à mars"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.494955,
+          14.722246
+        ]
+      },
+      "properties": {
+        "nom": "Monument de la Renaissance Africaine",
+        "categorie": "site",
+        "type": "culturel",
+        "commune": "",
+        "departement": "",
+        "description": "Statue en bronze de 52 m dominant la baie de Dakar, avec une plateforme d'observation au sommet.",
+        "site_web": "",
+        "telephone": "+221 30 118 36 74",
+        "destination": "dakar",
+        "periode_ideale": "novembre à mars"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.435129,
+          14.677326
+        ]
+      },
+      "properties": {
+        "nom": "Musée des Civilisations noires",
+        "categorie": "site",
+        "type": "culturel",
+        "commune": "",
+        "departement": "",
+        "description": "Musée de Dakar inauguré en 2018, consacré à l'histoire et à la création artistique du monde noir.",
+        "site_web": "",
+        "telephone": "+221 33 889 11 80",
+        "destination": "dakar",
+        "ancre": true,
+        "periode_ideale": "novembre à mars"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.397297,
+          14.667655
+        ]
+      },
+      "properties": {
+        "nom": "Maison des esclaves",
+        "categorie": "site",
+        "type": "culturel",
+        "commune": "",
+        "departement": "",
+        "description": "Musée et mémorial de la traite négrière atlantique, sur l'île de Gorée.",
+        "site_web": "",
+        "telephone": "+221 77 649 38 24",
+        "destination": "dakar",
+        "acces": "bateau",
+        "periode_ideale": "novembre à mars"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.399572,
+          14.670809
+        ]
+      },
+      "properties": {
+        "nom": "Musée historique du Sénégal (Fort d'Estrées)",
+        "categorie": "site",
+        "type": "culturel",
+        "commune": "",
+        "departement": "",
+        "description": "Musée installé dans un fort du XIXe siècle sur l'île de Gorée, qui retrace l'histoire du Sénégal.",
+        "site_web": "",
+        "telephone": "",
+        "destination": "dakar",
+        "acces": "bateau",
+        "periode_ideale": "novembre à mars"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.435699,
+          14.678198
+        ]
+      },
+      "properties": {
+        "nom": "Musée international de la biographie du Prophète",
+        "categorie": "site",
+        "type": "culturel",
+        "commune": "",
+        "departement": "",
+        "description": "Musée de Dakar inauguré en 2025, consacré à la vie du prophète Muhammad et à la civilisation islamique.",
+        "site_web": "",
+        "telephone": "",
+        "destination": "dakar",
+        "periode_ideale": "novembre à mars"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.23413,
+          14.838818
+        ]
+      },
+      "properties": {
+        "nom": "Parc aquatique du Lac Rose",
+        "categorie": "site",
+        "type": "loisir",
+        "commune": "",
+        "departement": "",
+        "description": "Parc de loisirs familial au bord du Lac Rose : piscines, toboggans et structures gonflables.",
+        "site_web": "",
+        "telephone": "+221 77 343 15 74",
+        "destination": "lac-rose",
+        "periode_ideale": "novembre à mars"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.249978,
+          14.838579
+        ]
+      },
+      "properties": {
+        "nom": "Parc exotique Le Mbossé",
+        "categorie": "site",
+        "type": "loisir",
+        "commune": "",
+        "departement": "",
+        "description": "Petit zoo privé près du Lac Rose, avec reptiles, singes et oiseaux exotiques.",
+        "site_web": "",
+        "telephone": "+221 77 541 57 34",
+        "destination": "lac-rose",
+        "periode_ideale": "novembre à mars"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.244553,
+          14.839467
+        ]
+      },
+      "properties": {
+        "nom": "Lac Rose",
+        "categorie": "site",
+        "type": "naturel",
+        "commune": "",
+        "departement": "",
+        "description": "Lagune salée à la teinte rosée, ancienne arrivée du rallye Paris-Dakar, où le sel est récolté artisanalement.",
+        "site_web": "",
+        "telephone": "",
+        "destination": "lac-rose",
+        "ancre": true,
+        "periode_ideale": "novembre à mars"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.766002,
+          14.056187
+        ]
+      },
+      "properties": {
+        "nom": "Puits de sel de Palmarin",
+        "categorie": "site",
+        "type": "culturel",
+        "commune": "",
+        "departement": "",
+        "description": "Bassins traditionnels où les femmes de Palmarin récoltent le sel de façon artisanale, dans le delta du Saloum.",
+        "site_web": "",
+        "telephone": "",
+        "destination": "saloum",
+        "ancre": true,
+        "periode_ideale": "novembre à juin (saison sèche)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.707899,
+          14.053034
+        ]
+      },
+      "properties": {
+        "nom": "La Pirogue des Îles du Saloum",
+        "categorie": "site",
+        "type": "loisir",
+        "commune": "",
+        "departement": "",
+        "description": "Location de pirogues motorisées pour explorer les bolongs et les îles du delta du Saloum, à Dangane.",
+        "site_web": "",
+        "telephone": "+221 78 107 42 88",
+        "destination": "saloum",
+        "periode_ideale": "novembre à juin (saison sèche)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.714232,
+          14.0723
+        ]
+      },
+      "properties": {
+        "nom": "Île des oiseaux",
+        "categorie": "site",
+        "type": "naturel",
+        "commune": "",
+        "departement": "",
+        "description": "Banc de sable du delta du Saloum, accessible en pirogue, refuge de sternes et de pélicans.",
+        "site_web": "",
+        "telephone": "",
+        "destination": "saloum",
+        "periode_ideale": "novembre à juin (saison sèche)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -16.67727,
+          15.464547
+        ]
+      },
+      "properties": {
+        "nom": "Désert de Lompoul",
+        "categorie": "site",
+        "type": "naturel",
+        "commune": "",
+        "departement": "",
+        "description": "Mini-désert d'environ 18 km², aux dunes de sable ocre en bordure de l'océan Atlantique, dans la région de Louga.",
+        "site_web": "",
+        "telephone": "",
+        "destination": "lompoul",
+        "ancre": true,
+        "periode_ideale": "novembre à mai"
+      }
+    }
+  ]
+}

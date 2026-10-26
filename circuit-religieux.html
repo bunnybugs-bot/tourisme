@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circuit religieux — Région de Thiès</title>
+<meta name="description" content="Les hauts lieux spirituels de la région de Thiès : Tivaouane, Ndiassane, Thiénaba, Pire, Ndiéguène, Baye-Fall, Popenguine, Keur Moussa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Montserrat:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+<style>
+:root{
+  --green:#1B5E20;--green-mid:#2E7D32;--green-light:#66BB6A;--green-pale:#E8F5E9;--green-dark:#0D3512;
+  --yellow:#F9A825;--yellow-light:#FDD835;--yellow-pale:#FFF9E6;--gold:#D4AF37;
+  --blue:#0D3B66;--blue-mid:#1B6CA8;--blue-light:#5DADE2;--blue-pale:#E6F2FA;
+  --brown:#7B4A2A;--brown-light:#A67C52;
+  --white:#FFFFFF;--white-soft:#FAFAF8;--charcoal:#1C2B39;--dark:#0F1923;
+  --text:#2C3E50;--text-muted:#7F8C8D;--text-soft:#95A5A6;
+  --nav-h:68px;--border:rgba(27,94,32,0.12);--border-yellow:rgba(249,168,37,0.25);
+  --shadow:0 2px 20px rgba(15,25,35,0.07);--shadow-md:0 8px 32px rgba(15,25,35,0.10);--shadow-lg:0 20px 64px rgba(15,25,35,0.20);
+  --radius:20px;--transition:0.28s cubic-bezier(0.4,0,0.2,1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;scroll-padding-top:130px;}
+body{font-family:'Montserrat',sans-serif;background:var(--white);color:var(--text);overflow-x:hidden;
+  background-image:radial-gradient(ellipse 80% 50% at 100% 0%,rgba(27,94,32,0.04) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 0% 100%,rgba(249,168,37,0.04) 0%,transparent 60%);
+  background-attachment:fixed;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);display:flex;align-items:center;padding:0 2.5rem;gap:1rem;
+  background:rgba(13,53,18,0.85);-webkit-backdrop-filter:blur(16px) saturate(160%);backdrop-filter:blur(16px) saturate(160%);
+  border-bottom:1px solid rgba(255,255,255,0.08);transition:background var(--transition);}
+nav.solid{background:rgba(13,53,18,0.98);}
+.nav-back{display:flex;align-items:center;gap:0.6rem;color:rgba(255,255,255,0.75);text-decoration:none;font-size:0.76rem;font-weight:600;letter-spacing:0.3px;transition:color var(--transition);text-transform:uppercase;}
+.nav-back:hover{color:var(--yellow-light);}
+.nav-back i{font-size:0.72rem;}
+.nav-divider{color:rgba(255,255,255,0.25);}
+.nav-title{font-family:'Playfair Display',serif;font-size:1rem;color:#fff;font-weight:700;}
+
+/* HERO */
+.hero-mini{position:relative;height:55vh;min-height:400px;overflow:hidden;color:#fff;z-index:1;}
+.hero-mini-bg{position:absolute;inset:0;background-size:cover;background-position:center;background-color:var(--green-dark);transform:scale(1.05);will-change:transform,filter;}
+.hero-mini-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(13,53,18,0.25) 0%,rgba(13,53,18,0.35) 55%,rgba(13,53,18,0.70) 100%);}
+.hero-mini-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.05) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;}
+.hero-mini-content{position:relative;z-index:3;max-width:1280px;margin:0 auto;padding:calc(var(--nav-h) + 2rem) 2.5rem 2rem;height:100%;display:flex;flex-direction:column;justify-content:center;}
+.hero-mini-tag{display:inline-flex;align-items:center;gap:8px;padding:0.4rem 1rem;border-radius:30px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.35);color:#fff;font-size:0.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:1.2rem;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);text-shadow:0 1px 6px rgba(0,0,0,0.5);width:fit-content;}
+.hero-mini-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--yellow);box-shadow:0 0 0 3px rgba(249,168,37,0.3);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(249,168,37,0.3);}50%{box-shadow:0 0 0 8px rgba(249,168,37,0.1);}}
+.hero-mini h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,7vw,5rem);font-weight:900;line-height:0.95;letter-spacing:-0.02em;margin-bottom:0.8rem;text-shadow:0 2px 12px rgba(0,0,0,0.75),0 4px 32px rgba(0,0,0,0.5);}
+.hero-mini h1 em{font-style:italic;color:var(--yellow-light);font-weight:400;display:block;font-size:0.55em;margin-top:0.3rem;text-shadow:0 2px 12px rgba(0,0,0,0.75),0 4px 24px rgba(0,0,0,0.5);}
+.hero-mini-lead{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,1.8vw,1.3rem);font-style:italic;color:rgba(255,255,255,0.95);line-height:1.5;max-width:620px;text-shadow:0 2px 10px rgba(0,0,0,0.8),0 4px 20px rgba(0,0,0,0.5);}
+
+/* ENVELOPPE */
+.content-envelope{position:relative;z-index:10;background:var(--white);border-radius:40px 40px 0 0;margin-top:-50px;box-shadow:0 -20px 60px rgba(13,53,18,0.18);padding-top:2rem;overflow:clip;}
+
+/* SOMMAIRE */
+.sommaire{position:sticky;top:var(--nav-h);z-index:100;background:rgba(255,255,255,0.97);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);box-shadow:0 4px 20px rgba(27,94,32,0.05);}
+.sommaire-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;padding:0.7rem 2.5rem;gap:1.5rem;overflow-x:auto;scrollbar-width:none;}
+.sommaire-inner::-webkit-scrollbar{display:none;}
+.sommaire-label{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);flex-shrink:0;display:flex;align-items:center;gap:0.5rem;}
+.sommaire-label i{color:var(--green);}
+.sommaire-links{display:flex;gap:0.3rem;list-style:none;}
+.sommaire-links a{display:inline-block;padding:0.5rem 0.9rem;font-size:0.78rem;font-weight:600;color:var(--text-muted);text-decoration:none;border-radius:20px;white-space:nowrap;transition:all var(--transition);}
+.sommaire-links a:hover{background:var(--green-pale);color:var(--green);}
+.sommaire-links a.active{background:var(--green);color:#fff;}
+.sommaire-progress{position:absolute;bottom:-1px;left:0;height:2px;background:var(--yellow);width:0%;transition:width 0.1s linear;}
+
+/* SECTIONS */
+section{padding:5rem 2.5rem;position:relative;}
+.section-inner{max-width:1280px;margin:0 auto;}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap;margin-bottom:2.5rem;}
+.section-head > div{max-width:720px;}
+.eyebrow{display:inline-flex;align-items:center;gap:0.7rem;font-size:0.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--green);margin-bottom:0.7rem;}
+.eyebrow::before{content:'';width:28px;height:2px;background:var(--yellow);}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.15;color:var(--green-dark);letter-spacing:-0.01em;}
+.section-title em{font-style:italic;color:var(--yellow);font-weight:400;}
+.section-lead{font-size:0.95rem;color:var(--text-muted);line-height:1.8;max-width:720px;margin-top:0.8rem;}
+
+.section-white{background:var(--white);}
+.section-white-soft{background:var(--white-soft);}
+.section-pale-green{background:linear-gradient(180deg,var(--white) 0%,var(--green-pale) 100%);}
+.section-pale-yellow{background:linear-gradient(180deg,var(--white) 0%,var(--yellow-pale) 100%);}
+
+/* INTRO */
+.intro-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:3.5rem;align-items:start;margin-top:1rem;}
+@media (max-width:860px){.intro-grid{grid-template-columns:1fr;gap:2rem;}}
+.intro-text{font-size:1rem;line-height:1.85;color:var(--text);}
+.intro-text p{margin-bottom:1.2rem;}
+.intro-text strong{color:var(--green-dark);}
+.intro-text em{color:var(--yellow);font-style:italic;font-weight:600;}
+.intro-stats{display:grid;grid-template-columns:1fr;gap:0.9rem;}
+.intro-stat{display:flex;gap:1rem;align-items:flex-start;padding:1.1rem 1.2rem;background:#fff;border-radius:14px;border:1px solid var(--border);box-shadow:var(--shadow);transition:transform var(--transition),box-shadow var(--transition);}
+.intro-stat:hover{transform:translateX(5px);box-shadow:var(--shadow-md);}
+.intro-stat-icon{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--green-pale),var(--yellow-pale));color:var(--green);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.intro-stat-body b{display:block;font-size:0.9rem;color:var(--green-dark);font-weight:700;margin-bottom:0.15rem;}
+.intro-stat-body span{font-size:0.75rem;color:var(--text-muted);line-height:1.5;}
+
+/* LIEUX */
+.lieu{display:grid;grid-template-columns:1fr 1.2fr;gap:3rem;align-items:center;margin-bottom:4rem;padding-bottom:4rem;border-bottom:1px solid var(--border);}
+.lieu:last-of-type{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.lieu.swap{direction:rtl;}
+.lieu.swap > *{direction:ltr;}
+@media (max-width:860px){.lieu,.lieu.swap{grid-template-columns:1fr;direction:ltr;gap:2rem;}}
+.lieu-visual{position:relative;aspect-ratio:4/3;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg);background:var(--green-dark);}
+.lieu-visual img{width:100%;height:100%;object-fit:cover;display:block;}
+.lieu-visual-badge{position:absolute;top:1.2rem;left:1.2rem;display:inline-flex;align-items:center;gap:6px;padding:0.4rem 0.9rem;background:rgba(255,255,255,0.95);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);font-size:0.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;color:var(--green-dark);}
+.lieu-visual-badge i{font-size:0.75rem;}
+.lieu-visual-caption{position:absolute;bottom:0;left:0;right:0;padding:1.5rem 1.5rem 1.2rem;background:linear-gradient(to top,rgba(13,53,18,0.95),transparent);color:#fff;font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;font-style:italic;}
+.lieu-text h2{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;line-height:1.2;color:var(--green-dark);margin-bottom:0.5rem;}
+.lieu-text h2 em{font-style:italic;color:var(--yellow);font-weight:400;}
+.lieu-loc{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.72rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:1.2rem;}
+.lieu-loc i{color:var(--yellow);}
+.lieu-text p{font-size:0.92rem;line-height:1.85;color:var(--text);margin-bottom:1rem;}
+.lieu-text p strong{color:var(--green-dark);}
+.lieu-text p em{color:var(--yellow);font-style:italic;font-weight:600;}
+.lieu-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:0.7rem;margin-top:1.5rem;}
+.lieu-fact{padding:0.85rem 0.9rem;background:var(--green-pale);border-radius:12px;text-align:center;}
+.lieu-fact i{color:var(--green);font-size:0.9rem;display:block;margin-bottom:0.35rem;}
+.lieu-fact b{display:block;font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:700;color:var(--green-dark);}
+.lieu-fact small{display:block;font-size:0.58rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-top:0.15rem;font-weight:600;}
+.lieu-tijaniyya .lieu-fact{background:rgba(27,94,32,0.10);}
+.lieu-qadiriyya .lieu-fact{background:rgba(13,59,102,0.10);}
+.lieu-qadiriyya .lieu-fact i{color:var(--blue);}
+.lieu-qadiriyya .lieu-fact b{color:var(--blue);}
+.lieu-catho .lieu-fact{background:rgba(212,175,55,0.12);}
+.lieu-catho .lieu-fact i{color:var(--gold);}
+.lieu-catho .lieu-fact b{color:#8B6914;}
+.lieu-dialogue .lieu-fact{background:rgba(123,74,42,0.10);}
+.lieu-dialogue .lieu-fact i{color:var(--brown);}
+.lieu-dialogue .lieu-fact b{color:var(--brown);}
+
+/* PERSONNALITÉS */
+.personnalites-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.3rem;}
+.personnalite-card{background:#fff;border-radius:16px;padding:1.5rem 1.4rem;border:1px solid var(--border);box-shadow:var(--shadow);transition:transform var(--transition),box-shadow var(--transition),border-color var(--transition);}
+.personnalite-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:var(--border-yellow);}
+.personnalite-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.15rem;color:#fff;margin-bottom:1rem;}
+.personnalite-card h4{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--green-dark);margin-bottom:0.25rem;line-height:1.25;}
+.personnalite-dates{display:block;font-size:0.72rem;color:var(--text-soft);font-weight:600;letter-spacing:0.3px;margin-bottom:0.6rem;}
+.personnalite-card p{font-size:0.8rem;color:var(--text-muted);line-height:1.65;margin:0;}
+
+/* CONSEILS */
+.conseils-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.3rem;}
+.conseil-card{background:#fff;border-radius:16px;padding:1.5rem 1.4rem;border:1px solid var(--border);box-shadow:var(--shadow);transition:transform var(--transition),box-shadow var(--transition);}
+.conseil-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
+.conseil-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:1rem;color:#fff;}
+.conseil-card h4{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--green-dark);margin-bottom:0.5rem;}
+.conseil-card p{font-size:0.82rem;color:var(--text-muted);line-height:1.7;}
+
+/* CTA */
+.cta-final{padding:5rem 2.5rem;text-align:center;background:var(--white);}
+.cta-box{max-width:800px;margin:0 auto;background:linear-gradient(135deg,#fff 0%,var(--yellow-pale) 100%);border-radius:24px;padding:3.5rem 2.5rem;box-shadow:var(--shadow-md);border:1px solid var(--border-yellow);position:relative;overflow:hidden;}
+.cta-box::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--green),var(--yellow),var(--green-light));}
+.cta-box h2{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3vw,2.2rem);color:var(--green-dark);margin-bottom:0.8rem;line-height:1.2;}
+.cta-box h2 em{color:var(--yellow);font-style:italic;}
+.cta-box p{font-size:0.95rem;color:var(--text-muted);line-height:1.75;max-width:560px;margin:0 auto 2rem;}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:0.6rem;padding:0.9rem 1.8rem;border-radius:50px;font-family:inherit;font-size:0.85rem;font-weight:600;text-decoration:none;cursor:pointer;border:none;letter-spacing:0.3px;transition:transform var(--transition),box-shadow var(--transition);white-space:nowrap;}
+.btn-yellow{background:linear-gradient(135deg,var(--yellow) 0%,var(--yellow-light) 100%);color:var(--green-dark);box-shadow:0 8px 24px rgba(249,168,37,0.4);font-weight:700;}
+.btn-yellow:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(249,168,37,0.55);}
+.btn-green{background:linear-gradient(135deg,var(--green) 0%,var(--green-mid) 100%);color:#fff;box-shadow:0 8px 24px rgba(27,94,32,0.4);}
+.btn-green:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(27,94,32,0.55);}
+.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--green);}
+.btn-outline:hover{border-color:var(--green);color:var(--green);background:var(--green-pale);transform:translateY(-3px);}
+
+/* FOOTER */
+footer{background:var(--green-dark);color:rgba(255,255,255,0.65);padding:3rem 2.5rem 1.5rem;margin-top:2rem;}
+.footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(249,168,37,0.15);}
+.footer-brand h4{font-family:'Playfair Display',serif;font-size:1.2rem;color:#fff;margin-bottom:0.6rem;}
+.footer-brand p{font-size:0.82rem;line-height:1.7;color:rgba(255,255,255,0.5);}
+.footer-col h5{color:#fff;font-size:0.76rem;text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:1.2rem;}
+.footer-col a{display:block;color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.82rem;padding:0.35rem 0;transition:color var(--transition),transform var(--transition);}
+.footer-col a:hover{color:var(--yellow-light);transform:translateX(4px);}
+.footer-bottom{max-width:1280px;margin:1.5rem auto 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:0.75rem;color:rgba(255,255,255,0.4);}
+.footer-bottom strong{color:var(--yellow-light);}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* BACK TOP */
+#back-top{position:fixed;bottom:2rem;right:2rem;width:46px;height:46px;border-radius:50%;background:var(--green);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(27,94,32,0.4);opacity:0;pointer-events:none;transform:translateY(10px);transition:all var(--transition);z-index:500;font-size:1rem;}
+#back-top.show{opacity:1;pointer-events:all;transform:translateY(0);}
+#back-top:hover{background:var(--yellow);color:var(--green-dark);transform:translateY(-3px);}
+
+@media (max-width:1024px){.footer-inner{grid-template-columns:1fr 1fr;gap:2rem;}}
+@media (max-width:768px){
+  nav{padding:0 1.2rem;}
+  section{padding:3.5rem 1.2rem;}
+  .sommaire-inner{padding:0.6rem 1rem;gap:0.8rem;}
+  .sommaire-label{display:none;}
+  .hero-mini{height:60vh;min-height:420px;}
+  .hero-mini-content{padding:calc(var(--nav-h) + 1rem) 1.2rem 1.5rem;}
+  .content-envelope{border-radius:24px 24px 0 0;margin-top:-30px;}
+  .footer-inner{grid-template-columns:1fr;}
+  .footer-bottom{flex-direction:column;align-items:flex-start;}
+  .lieu{margin-bottom:3rem;padding-bottom:3rem;}
+}
+@media (max-width:480px){.section-head{flex-direction:column;align-items:flex-start;}}
+
+/* ============== SOURCES ============== */
+.sources-block {
+  margin-top: 3rem;
+  padding: 1.5rem 1.8rem;
+  background: linear-gradient(135deg, #fff 0%, var(--cream, #FAF7F0) 100%);
+  border-radius: 14px;
+  border-left: 3px solid var(--sand, #E8D5B7);
+  border-top: 1px solid var(--border, rgba(0,0,0,0.08));
+  border-right: 1px solid var(--border, rgba(0,0,0,0.08));
+  border-bottom: 1px solid var(--border, rgba(0,0,0,0.08));
+}
+.sources-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+.sources-header i {
+  color: var(--sand, #E8D5B7);
+  font-size: 1rem;
+}
+.sources-header h4 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted, #8A9BB0);
+  margin: 0;
+}
+.sources-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.sources-list li {
+  font-size: 0.78rem;
+  color: var(--text-muted, #8A9BB0);
+  line-height: 1.6;
+  padding-left: 1.2rem;
+  position: relative;
+}
+.sources-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--sand, #E8D5B7);
+  font-weight: 700;
+}
+.sources-list li strong {
+  color: var(--text, #2C3E50);
+  font-weight: 600;
+}
+.sources-list li a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted currentColor;
+  transition: color 0.2s ease;
+}
+.sources-list li a:hover {
+  color: var(--orange, var(--blue, var(--green, #E8730A)));
+}
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="tivaouane.html" class="nav-back"><i class="fa-solid fa-arrow-left"></i> Retour à Tivaouane</a>
+  <span class="nav-divider">/</span>
+  <span class="nav-title">Circuit religieux</span>
+</nav>
+
+<header class="hero-mini" id="hero">
+  <div class="hero-mini-bg" style="background-image:url('images/tivaouane-grande-mosquee.jpg')"></div>
+  <div class="hero-mini-overlay"></div>
+  <div class="hero-mini-grid"></div>
+  <div class="hero-mini-content">
+    <div class="hero-mini-tag">
+      <span class="dot"></span>
+      Tijaniyya · Qadiriyya · Mouridiyya · Catholicisme
+    </div>
+    <h1>
+      Le circuit religieux
+      <em>de la région de Thiès</em>
+    </h1>
+    <p class="hero-mini-lead">
+      Neuf hauts lieux spirituels, quatre traditions, une même terre de foi — la région de Thiès, creuset religieux d'une rare densité au Sénégal.
+    </p>
+  </div>
+</header>
+
+<main class="content-envelope">
+
+<div class="sommaire" id="sommaire">
+  <div class="sommaire-inner">
+    <span class="sommaire-label"><i class="fa-solid fa-list-ul"></i> Sommaire</span>
+    <ul class="sommaire-links">
+      <li><a href="#intro" data-target="intro">Introduction</a></li>
+      <li><a href="#tivaouane" data-target="tivaouane">Tivaouane</a></li>
+      <li><a href="#ndiassane" data-target="ndiassane">Ndiassane</a></li>
+      <li><a href="#thienaba" data-target="thienaba">Thiénaba</a></li>
+      <li><a href="#pire" data-target="pire">Pire</a></li>
+      <li><a href="#ndieguene" data-target="ndieguene">Ndiéguène</a></li>
+      <li><a href="#mouridisme" data-target="mouridisme">Mouridisme</a></li>
+      <li><a href="#popenguine" data-target="popenguine">Popenguine</a></li>
+      <li><a href="#keur-moussa" data-target="keur-moussa">Keur Moussa</a></li>
+      <li><a href="#thies" data-target="thies">Thiès</a></li>
+      <li><a href="#personnalites" data-target="personnalites">Personnalités</a></li>
+      <li><a href="#conseils" data-target="conseils">Conseils</a></li>
+    </ul>
+    <div class="sommaire-progress" id="sommaireProgress"></div>
+  </div>
+</div>
+
+<section id="intro" class="section-pale-green">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Introduction</span>
+        <h2 class="section-title">Une région, <em>plusieurs voies vers le sacré</em></h2>
+        <p class="section-lead">
+          Carrefour stratégique à moins de 80 km de Dakar, la région de Thiès s'impose à la fois
+          comme un bastion du syndicalisme, un pôle politique, économique et culturel de premier plan
+          et un <em>creuset religieux d'une rare densité</em>, un haut lieu de mémoire et de
+          convergence spirituelle nationale.
+        </p>
+      </div>
+    </div>
+
+    <div class="intro-grid">
+      <div class="intro-text reveal">
+        <p>
+          <strong>La région abrite d'importants foyers religieux musulmans</strong> comme
+          Tivaouane, Ndiassane, Thiénaba, Pire, ainsi que des lieux marqués par le mouridisme
+          (Médina Fall, Baye-Fall) sans compter les sites sacrés chrétiens comme Popenguine
+          et Keur Moussa. L'ancien Cayor fut également une <em>terre de passage</em> pour de
+          grandes figures de la confrérie mouride, à l'instar de Cheikh Ibrahima Fall, dont
+          l'empreinte toponymique demeure visible à travers le quartier Médina Fall.
+        </p>
+        <p>
+          Ce patrimoine religieux n'est pas seulement architectural ou historique, il est
+          <strong>vivant</strong>. Chaque année, des millions de pèlerins convergent vers ces lieux :
+          Gamou, ziyara, pèlerinage marial, offices quotidiens. <em>Ce circuit vous invite à
+          les découvrir avec respect et curiosité</em>.
+        </p>
+      </div>
+      <div class="intro-stats reveal">
+        <div class="intro-stat">
+          <div class="intro-stat-icon"><i class="fa-solid fa-mosque"></i></div>
+          <div class="intro-stat-body">
+            <b>6 pôles soufis</b>
+            <span>Tijaniyya, Qadiriyya, Mouridiyya</span>
+          </div>
+        </div>
+        <div class="intro-stat">
+          <div class="intro-stat-icon"><i class="fa-solid fa-cross"></i></div>
+          <div class="intro-stat-body">
+            <b>3 hauts lieux chrétiens</b>
+            <span>Popenguine, Keur Moussa, diocèse de Thiès</span>
+          </div>
+        </div>
+        <div class="intro-stat">
+          <div class="intro-stat-icon"><i class="fa-solid fa-calendar-days"></i></div>
+          <div class="intro-stat-body">
+            <b>Rassemblements nationaux</b>
+            <span>Gamou, Pentecôte, ziyara</span>
+          </div>
+        </div>
+        <div class="intro-stat">
+          <div class="intro-stat-icon"><i class="fa-solid fa-route"></i></div>
+          <div class="intro-stat-body">
+            <b>3 à 4 jours</b>
+            <span>Pour parcourir le circuit</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<section id="tivaouane" class="section-white">
+  <div class="section-inner">
+    <article class="lieu lieu-tijaniyya reveal">
+      <div class="lieu-visual">
+        <img src="images/tivaouane-grande-mosquee.jpg" alt="Grande Mosquée de Tivaouane" loading="lazy">
+        <div class="lieu-visual-badge"><i class="fa-solid fa-star-and-crescent"></i> Tijaniyya</div>
+        <div class="lieu-visual-caption">« Capitale de la Tijaniyya en Afrique noire »</div>
+      </div>
+      <div class="lieu-text">
+        <h2>Tivaouane <em>— cœur de la Tijaniyya</em></h2>
+        <div class="lieu-loc"><i class="fa-solid fa-location-dot"></i> Département de Tivaouane · 92 km de Dakar</div>
+        <p><strong>Siège de la confrérie Tijaniyya en Afrique noire</strong> depuis l'installation d'El Hadji Malick Sy en 1902, Tivaouane est la ville spirituelle la plus importante du Sénégal après Touba. Son Gamou (Maouloud) rassemble chaque année jusqu'à 1,5 million de pèlerins.</p>
+        <p>Le pèlerinage se concentre autour de la <strong>Grande Mosquée</strong>, du <strong>mausolée d'El Hadji Malick Sy</strong>, de la <strong>mosquée Serigne Babacar Sy</strong> et de la <strong>zawiya</strong>.</p>
+        <div class="lieu-facts">
+          <div class="lieu-fact"><i class="fa-solid fa-calendar"></i><b>1902</b><small>Installation d'EM Sy</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-users"></i><b>Milliers</b><small>Pèlerins au Gamou</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-mosque"></i><b>4 sites</b><small>Lieux de visite</small></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="ndiassane" class="section-white-soft">
+  <div class="section-inner">
+    <article class="lieu lieu-qadiriyya swap reveal">
+      <div class="lieu-visual">
+        <img src="images/serigne-sidi-yahya.jpg" alt="Ndiassane" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg,#0D3B66,#2E86AB)'">
+        <div class="lieu-visual-badge" style="color:var(--blue)"><i class="fa-solid fa-moon"></i> Qadiriyya</div>
+        <div class="lieu-visual-caption">« Le flambeau de la Khadriya »</div>
+      </div>
+      <div class="lieu-text">
+        <h2>Ndiassane <em>— la voie qadir</em></h2>
+        <div class="lieu-loc"><i class="fa-solid fa-location-dot"></i> Département de Tivaouane · à 15 km de Tivaouane</div>
+        <p><strong>Principal centre de la confrérie Qadiriyya au Sénégal.</strong> La zawiya Kounta fut d'abord fondée à <em>Ndankh Nar</em> vers 1800 par <strong>Cheikh Mohamed Bounama Kounta</strong>. C'est son descendant, <em>Cheikh Mohamed Kounta</em>, qui fonde la cité religieuse de Ndiassane en <strong>1883</strong> et y célèbre le Gamou dès 1884.</p>
+        <p>Particularité : le <strong>Gamou de Ndiassane</strong> — appelé <em>« Nguente-Li »</em> (anniversaire du baptême du Prophète) — se tient <strong>une semaine après</strong> celui de la plupart des autres foyers religieux sénégalais.</p>
+        <div class="lieu-facts">
+          <div class="lieu-fact"><i class="fa-solid fa-calendar"></i><b>1883</b><small>Fondation Ndiassane</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-user"></i><b>M. Kounta</b><small>Fondateur</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-star-and-crescent"></i><b>Nguente-Li</b><small>Gamou khadre</small></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="thienaba" class="section-white">
+  <div class="section-inner">
+    <article class="lieu lieu-tijaniyya reveal">
+      <div class="lieu-visual">
+        <img src="images/thienaba.webp" alt="Thiénaba" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg,#1B5E20,#66BB6A)'">
+        <div class="lieu-visual-badge" style="color:var(--green)"><i class="fa-solid fa-mosque"></i> Tijaniyya</div>
+        <div class="lieu-visual-caption">« Le foyer de Cheikh Amary Ndack Seck »</div>
+      </div>
+      <div class="lieu-text">
+        <h2>Thiénaba <em>— le foyer d'Amary Ndack Seck</em></h2>
+        <div class="lieu-loc"><i class="fa-solid fa-location-dot"></i> Département de Thiès · à 20 km de Thiès-ville</div>
+        <p><strong>Thiénaba est l'un des hauts lieux de la confrérie Tijaniyya au Sénégal.</strong> La cité fut fondée en <strong>1882</strong> par <em>Cheikh Amary Ndack Seck</em> (1831-1894), successeur spirituel de Cheikhou Ahmadou Bâ. Ce guide marqua son époque par son engagement aux côtés des <em>madiyankoobé</em> lors des djihads de 1869-1875, notamment à la bataille de Samba Sadio (11 février 1875).</p>
+        <p>Trois dimensions structurent sa trajectoire : <em>recteur de daara</em> à Thiénaba Kador (1860-1871), <em>résistant</em> à la conquête coloniale (1871-1875), puis <em>guide religieux</em> à Thiénaba (1882-1899). Actuel Khalife général : <strong>Serigne Cheikh Ahmed Tidiane Seck</strong>.</p>
+        <p>Particularité unique : le <strong>Gamou de Thiénaba se déroule sur deux jours</strong>. Il démarre avec celui de Tivaouane et intègre des intermèdes de prières sur le Prophète instaurés par Amary Ndack Seck lui-même.</p>
+        <div class="lieu-facts">
+          <div class="lieu-fact"><i class="fa-solid fa-calendar"></i><b>1882</b><small>Fondation</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-user"></i><b>Amary Ndack</b><small>Guide spirituel</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-calendar-check"></i><b>2 jours</b><small>Gamou unique</small></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="pire" class="section-white-soft">
+  <div class="section-inner">
+    <article class="lieu lieu-tijaniyya swap reveal">
+      <div class="lieu-visual">
+        <img src="images/pire.webp" alt="Pire" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg,#1B5E20,#2D6A4F)'">
+        <div class="lieu-visual-badge" style="color:var(--green)"><i class="fa-solid fa-book-open"></i> Tijaniyya</div>
+        <div class="lieu-visual-caption">« Une inspiration de Maodo »</div>
+      </div>
+      <div class="lieu-text">
+        <h2>Pire <em>— le haut lieu du savoir</em></h2>
+        <div class="lieu-loc"><i class="fa-solid fa-location-dot"></i> Département de Tivaouane</div>
+        <p><strong>Pire occupe une place à part sur la carte intellectuelle et spirituelle de l'Afrique de l'Ouest.</strong> Sa célèbre <em>université populaire</em> attire depuis des siècles les grands esprits du monde musulman. Plusieurs figures majeures y ont séjourné : <strong>El Hadji Oumar Tall</strong>, <strong>Thierno Souleymane Baal</strong>, <strong>Almamy Abdoul Khadre Kane</strong>.</p>
+        <p>Le <strong>Gamou de Pire</strong> a été initié en <strong>1902</strong> par <em>Tafsir Abdou Cissé</em>, disciple et compagnon d'El Hadji Malick Sy. Comme « jumeaux », le Gamou de Pire et celui de Tivaouane sont nés le même jour sous l'inspiration du même maître. Pire et Tivaouane sont depuis liés par une proximité à la fois <em>géographique et spirituelle</em>.</p>
+        <div class="lieu-facts">
+          <div class="lieu-fact"><i class="fa-solid fa-graduation-cap"></i><b>Université</b><small>Populaire & spirituelle</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-calendar"></i><b>1902</b><small>Premier Gamou</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-book"></i><b>T. A. Cissé</b><small>Fondateur</small></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="ndieguene" class="section-white">
+  <div class="section-inner">
+    <article class="lieu lieu-tijaniyya reveal">
+      <div class="lieu-visual">
+        <img src="images/ndieguene-thies.webp" alt="Keur Mame El Hadj, Thiès" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg,#1B5E20,#2D6A4F)'">
+        <div class="lieu-visual-badge" style="color:var(--green)"><i class="fa-solid fa-book-quran"></i> Tijaniyya</div>
+        <div class="lieu-visual-caption">« Gardiens de la Tijaniyya à Thiès »</div>
+      </div>
+      <div class="lieu-text">
+        <h2>Les Ndiéguène de Thiès <em>— gardiens de la Tijaniyya</em></h2>
+        <div class="lieu-loc"><i class="fa-solid fa-location-dot"></i> Ville de Thiès · Quartier Nginth</div>
+        <p><strong>La famille Ndiéguène est le plus ancien et le plus grand foyer religieux de Thiès-ville.</strong> Son fondateur, <em>El Hadji Ahmadou Barro Ndiéguène</em>, originaire du Saloum, arrive à Thiès en <strong>1885</strong> après 20 ans de perfectionnement à Rufisque auprès de Serigne Birane Cissé, grand érudit et Moukhadam de la Tijaniyya.</p>
+        <p>Il choisit le quartier de <strong>Nginth</strong>, y crée un <em>daara</em> et construit une mosquée. Il s'engage dans l'islamisation des populations <em>ceddo</em> et <em>sérères nones</em>. C'est dans ce cadre qu'il rencontre <strong>Cheikh Ahmadou Bamba</strong> lors de l'escale de ce dernier à Thiès sur la route de l'exil.</p>
+        <p>Sa réputation lui vaut d'être nommé <strong>1<sup>er</sup> Imam Ratib de Thiès</strong>. Après sa disparition en 1936, son premier khalife fut <em>Ahmadou Sakhir Ndiéguène</em>. Aujourd'hui, la famille est conduite par son petit-fils, <strong>Serigne Mounirou Ndiéguène</strong>. Il est aussi le fondateur du quartier religieux <em>« Keur Mame El Hadj »</em>.</p>
+        <div class="lieu-facts">
+          <div class="lieu-fact"><i class="fa-solid fa-calendar"></i><b>1885</b><small>Arrivée à Thiès</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-mosque"></i><b>Imam Ratib</b><small>1<sup>er</sup> de Thiès</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-user"></i><b>Mounirou</b><small>Khalife actuel</small></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="mouridisme" class="section-white-soft">
+  <div class="section-inner">
+    <article class="lieu lieu-qadiriyya swap reveal">
+      <div class="lieu-visual">
+        <img src="images/baye-fall-thies.jpg" alt="Médina Fall, Thiès" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg,#0D3B66,#5DADE2)'">
+        <div class="lieu-visual-badge" style="color:var(--blue)"><i class="fa-solid fa-hands-working"></i> Mouridiyya</div>
+        <div class="lieu-visual-caption">« La Capitale du Rail, terre des Baye-Fall »</div>
+      </div>
+      <div class="lieu-text">
+        <h2>Le mouridisme à Thiès <em>— terre des Baye-Fall</em></h2>
+        <div class="lieu-loc"><i class="fa-solid fa-location-dot"></i> Ville de Thiès · Quartiers Médina Fall, Keur Cheikh, Keur Ablaye</div>
+        <p><strong>Thiès est aussi une terre profondément marquée par la spiritualité mouride.</strong> La ville fut une <em>terre de passage</em> pour de grandes figures de la confrérie, à l'instar de Cheikh Ibrahima Fall — dont l'empreinte toponymique demeure visible à travers le quartier <strong>Médina Fall</strong>.</p>
+        <p>Pendant plus de <strong>quarante ans</strong>, <em>Serigne Saliou Touré</em>, représentant du Khalife général des mourides à Thiès, a façonné la vie religieuse de la ville. Aujourd'hui, Thiès s'affirme comme un <strong>véritable fief des Baye-Fall</strong>, cette branche emblématique du mouridisme fondée par Cheikh Ibra Fall.</p>
+        <p>Dans les quartiers de <em>Médina Fall</em>, <em>Keur Cheikh</em> et <em>Keur Ablaye</em>, leur présence structure la vie religieuse et sociale. Fidèles à leurs valeurs de <em>travail, dévotion et solidarité</em>, ils participent activement à l'animation spirituelle à travers les <strong>khassaïdes</strong>, les <em>dahiras</em> et les grands rassemblements.</p>
+        <div class="lieu-facts">
+          <div class="lieu-fact"><i class="fa-solid fa-user"></i><b>S. S. Touré</b><small>Représentant 40 ans</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-city"></i><b>Médina Fall</b><small>Quartier emblématique</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-music"></i><b>Khassaïdes</b><small>Chants spirituels</small></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="popenguine" class="section-white">
+  <div class="section-inner">
+    <article class="lieu lieu-catho reveal">
+      <div class="lieu-visual">
+        <img src="images/popenguine-sanctuaire.webp" alt="Sanctuaire de Popenguine" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg,#D4AF37,#E8C766)'">
+        <div class="lieu-visual-badge" style="color:#8B6914"><i class="fa-solid fa-dove"></i> Sanctuaire marial</div>
+        <div class="lieu-visual-caption">« Le grand pèlerinage national de Pentecôte »</div>
+      </div>
+      <div class="lieu-text">
+        <h2>Popenguine <em>— le sanctuaire marial</em></h2>
+        <div class="lieu-loc"><i class="fa-solid fa-location-dot"></i> Département de Mbour · à 70 km de Dakar</div>
+        <p><strong>Le sanctuaire marial de Popenguine est le haut lieu du catholicisme sénégalais.</strong> Son origine remonte à une visite de <em>Monseigneur Picarda</em> (1845-1889), vicaire apostolique du Sénégal d'origine bretonne. Frappé par la beauté du site — alors appelé <em>« Bop Jinné »</em> (Tête du génie ou Tête du serpent) — il s'écrie : « Quel magnifique site pour un sanctuaire à la Vierge ! ». Inspiré par Notre-Dame de la Délivrande de Bayeux, il y voit la réalisation d'un rêve : une réplique africaine du sanctuaire marial normand.</p>
+        <p>Depuis <strong>1888</strong>, le pèlerinage national de Pentecôte rassemble des dizaines de milliers de fidèles du Sénégal et de la sous-région. La <em>marche-pèlerinage</em>, lancée en <strong>1981</strong> sous l'impulsion du colonel Pierre Faye, a donné un nouveau souffle à cet événement, particulièrement auprès des jeunes. Le <strong>diocèse de Thiès</strong>, érigé en 1969, fait de la région un pilier de l'Église catholique sénégalaise.</p>
+        <div class="lieu-facts">
+          <div class="lieu-fact"><i class="fa-solid fa-calendar"></i><b>1888</b><small>Premier pèlerinage</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-person-walking"></i><b>1981</b><small>Marche-pèlerinage</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-church"></i><b>1969</b><small>Diocèse de Thiès</small></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="keur-moussa" class="section-white-soft">
+  <div class="section-inner">
+    <article class="lieu lieu-catho swap reveal">
+      <div class="lieu-visual">
+        <img src="images/keur-moussa.jpg" alt="Monastère de Keur Moussa" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg,#D4AF37,#E8C766)'">
+        <div class="lieu-visual-badge" style="color:#8B6914"><i class="fa-solid fa-church"></i> Bénédictin</div>
+        <div class="lieu-visual-caption">« Silence, prière et louange »</div>
+      </div>
+      <div class="lieu-text">
+        <h2>Monastère de Keur Moussa <em>— la paix bénédictine</em></h2>
+        <div class="lieu-loc"><i class="fa-solid fa-location-dot"></i> Département de Thiès · à 50 km de Dakar</div>
+        <p><strong>Fondé en 1963 par des moines bénédictins français</strong>, le monastère de Keur Moussa est un lieu unique au Sénégal — un monastère catholique en terre majoritairement musulmane, vivant en parfaite harmonie avec son environnement.</p>
+        <p>Keur Moussa est célèbre pour sa <strong>chorale</strong> qui chante les offices en français et en wolof, pour son <strong>orgue fabriqué sur place</strong>, et pour sa <em>plantation d'agrumes</em> qui fait vivre la communauté. Les moines accueillent les visiteurs pour des retraites, des offices et la vente de leurs produits.</p>
+        <div class="lieu-facts">
+          <div class="lieu-fact"><i class="fa-solid fa-calendar"></i><b>1963</b><small>Fondation</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-music"></i><b>Chorale</b><small>Offices chantés</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-leaf"></i><b>Agrumes</b><small>Verger monastique</small></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="thies" class="section-white">
+  <div class="section-inner">
+    <article class="lieu lieu-dialogue reveal">
+      <div class="lieu-visual">
+        <img src="images/cathedrale-sainte-anne-thies.jpg" alt="Cathédrale Sainte-Anne de Thiès" loading="lazy">
+        <div class="lieu-visual-badge" style="color:var(--brown)"><i class="fa-solid fa-handshake-angle"></i> Dialogue</div>
+        <div class="lieu-visual-caption">« Mosquée et cathédrale côte à côte »</div>
+      </div>
+      <div class="lieu-text">
+        <h2>Thiès <em>— la coexistence pacifique</em></h2>
+        <div class="lieu-loc"><i class="fa-solid fa-location-dot"></i> Ville de Thiès · Département de Thiès</div>
+        <p><strong>Thiès incarne l'un des plus beaux exemples de dialogue interreligieux en Afrique de l'Ouest.</strong> La <em>Grande Mosquée</em> et la <em>Cathédrale Sainte-Anne</em> se dressent à quelques rues l'une de l'autre, dans un esprit de coexistence et de respect mutuel.</p>
+        <p>Cette harmonie est le fruit d'une histoire commune, portée par des générations de Thiessois de toutes confessions. La ville abrite également le <strong>Musée régional</strong> (ancien fort Faidherbe) qui témoigne de cette histoire partagée.</p>
+        <div class="lieu-facts">
+          <div class="lieu-fact"><i class="fa-solid fa-mosque"></i><b>Grande Mosquée</b><small>Lieu de culte musulman</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-church"></i><b>Cathédrale</b><small>Diocèse depuis 1969</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-landmark"></i><b>Musée</b><small>Mémoire régionale</small></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="personnalites" class="section-pale-green">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Figures majeures</span>
+        <h2 class="section-title">Éminences <em>de la région</em></h2>
+        <p class="section-lead">La région de Thiès a donné au Sénégal plusieurs grandes figures religieuses, musulmanes et chrétiennes, dont l'influence dépasse largement les frontières du pays.</p>
+      </div>
+    </div>
+    <div class="personnalites-grid">
+      <div class="personnalite-card reveal">
+        <div class="personnalite-icon" style="background:linear-gradient(135deg,#1B5E20,#2E7D32)"><i class="fa-solid fa-mosque"></i></div>
+        <h4>El Hadji Malick Sy</h4>
+        <span class="personnalite-dates">1855 – 1922</span>
+        <p>Fondateur de la cité spirituelle de Tivaouane, principale figure de la Tijaniyya au Sénégal.</p>
+      </div>
+      <div class="personnalite-card reveal">
+        <div class="personnalite-icon" style="background:linear-gradient(135deg,#0D3B66,#1B6CA8)"><i class="fa-solid fa-book-quran"></i></div>
+        <h4>El Hadji Ahmadou Barro Ndiéguène</h4>
+        <span class="personnalite-dates">~1850 – 1936</span>
+        <p>Fondateur de la famille Ndiéguène de Thiès, 1<sup>er</sup> Imam Ratib de la ville.</p>
+      </div>
+      <div class="personnalite-card reveal">
+        <div class="personnalite-icon" style="background:linear-gradient(135deg,#2E7D32,#66BB6A)"><i class="fa-solid fa-scroll"></i></div>
+        <h4>Cheikh Amary Ndack Seck</h4>
+        <span class="personnalite-dates">1831 – 1894</span>
+        <p>Fondateur de Thiénaba, résistant à la conquête coloniale, guide spirituel majeur.</p>
+      </div>
+      <div class="personnalite-card reveal">
+        <div class="personnalite-icon" style="background:linear-gradient(135deg,#0D3B66,#5DADE2)"><i class="fa-solid fa-moon"></i></div>
+        <h4>Cheikh Mohamed Kounta</h4>
+        <span class="personnalite-dates">XIX<sup>e</sup> siècle</span>
+        <p>Fondateur de la cité religieuse de Ndiassane (1883), figure de la Qadiriyya sénégalaise.</p>
+      </div>
+      <div class="personnalite-card reveal">
+        <div class="personnalite-icon" style="background:linear-gradient(135deg,#D4AF37,#E8C766);color:#0D3512"><i class="fa-solid fa-cross"></i></div>
+        <h4>Cardinal Hyacinthe Thiaudoum</h4>
+        <span class="personnalite-dates">1911 – 2000</span>
+        <p>Natif de Popenguine, premier prélat sénégalais archevêque de Dakar, figure majeure de l'Église d'Afrique.</p>
+      </div>
+      <div class="personnalite-card reveal">
+        <div class="personnalite-icon" style="background:linear-gradient(135deg,#D4AF37,#F4D58D);color:#0D3512"><i class="fa-solid fa-mitre"></i></div>
+        <h4>Cardinal Théodore Adrien Sarr</h4>
+        <span class="personnalite-dates">né en 1936</span>
+        <p>Natif de Fadiouth (Mbour), archevêque de Dakar de 2000 à 2014.</p>
+      </div>
+      <div class="personnalite-card reveal">
+        <div class="personnalite-icon" style="background:linear-gradient(135deg,#5DADE2,#B8E0F5);color:#0D3B66"><i class="fa-solid fa-church"></i></div>
+        <h4>Mgr Benjamin Ndiaye</h4>
+        <span class="personnalite-dates">né en 1948</span>
+        <p>Natif de Fadiouth, archevêque de Dakar (2014-2025), figure du dialogue interreligieux.</p>
+      </div>
+      <div class="personnalite-card reveal">
+        <div class="personnalite-icon" style="background:linear-gradient(135deg,#7B4A2A,#A67C52)"><i class="fa-solid fa-church"></i></div>
+        <h4>Mgr André Gueye</h4>
+        <span class="personnalite-dates">né en 1966</span>
+        <p>Natif de Pallo-Youga (Tivaouane), ancien évêque de Thiès, actuel archevêque de Dakar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="conseils" class="section-pale-yellow">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Conseils pratiques</span>
+        <h2 class="section-title">Visiter avec <em>respect</em></h2>
+        <p class="section-lead">Ces lieux sont avant tout des espaces de foi. Voici quelques principes simples pour que votre visite soit sereine.</p>
+      </div>
+    </div>
+    <div class="conseils-grid">
+      <div class="conseil-card reveal">
+        <div class="conseil-icon" style="background:linear-gradient(135deg,#1B5E20,#2E7D32)"><i class="fa-solid fa-shirt"></i></div>
+        <h4>Tenue sobre</h4>
+        <p>Privilégiez une tenue couvrante et discrète. Retirez vos chaussures dans les mosquées si on vous le demande.</p>
+      </div>
+      <div class="conseil-card reveal">
+        <div class="conseil-icon" style="background:linear-gradient(135deg,#D4AF37,#E8C766);color:#0D3512"><i class="fa-solid fa-camera"></i></div>
+        <h4>Photographie</h4>
+        <p>Demandez toujours <strong>l'autorisation</strong> avant de photographier des personnes en prière. Certains lieux sont fermés aux photos.</p>
+      </div>
+      <div class="conseil-card reveal">
+        <div class="conseil-icon" style="background:linear-gradient(135deg,#0D3B66,#2E86AB)"><i class="fa-solid fa-volume-low"></i></div>
+        <h4>Silence et discrétion</h4>
+        <p>Pendant les prières et offices, restez silencieux et à l'écart. Certains espaces peuvent être réservés aux croyants.</p>
+      </div>
+      <div class="conseil-card reveal">
+        <div class="conseil-icon" style="background:linear-gradient(135deg,#7B4A2A,#A67C52)"><i class="fa-solid fa-hand-holding-heart"></i></div>
+        <h4>Respect et humilité</h4>
+        <p>Ce ne sont pas des attractions touristiques, mais des espaces sacrés pour des millions de personnes.</p>
+      </div>
+      <div class="conseil-card reveal">
+        <div class="conseil-icon" style="background:linear-gradient(135deg,#66BB6A,#A5D6A7);color:#0D3512"><i class="fa-solid fa-user-tie"></i></div>
+        <h4>Guides locaux</h4>
+        <p>Faites appel à des guides locaux pour comprendre la signification des lieux et faciliter les échanges.</p>
+      </div>
+      <div class="conseil-card reveal">
+        <div class="conseil-icon" style="background:linear-gradient(135deg,#1C2B39,#0F1923)"><i class="fa-solid fa-calendar-days"></i></div>
+        <h4>Moments à éviter</h4>
+        <p>Évitez de visiter pendant les grandes célébrations si vous n'êtes pas de la confession concernée.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="cta-box reveal">
+    <h2>Prêt à parcourir le <em>circuit</em> ?</h2>
+    <p>Explorez les pôles spirituels sur le géoportail, préparez votre itinéraire, ou découvrez plus en détail la ville sainte de Tivaouane.</p>
+    <div class="cta-btns">
+      <a href="carte.html" class="btn btn-green"><i class="fa-solid fa-map-location-dot"></i> Ouvrir le Géoportail</a>
+      <a href="tivaouane.html" class="btn btn-yellow"><i class="fa-solid fa-mosque"></i> Découvrir Tivaouane</a>
+      <a href="n_index.html" class="btn btn-outline"><i class="fa-solid fa-house"></i> Page d'accueil</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h4>Circuit religieux — Région de Thiès</h4>
+      <p>Neuf hauts lieux spirituels, quatre traditions, une même terre de foi au cœur du Sénégal.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Les pôles</h5>
+      <a href="#tivaouane">Tivaouane</a>
+      <a href="#ndiassane">Ndiassane</a>
+      <a href="#thienaba">Thiénaba</a>
+      <a href="#pire">Pire</a>
+      <a href="#ndieguene">Ndiéguène</a>
+      <a href="#mouridisme">Baye-Fall</a>
+      <a href="#popenguine">Popenguine</a>
+      <a href="#keur-moussa">Keur Moussa</a>
+    </div>
+    <div class="footer-col">
+      <h5>Départements</h5>
+      <a href="thies.html">Thiès</a>
+      <a href="mbour.html">Mbour</a>
+      <a href="tivaouane.html">Tivaouane</a>
+      <a href="carte.html">Géoportail</a>
+    </div>
+    <div class="footer-col">
+      <h5>Ressources</h5>
+      <a href="#conseils">Conseils de visite</a>
+      <a href="n_index.html">Vue d'ensemble</a>
+      <a href="n_index.html#contact">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Tourisme Région de Thiès — Tous droits réservés.</span>
+    <span>Coordonnées SIG : <strong>14.79°N · 16.93°W</strong> · Sénégal</span>
+  </div>
+</footer>
+
+<button id="back-top" aria-label="Retour en haut"><i class="fa-solid fa-chevron-up"></i></button>
+
+<script>
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => { navbar.classList.toggle('solid', window.scrollY > 100); }, { passive: true });
+
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i % 6) * 0.06 + 's'; revealObs.observe(el); });
+
+const sommaireLinks = document.querySelectorAll('.sommaire-links a');
+const sommaireProgress = document.getElementById('sommaireProgress');
+const sectionIds = ['intro','tivaouane','ndiassane','thienaba','pire','ndieguene','mouridisme','popenguine','keur-moussa','thies','personnalites','conseils'];
+const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+function updateSommaire() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  sommaireProgress.style.width = Math.min(100, (scrollTop / docHeight) * 100) + '%';
+  let current = null;
+  sections.forEach(sec => { const rect = sec.getBoundingClientRect(); if (rect.top <= 180 && rect.bottom > 180) current = sec.id; });
+  sommaireLinks.forEach(a => { a.classList.toggle('active', a.dataset.target === current); });
+}
+window.addEventListener('scroll', updateSommaire, { passive: true });
+updateSommaire();
+
+const backTop = document.getElementById('back-top');
+window.addEventListener('scroll', () => { backTop.classList.toggle('show', window.scrollY > 600); }, { passive: true });
+backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', (e) => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); const y = target.getBoundingClientRect().top + window.scrollY - 120; window.scrollTo({ top: y, behavior: 'smooth' }); }
+  });
+});
+
+(function heroEnvelopeEffect() {
+  const hero = document.querySelector('.hero-mini');
+  if (!hero) return;
+  const bg = hero.querySelector('.hero-mini-bg');
+  if (!bg) return;
+  let ticking = false;
+  function update() {
+    const progress = Math.min(1, window.scrollY / hero.offsetHeight);
+    bg.style.transform = `scale(${1.05 - progress * 0.08})`;
+    bg.style.filter = `brightness(${1 - progress * 0.35})`;
+    ticking = false;
+  }
+  window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, { passive: true });
+  update();
+})();
+</script>
+
+</body>
+</html>

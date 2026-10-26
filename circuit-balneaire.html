@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circuit balnéaire — La Petite Côte | Région de Thiès</title>
+<meta name="description" content="Les plages, lagunes et stations de la Petite Côte : Saly, Nianing, Somone, Joal-Fadiouth, Toubab Dialaw, Pointe Sarène.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Montserrat:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+<style>
+:root{
+  --blue:#0D3B66;--blue-mid:#1B6CA8;--blue-ocean:#2E86AB;--blue-light:#5DADE2;--blue-pale:#E6F2FA;--blue-deep:#0A2540;
+  --sand:#E8C766;--sand-light:#F4D58D;--sand-pale:#FFF9E8;
+  --white:#FFFFFF;--white-soft:#F9FBFC;--charcoal:#1C2B39;--dark:#0F1923;
+  --text:#2C3E50;--text-muted:#7F8C8D;--text-soft:#95A5A6;
+  --nav-h:68px;--border:rgba(13,59,102,0.12);--border-sand:rgba(232,199,102,0.35);
+  --shadow:0 2px 20px rgba(15,25,35,0.07);--shadow-md:0 8px 32px rgba(15,25,35,0.10);--shadow-lg:0 20px 64px rgba(15,25,35,0.20);
+  --radius:20px;--transition:0.28s cubic-bezier(0.4,0,0.2,1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;scroll-padding-top:130px;}
+body{font-family:'Montserrat',sans-serif;background:var(--white);color:var(--text);overflow-x:hidden;
+  background-image:radial-gradient(ellipse 80% 50% at 100% 0%,rgba(46,134,171,0.05) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 0% 100%,rgba(232,199,102,0.04) 0%,transparent 60%);
+  background-attachment:fixed;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);display:flex;align-items:center;padding:0 2.5rem;gap:1rem;
+  background:rgba(10,37,64,0.85);-webkit-backdrop-filter:blur(16px) saturate(160%);backdrop-filter:blur(16px) saturate(160%);
+  border-bottom:1px solid rgba(255,255,255,0.08);transition:background var(--transition);}
+nav.solid{background:rgba(10,37,64,0.98);}
+.nav-back{display:flex;align-items:center;gap:0.6rem;color:rgba(255,255,255,0.75);text-decoration:none;font-size:0.76rem;font-weight:600;letter-spacing:0.3px;transition:color var(--transition);text-transform:uppercase;}
+.nav-back:hover{color:var(--sand-light);}
+.nav-back i{font-size:0.72rem;}
+.nav-divider{color:rgba(255,255,255,0.25);}
+.nav-title{font-family:'Playfair Display',serif;font-size:1rem;color:#fff;font-weight:700;}
+
+.hero-mini{position:relative;height:55vh;min-height:400px;overflow:hidden;color:#fff;z-index:1;}
+.hero-mini-bg{position:absolute;inset:0;background-size:cover;background-position:center;background-color:var(--blue-deep);transform:scale(1.05);will-change:transform,filter;}
+.hero-mini-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,37,64,0.20) 0%,rgba(10,37,64,0.30) 55%,rgba(10,37,64,0.70) 100%);}
+.hero-mini-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.05) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;}
+.hero-mini-content{position:relative;z-index:3;max-width:1280px;margin:0 auto;padding:calc(var(--nav-h) + 2rem) 2.5rem 2rem;height:100%;display:flex;flex-direction:column;justify-content:center;}
+.hero-mini-tag{display:inline-flex;align-items:center;gap:8px;padding:0.4rem 1rem;border-radius:30px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.35);color:#fff;font-size:0.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:1.2rem;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);text-shadow:0 1px 6px rgba(0,0,0,0.5);width:fit-content;}
+.hero-mini-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--sand);box-shadow:0 0 0 3px rgba(232,199,102,0.3);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(232,199,102,0.3);}50%{box-shadow:0 0 0 8px rgba(232,199,102,0.1);}}
+.hero-mini h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,7vw,5rem);font-weight:900;line-height:0.95;letter-spacing:-0.02em;margin-bottom:0.8rem;text-shadow:0 2px 12px rgba(0,0,0,0.75),0 4px 32px rgba(0,0,0,0.5);}
+.hero-mini h1 em{font-style:italic;color:var(--sand-light);font-weight:400;display:block;font-size:0.55em;margin-top:0.3rem;text-shadow:0 2px 12px rgba(0,0,0,0.75),0 4px 24px rgba(0,0,0,0.5);}
+.hero-mini-lead{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,1.8vw,1.3rem);font-style:italic;color:rgba(255,255,255,0.95);line-height:1.5;max-width:620px;text-shadow:0 2px 10px rgba(0,0,0,0.8),0 4px 20px rgba(0,0,0,0.5);}
+
+.content-envelope{position:relative;z-index:10;background:var(--white);border-radius:40px 40px 0 0;margin-top:-50px;box-shadow:0 -20px 60px rgba(10,37,64,0.18);padding-top:2rem;overflow:clip;}
+
+.sommaire{position:sticky;top:var(--nav-h);z-index:100;background:rgba(255,255,255,0.97);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);box-shadow:0 4px 20px rgba(13,59,102,0.05);}
+.sommaire-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;padding:0.7rem 2.5rem;gap:1.5rem;overflow-x:auto;scrollbar-width:none;}
+.sommaire-inner::-webkit-scrollbar{display:none;}
+.sommaire-label{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);flex-shrink:0;display:flex;align-items:center;gap:0.5rem;}
+.sommaire-label i{color:var(--blue);}
+.sommaire-links{display:flex;gap:0.3rem;list-style:none;}
+.sommaire-links a{display:inline-block;padding:0.5rem 0.9rem;font-size:0.78rem;font-weight:600;color:var(--text-muted);text-decoration:none;border-radius:20px;white-space:nowrap;transition:all var(--transition);}
+.sommaire-links a:hover{background:var(--blue-pale);color:var(--blue);}
+.sommaire-links a.active{background:var(--blue);color:#fff;}
+.sommaire-progress{position:absolute;bottom:-1px;left:0;height:2px;background:var(--sand);width:0%;transition:width 0.1s linear;}
+
+section{padding:5rem 2.5rem;position:relative;}
+.section-inner{max-width:1280px;margin:0 auto;}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap;margin-bottom:2.5rem;}
+.section-head > div{max-width:720px;}
+.eyebrow{display:inline-flex;align-items:center;gap:0.7rem;font-size:0.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:0.7rem;}
+.eyebrow::before{content:'';width:28px;height:2px;background:var(--sand);}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.15;color:var(--blue-deep);letter-spacing:-0.01em;}
+.section-title em{font-style:italic;color:var(--sand);font-weight:400;}
+.section-lead{font-size:0.95rem;color:var(--text-muted);line-height:1.8;max-width:720px;margin-top:0.8rem;}
+
+.section-white{background:var(--white);}
+.section-white-soft{background:var(--white-soft);}
+.section-pale-blue{background:linear-gradient(180deg,var(--white) 0%,var(--blue-pale) 100%);}
+.section-pale-sand{background:linear-gradient(180deg,var(--white) 0%,var(--sand-pale) 100%);}
+
+.intro-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:3.5rem;align-items:start;margin-top:1rem;}
+@media (max-width:860px){.intro-grid{grid-template-columns:1fr;gap:2rem;}}
+.intro-text{font-size:1rem;line-height:1.85;color:var(--text);}
+.intro-text p{margin-bottom:1.2rem;}
+.intro-text strong{color:var(--blue-deep);}
+.intro-text em{color:var(--blue-mid);font-style:italic;font-weight:600;}
+.intro-stats{display:grid;grid-template-columns:1fr;gap:0.9rem;}
+.intro-stat{display:flex;gap:1rem;align-items:flex-start;padding:1.1rem 1.2rem;background:#fff;border-radius:14px;border:1px solid var(--border);box-shadow:var(--shadow);transition:transform var(--transition),box-shadow var(--transition);}
+.intro-stat:hover{transform:translateX(5px);box-shadow:var(--shadow-md);}
+.intro-stat-icon{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--blue-pale),var(--sand-pale));color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.intro-stat-body b{display:block;font-size:0.9rem;color:var(--blue-deep);font-weight:700;margin-bottom:0.15rem;}
+.intro-stat-body span{font-size:0.75rem;color:var(--text-muted);line-height:1.5;}
+
+.lieu{display:grid;grid-template-columns:1fr 1.2fr;gap:3rem;align-items:center;margin-bottom:4rem;padding-bottom:4rem;border-bottom:1px solid var(--border);}
+.lieu:last-of-type{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.lieu.swap{direction:rtl;}
+.lieu.swap > *{direction:ltr;}
+@media (max-width:860px){.lieu,.lieu.swap{grid-template-columns:1fr;direction:ltr;gap:2rem;}}
+.lieu-visual{position:relative;aspect-ratio:4/3;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg);background:var(--blue-deep);}
+.lieu-visual img{width:100%;height:100%;object-fit:cover;display:block;}
+.lieu-visual-badge{position:absolute;top:1.2rem;left:1.2rem;display:inline-flex;align-items:center;gap:6px;padding:0.4rem 0.9rem;background:rgba(255,255,255,0.95);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);font-size:0.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:20px;color:var(--blue-deep);}
+.lieu-visual-badge i{font-size:0.75rem;}
+.lieu-visual-caption{position:absolute;bottom:0;left:0;right:0;padding:1.5rem 1.5rem 1.2rem;background:linear-gradient(to top,rgba(10,37,64,0.95),transparent);color:#fff;font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;font-style:italic;}
+.lieu-text h2{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;line-height:1.2;color:var(--blue-deep);margin-bottom:0.5rem;}
+.lieu-text h2 em{font-style:italic;color:var(--sand);font-weight:400;}
+.lieu-loc{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.72rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:1.2rem;}
+.lieu-loc i{color:var(--blue);}
+.lieu-text p{font-size:0.92rem;line-height:1.85;color:var(--text);margin-bottom:1rem;}
+.lieu-text p strong{color:var(--blue-deep);}
+.lieu-text p em{color:var(--blue-mid);font-style:italic;font-weight:600;}
+.lieu-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:0.7rem;margin-top:1.5rem;}
+.lieu-fact{padding:0.85rem 0.9rem;background:var(--blue-pale);border-radius:12px;text-align:center;}
+.lieu-fact i{color:var(--blue);font-size:0.9rem;display:block;margin-bottom:0.35rem;}
+.lieu-fact b{display:block;font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:700;color:var(--blue-deep);}
+.lieu-fact small{display:block;font-size:0.58rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-top:0.15rem;font-weight:600;}
+
+/* Catégories de lieux */
+.lieu-station .lieu-fact{background:rgba(13,59,102,0.10);}
+.lieu-lagune .lieu-fact{background:rgba(46,134,171,0.12);}
+.lieu-lagune .lieu-fact i{color:var(--blue-ocean);}
+.lieu-lagune .lieu-fact b{color:var(--blue-ocean);}
+.lieu-village .lieu-fact{background:rgba(232,199,102,0.15);}
+.lieu-village .lieu-fact i{color:#8B6914;}
+.lieu-village .lieu-fact b{color:#8B6914;}
+.lieu-sauvage .lieu-fact{background:rgba(27,108,168,0.10);}
+.lieu-sauvage .lieu-fact i{color:var(--blue-light);}
+.lieu-sauvage .lieu-fact b{color:var(--blue-mid);}
+
+.conseils-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.3rem;}
+.conseil-card{background:#fff;border-radius:16px;padding:1.5rem 1.4rem;border:1px solid var(--border);box-shadow:var(--shadow);transition:transform var(--transition),box-shadow var(--transition);}
+.conseil-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);}
+.conseil-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:1rem;color:#fff;}
+.conseil-card h4{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--blue-deep);margin-bottom:0.5rem;}
+.conseil-card p{font-size:0.82rem;color:var(--text-muted);line-height:1.7;}
+
+.cta-final{padding:5rem 2.5rem;text-align:center;background:var(--white);}
+.cta-box{max-width:800px;margin:0 auto;background:linear-gradient(135deg,#fff 0%,var(--blue-pale) 100%);border-radius:24px;padding:3.5rem 2.5rem;box-shadow:var(--shadow-md);border:1px solid var(--border);position:relative;overflow:hidden;}
+.cta-box::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--blue),var(--sand),var(--blue-light));}
+.cta-box h2{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3vw,2.2rem);color:var(--blue-deep);margin-bottom:0.8rem;line-height:1.2;}
+.cta-box h2 em{color:var(--sand);font-style:italic;}
+.cta-box p{font-size:0.95rem;color:var(--text-muted);line-height:1.75;max-width:560px;margin:0 auto 2rem;}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:0.6rem;padding:0.9rem 1.8rem;border-radius:50px;font-family:inherit;font-size:0.85rem;font-weight:600;text-decoration:none;cursor:pointer;border:none;letter-spacing:0.3px;transition:transform var(--transition),box-shadow var(--transition);white-space:nowrap;}
+.btn-sand{background:linear-gradient(135deg,var(--sand) 0%,var(--sand-light) 100%);color:var(--blue-deep);box-shadow:0 8px 24px rgba(232,199,102,0.4);font-weight:700;}
+.btn-sand:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(232,199,102,0.55);}
+.btn-blue{background:linear-gradient(135deg,var(--blue) 0%,var(--blue-mid) 100%);color:#fff;box-shadow:0 8px 24px rgba(13,59,102,0.4);}
+.btn-blue:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(13,59,102,0.55);}
+.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--blue);}
+.btn-outline:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-pale);transform:translateY(-3px);}
+
+footer{background:var(--blue-deep);color:rgba(255,255,255,0.65);padding:3rem 2.5rem 1.5rem;margin-top:2rem;}
+.footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(93,173,226,0.15);}
+.footer-brand h4{font-family:'Playfair Display',serif;font-size:1.2rem;color:#fff;margin-bottom:0.6rem;}
+.footer-brand p{font-size:0.82rem;line-height:1.7;color:rgba(255,255,255,0.5);}
+.footer-col h5{color:#fff;font-size:0.76rem;text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:1.2rem;}
+.footer-col a{display:block;color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.82rem;padding:0.35rem 0;transition:color var(--transition),transform var(--transition);}
+.footer-col a:hover{color:var(--sand-light);transform:translateX(4px);}
+.footer-bottom{max-width:1280px;margin:1.5rem auto 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-size:0.75rem;color:rgba(255,255,255,0.4);}
+.footer-bottom strong{color:var(--sand-light);}
+
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+#back-top{position:fixed;bottom:2rem;right:2rem;width:46px;height:46px;border-radius:50%;background:var(--blue);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(13,59,102,0.4);opacity:0;pointer-events:none;transform:translateY(10px);transition:all var(--transition);z-index:500;font-size:1rem;}
+#back-top.show{opacity:1;pointer-events:all;transform:translateY(0);}
+#back-top:hover{background:var(--sand);color:var(--blue-deep);transform:translateY(-3px);}
+
+@media (max-width:1024px){.footer-inner{grid-template-columns:1fr 1fr;gap:2rem;}}
+@media (max-width:768px){
+  nav{padding:0 1.2rem;}
+  section{padding:3.5rem 1.2rem;}
+  .sommaire-inner{padding:0.6rem 1rem;gap:0.8rem;}
+  .sommaire-label{display:none;}
+  .hero-mini{height:60vh;min-height:420px;}
+  .hero-mini-content{padding:calc(var(--nav-h) + 1rem) 1.2rem 1.5rem;}
+  .content-envelope{border-radius:24px 24px 0 0;margin-top:-30px;}
+  .footer-inner{grid-template-columns:1fr;}
+  .footer-bottom{flex-direction:column;align-items:flex-start;}
+  .lieu{margin-bottom:3rem;padding-bottom:3rem;}
+}
+@media (max-width:480px){.section-head{flex-direction:column;align-items:flex-start;}}
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="mbour.html" class="nav-back"><i class="fa-solid fa-arrow-left"></i> Retour à Mbour</a>
+  <span class="nav-divider">/</span>
+  <span class="nav-title">Circuit balnéaire</span>
+</nav>
+
+<header class="hero-mini" id="hero">
+  <div class="hero-mini-bg" style="background-image:url('images/mbour-petite-cote.jpg')"></div>
+  <div class="hero-mini-overlay"></div>
+  <div class="hero-mini-grid"></div>
+  <div class="hero-mini-content">
+    <div class="hero-mini-tag">
+      <span class="dot"></span>
+      Plages · Lagunes · Villages · Réserves
+    </div>
+    <h1>
+      Le circuit balnéaire
+      <em>de la Petite Côte</em>
+    </h1>
+    <p class="hero-mini-lead">
+      Plus de 100 km de côte entre Toubab Dialaw et Joal-Fadiouth — stations mythiques, lagunes préservées, villages de pêcheurs et plages sauvages.
+    </p>
+  </div>
+</header>
+
+<main class="content-envelope">
+
+<div class="sommaire" id="sommaire">
+  <div class="sommaire-inner">
+    <span class="sommaire-label"><i class="fa-solid fa-list-ul"></i> Sommaire</span>
+    <ul class="sommaire-links">
+      <li><a href="#intro" data-target="intro">Introduction</a></li>
+      <li><a href="#saly" data-target="saly">Saly</a></li>
+      <li><a href="#ngaparou" data-target="ngaparou">Ngaparou</a></li>
+      <li><a href="#somone" data-target="somone">Somone</a></li>
+      <li><a href="#nianing" data-target="nianing">Nianing</a></li>
+      <li><a href="#warang" data-target="warang">Warang</a></li>
+      <li><a href="#mbour-port" data-target="mbour-port">Mbour</a></li>
+      <li><a href="#joal" data-target="joal">Joal-Fadiouth</a></li>
+      <li><a href="#bandia" data-target="bandia">Bandia</a></li>
+      <li><a href="#popenguine" data-target="popenguine">Popenguine</a></li>
+      <li><a href="#toubab" data-target="toubab">Toubab Dialaw</a></li>
+      <li><a href="#pointe-sarene" data-target="pointe-sarene">Pointe Sarène</a></li>
+      <li><a href="#conseils" data-target="conseils">Conseils</a></li>
+    </ul>
+    <div class="sommaire-progress" id="sommaireProgress"></div>
+  </div>
+</div>
+
+<section id="intro" class="section-pale-blue">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Introduction</span>
+        <h2 class="section-title">La Petite Côte, <em>un chapelet de merveilles</em></h2>
+        <p class="section-lead">
+          Étirée sur plus de 100 km entre Dakar et le delta du Saloum, la Petite Côte est
+          <em>l'une des façades maritimes les plus célèbres d'Afrique de l'Ouest</em>. Elle doit son
+          nom à la douceur de ses plages, à la clémence de son climat et à la richesse de ses
+          écosystèmes — lagunes, mangroves, falaises et savane.
+        </p>
+      </div>
+    </div>
+
+    <div class="intro-grid">
+      <div class="intro-text reveal">
+        <p>
+          <strong>Du village de Toubab Dialaw jusqu'à Joal-Fadiouth</strong>, la côte déroule ses
+          stations balnéaires : Saly, Ngaparou, Somone, Nianing, Warang, Pointe Sarène. Chacune a
+          son caractère, son rythme, son identité. Toutes partagent la même âme : celle d'un Sénégal
+          ouvert à l'océan, hospitalier, fier de sa culture et de son art de vivre.
+        </p>
+        <p>
+          Ce circuit est aussi une <em>invitation à la découverte</em> : entre deux baignades, on
+          peut explorer une lagune en pirogue, observer les oiseaux migrateurs, faire un safari
+          dans la savane, ou partager un repas de poissons grillés avec des pêcheurs. Chaque
+          étape est une expérience.
+        </p>
+      </div>
+      <div class="intro-stats reveal">
+        <div class="intro-stat">
+          <div class="intro-stat-icon"><i class="fa-solid fa-umbrella-beach"></i></div>
+          <div class="intro-stat-body">
+            <b>100+ km de côte</b>
+            <span>De Toubab Dialaw à Joal-Fadiouth</span>
+          </div>
+        </div>
+        <div class="intro-stat">
+          <div class="intro-stat-icon"><i class="fa-solid fa-hotel"></i></div>
+          <div class="intro-stat-body">
+            <b>6+ stations</b>
+            <span>Saly, Nianing, Ngaparou, Somone, Warang…</span>
+          </div>
+        </div>
+        <div class="intro-stat">
+          <div class="intro-stat-icon"><i class="fa-solid fa-water"></i></div>
+          <div class="intro-stat-body">
+            <b>2 lagunes</b>
+            <span>Somone et Popenguine, protégées</span>
+          </div>
+        </div>
+        <div class="intro-stat">
+          <div class="intro-stat-icon"><i class="fa-solid fa-calendar-days"></i></div>
+          <div class="intro-stat-body">
+            <b>Toute l'année</b>
+            <span>Baignade possible sur la côte</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="saly" class="section-white">
+  <div class="section-inner">
+    <article class="lieu lieu-station reveal">
+      <div class="lieu-visual">
+        <img src="images/mbour-saly.jpg" alt="Saly Portudal" loading="lazy">
+        <div class="lieu-visual-badge"><i class="fa-solid fa-umbrella-beach"></i> Station</div>
+        <div class="lieu-visual-caption">« La première station balnéaire du Sénégal »</div>
+      </div>
+      <div class="lieu-text">
+        <h2>Saly Portudal <em>— la pionnière</em></h2>
+        <div class="lieu-loc"><i class="fa-solid fa-location-dot"></i> Département de Mbour · à 80 km de Dakar</div>
+        <p><strong>Première station balnéaire du Sénégal</strong>, Saly Portudal est née dans les années 1970 d'un projet visionnaire de développement touristique. Aujourd'hui référence en Afrique de l'Ouest, elle accueille des visiteurs du monde entier.</p>
+        <p>Au programme : <em>plages aménagées et surveillées</em>, sports nautiques (jet-ski, kitesurf, voile), <strong>golf 18 trous</strong> en bord de mer, marchés artisanaux, restaurants et bars en bord de plage — un condensé de l'art de vivre balnéaire.</p>
+        <div class="lieu-facts">
+          <div class="lieu-fact"><i class="fa-solid fa-calendar"></i><b>1970s</b><small>Aménagement</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-golf-ball-tee"></i><b>18 trous</b><small>Golf de Saly</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-hotel"></i><b>Multiples</b><small>Hôtels & clubs</small></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="ngaparou" class="section-white-soft">
+  <div class="section-inner">
+    <article class="lieu lieu-station swap reveal">
+      <div class="lieu-visual">
+        <img src="images/mbour-ngaparou.webp" alt="Plage de Ngaparou" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg,#0D3B66,#5DADE2)'">
+        <div class="lieu-visual-badge"><i class="fa-solid fa-umbrella-beach"></i> Plage</div>
+        <div class="lieu-visual-caption">« La plage familiale par excellence »</div>
+      </div>
+      <div class="lieu-text">
+        <h2>Ngaparou <em>— la familiale</em></h2>
+        <div class="lieu-loc"><i class="fa-solid fa-location-dot"></i> Département de Mbour · entre Saly et Somone</div>
+        <p><strong>Ngaparou est la plage familiale par excellence de la Petite Côte.</strong> Eaux calmes, sable doré, ambiance paisible : c'est la destination idéale pour les familles et ceux qui cherchent une station plus tranquille que Saly.</p>
+        <p>Le village s'est beaucoup développé ces dernières années avec de nombreuses résidences de standing, mais a su garder son caractère authentique. Restaurants de bord de mer, boutiques d'artisanat et vie locale animée.</p>
+        <div class="lieu-facts">
+          <div class="lieu-fact"><i class="fa-solid fa-users"></i><b>Familial</b><small>Eaux calmes</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-utensils"></i><b>Restaurants</b><small>Bord de mer</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-house"></i><b>Résidences</b><small>Standing</small></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="somone" class="section-white">
+  <div class="section-inner">
+    <article class="lieu lieu-lagune reveal">
+      <div class="lieu-visual">
+        <img src="images/mbour-somone.jpg" alt="Lagune de la Somone" loading="lazy">
+        <div class="lieu-visual-badge" style="color:var(--blue-ocean)"><i class="fa-solid fa-water"></i> Lagune</div>
+        <div class="lieu-visual-caption">« Réserve naturelle et paradis des oiseaux »</div>
+      </div>
+      <div class="lieu-text">
+        <h2>Lagune de la Somone <em>— l'écrin naturel</em></h2>
+        <div class="lieu-loc"><i class="fa-solid fa-location-dot"></i> Département de Mbour · entre Ngaparou et Nianing</div>
+        <p><strong>Classée réserve naturelle, la lagune de la Somone est un écosystème remarquable</strong> où se mêlent mangroves, eaux saumâtres et bancs de sable. Un paradis pour les oiseaux migrateurs et un lieu magique à découvrir en pirogue.</p>
+        <p>La lagune est un site majeur pour l'<em>observation des oiseaux</em>, notamment en période de migration (novembre à mars) : flamants roses, pélicans, aigrettes, hérons. La <strong>balade en pirogue</strong> guidée par des pêcheurs locaux est l'expérience incontournable.</p>
+        <div class="lieu-facts">
+          <div class="lieu-fact"><i class="fa-solid fa-leaf"></i><b>Réserve</b><small>Classée naturelle</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-feather"></i><b>Oiseaux</b><small>Migrateurs</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-ship"></i><b>Pirogue</b><small>Balade guidée</small></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="nianing" class="section-white-soft">
+  <div class="section-inner">
+    <article class="lieu lieu-station swap reveal">
+      <div class="lieu-visual">
+        <img src="images/mbour-nianing.jpg" alt="Plage de Nianing" loading="lazy">
+        <div class="lieu-visual-badge"><i class="fa-solid fa-sun"></i> Plage</div>
+        <div class="lieu-visual-caption">« Longue plage bordée de filaos »</div>
+      </div>
+      <div class="lieu-text">
+        <h2>Nianing <em>— la tranquille</em></h2>
+        <div class="lieu-loc"><i class="fa-solid fa-location-dot"></i> Département de Mbour · au sud de la Somone</div>
+        <p><strong>Nianing est l'une des plages les plus agréables de la Petite Côte.</strong> Longue, calme et bordée de filaos, elle offre une atmosphère familiale, loin de l'agitation des stations plus fréquentées.</p>
+        <p>Le village et ses alentours comptent de nombreux <em>campements et petits hôtels à taille humaine</em> — l'idéal pour un séjour calme et authentique. La <strong>gastronomie locale</strong> (poissons grillés, fruits de mer frais) est réputée pour sa qualité.</p>
+        <div class="lieu-facts">
+          <div class="lieu-fact"><i class="fa-solid fa-tree"></i><b>Filaos</b><small>Bord de mer</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-users"></i><b>Familial</b><small>Ambiance paisible</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-fish"></i><b>Gastronomie</b><small>Poissons grillés</small></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="warang" class="section-white">
+  <div class="section-inner">
+    <article class="lieu lieu-station reveal">
+      <div class="lieu-visual">
+        <img src="images/mbour-warang.webp" alt="Plage de Warang" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg,#2E86AB,#5DADE2)'">
+        <div class="lieu-visual-badge"><i class="fa-solid fa-water"></i> Plage</div>
+        <div class="lieu-visual-caption">«  Une escale paisible de la Petite Côte  »</div>
+      </div>
+      <div class="lieu-text">
+        <h2>Warang <em>— l'esprit village</em></h2>
+        <div class="lieu-loc"><i class="fa-solid fa-location-dot"></i> Département de Mbour · Malicounda, entre Nianing et Mbour</div>
+<p><strong>Warang (ou Ouoran) séduit par sa longue plage de sable et son atmosphère paisible.</strong> Situé entre Nianing et Mbour, le village constitue une halte agréable pour les visiteurs recherchant le calme, la détente et le contact avec la vie locale.</p>
+
+<p>Campements, restaurants de bord de mer et hébergements à taille humaine ponctuent le littoral. Selon les conditions de houle, certaines portions de plage peuvent accueillir des activités nautiques, mais Warang est surtout apprécié pour ses promenades en bord d'océan et son cadre authentique.</p>
+        <div class="lieu-facts">
+          <div class="lieu-fact"><i class="fa-solid fa-water"></i><b>Océan</b><small>Bord de plage</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-school"></i><b>Campements</b><small>Séjours authentiques</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-users"></i><b>Village</b><small>Ambiance conviviale</small></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="mbour-port" class="section-white-soft">
+  <div class="section-inner">
+    <article class="lieu lieu-village swap reveal">
+      <div class="lieu-visual">
+        <img src="images/mbour-port.webp" alt="Port de pêche de Mbour" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg,#E8C766,#F4D58D)'">
+        <div class="lieu-visual-badge" style="color:#8B6914"><i class="fa-solid fa-ship"></i> Village</div>
+        <div class="lieu-visual-caption">« L'un des principaux ports de pêche artisanale du Sénégal »</div>
+      </div>
+      <div class="lieu-text">
+        <h2>Mbour <em>— le port de pêche</em></h2>
+        <div class="lieu-loc"><i class="fa-solid fa-location-dot"></i> Ville de Mbour · Département de Mbour</div>
+        <p><strong>Le port de pêche de Mbour est l'un des principaux ports de pêche artisanale du Sénégal.</strong> Chaque retour de pirogue est un spectacle : cris, mouvements, couleurs, préparation du poisson sous les yeux des visiteurs — un moment fort du Sénégal authentique.</p>
+        <p>Une visite du port en fin d'après-midi, vers 17h, permet de voir la <em>criée</em> et l'arrivée des pirogues colorées. C'est l'occasion de comprendre la <strong>vie des pêcheurs lébou</strong>, leur savoir-faire et leur culture.</p>
+        <div class="lieu-facts">
+          <div class="lieu-fact"><i class="fa-solid fa-ship"></i><b>Pirogues</b><small>Pêcheurs lébou</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-clock"></i><b>17h</b><small>Retour de pêche</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-camera"></i><b>Photo</b><small>Scènes uniques</small></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="joal" class="section-white">
+  <div class="section-inner">
+    <article class="lieu lieu-village reveal">
+      <div class="lieu-visual">
+        <img src="images/mbour-fadiouth.jpeg" alt="Île de Fadiouth" loading="lazy">
+        <div class="lieu-visual-badge" style="color:#8B6914"><i class="fa-solid fa-shapes"></i> Île</div>
+        <div class="lieu-visual-caption">« L'île aux coquillages »</div>
+      </div>
+      <div class="lieu-text">
+        <h2>Joal-Fadiouth <em>— l'île aux coquillages</em></h2>
+        <div class="lieu-loc"><i class="fa-solid fa-location-dot"></i> Département de Mbour · au sud-est de la Petite Côte</div>
+        <p><strong>L'île de Fadiouth est l'un des sites patrimoniaux les plus singuliers du Sénégal.</strong> Elle est bâtie sur des accumulations de coquillages formées au fil des siècles. Reliée au village de Joal par une passerelle de bois, elle abrite un <em>cimetière mixte</em> où chrétiens et musulmans reposent côte à côte — un symbole saisissant de la tolérance sénégalaise.</p>
+        <p><strong>Joal-Fadiouth</strong> est aussi le <em>village natal de Léopold Sédar Senghor</em>, premier président du Sénégal et poète de renommée mondiale. Sa maison familiale est aujourd'hui un lieu de mémoire. Le port de pêche, l'écomusée et les ruelles colorées complètent la visite.</p>
+        <div class="lieu-facts">
+          <div class="lieu-fact"><i class="fa-solid fa-shapes"></i><b>Coquillages</b><small>Terrain unique</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-user"></i><b>Senghor</b><small>Village natal</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-landmark"></i><b>Écomusée</b><small>À visiter</small></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="bandia" class="section-white-soft">
+  <div class="section-inner">
+    <article class="lieu lieu-sauvage swap reveal">
+      <div class="lieu-visual">
+        <img src="images/mbour-bandia.jpg" alt="Réserve de Bandia" loading="lazy">
+        <div class="lieu-visual-badge" style="color:var(--blue-mid)"><i class="fa-solid fa-paw"></i> Réserve</div>
+        <div class="lieu-visual-caption">« Safari en 4x4 au cœur de la savane »</div>
+      </div>
+      <div class="lieu-text">
+        <h2>Réserve de Bandia <em>— le safari</em></h2>
+        <div class="lieu-loc"><i class="fa-solid fa-location-dot"></i> Département de Mbour · à 65 km de Dakar</div>
+        <p><strong>La réserve de Bandia s'étend sur 3 500 hectares de savane</strong> où vivent en semi-liberté girafes, rhinocéros, autruches, antilopes, singes et de nombreux oiseaux. Une expérience safari accessible et inoubliable.</p>
+        <p>À bord de <em>véhicules 4x4</em>, guides expérimentés et passionnés, vous parcourez la savane à la rencontre des animaux. Les <strong>imposants baobabs emblématiques de la savane sénégalaise</strong> renforcent le caractère spectaculaire du paysage. Un lodge sur place propose une restauration de qualité.</p>
+        <div class="lieu-facts">
+          <div class="lieu-fact"><i class="fa-solid fa-tree"></i><b>3 500 ha</b><small>Superficie</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-paw"></i><b>Multiples</b><small>Espèces</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-truck"></i><b>4x4</b><small>Découverte</small></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="popenguine" class="section-white">
+  <div class="section-inner">
+    <article class="lieu lieu-sauvage reveal">
+      <div class="lieu-visual">
+        <img src="images/mbour-popenguine.jpg" alt="Réserve de Popenguine" loading="lazy">
+        <div class="lieu-visual-badge" style="color:var(--blue-mid)"><i class="fa-solid fa-mountain-sun"></i> Nature</div>
+        <div class="lieu-visual-caption">« Falaises, savane et forêt littorale »</div>
+      </div>
+      <div class="lieu-text">
+        <h2>Réserve de Popenguine <em>— la nature préservée</em></h2>
+        <div class="lieu-loc"><i class="fa-solid fa-location-dot"></i> Département de Mbour · entre Somone et Toubab Dialaw</div>
+        <p><strong>La réserve naturelle de Popenguine s'étend sur 200 hectares de falaises, de savane et de forêt littorale.</strong> Sanctuaire de biodiversité, elle est aussi un haut lieu spirituel — le sanctuaire marial de Popenguine y est installé, théâtre du grand pèlerinage de Pentecôte.</p>
+        <p>Plusieurs <em>sentiers de randonnée</em> permettent d'explorer la réserve à pied, entre savane, falaises et bord de mer. Un lieu idéal pour les amoureux de nature et les photographes, avec des <strong>panoramas saisissants sur l'océan</strong>.</p>
+        <div class="lieu-facts">
+          <div class="lieu-fact"><i class="fa-solid fa-tree"></i><b>200 ha</b><small>Superficie</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-mountain-sun"></i><b>Falaises</b><small>Paysage</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-binoculars"></i><b>Oiseaux</b><small>Observation</small></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="toubab" class="section-white-soft">
+  <div class="section-inner">
+    <article class="lieu lieu-village swap reveal">
+      <div class="lieu-visual">
+        <img src="images/mbour-toubab.jpg" alt="Falaises de Toubab Dialaw" loading="lazy">
+        <div class="lieu-visual-badge" style="color:#8B6914"><i class="fa-solid fa-masks-theater"></i> Culture</div>
+        <div class="lieu-visual-caption">« Village d'artistes au bord de l'océan »</div>
+      </div>
+      <div class="lieu-text">
+        <h2>Toubab Dialaw <em>— le village d'artistes</em></h2>
+        <div class="lieu-loc"><i class="fa-solid fa-location-dot"></i> Département de Mbour · au sud de Dakar</div>
+        <p><strong>Ancien village de pêcheurs devenu, au fil des décennies, un haut lieu de la création artistique en Afrique de l'Ouest.</strong> Ses falaises rouges plongeant dans l'Atlantique offrent un cadre saisissant, propice à la création et à la contemplation.</p>
+        <p>Y vivent et travaillent peintres, sculpteurs, musiciens et danseurs. On y trouve notamment l'<strong>École des Sables</strong>, fondée par la chorégraphe Germaine Acogny — référence internationale en danse contemporaine africaine. Les falaises offrent des panoramas magnifiques, surtout au coucher du soleil.</p>
+        <div class="lieu-facts">
+          <div class="lieu-fact"><i class="fa-solid fa-mountain-sun"></i><b>Falaises</b><small>Rouges & océan</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-palette"></i><b>Art</b><small>Village d'artistes</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-school"></i><b>École</b><small>Des Sables</small></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="pointe-sarene" class="section-white">
+  <div class="section-inner">
+    <article class="lieu lieu-sauvage reveal">
+      <div class="lieu-visual">
+        <img src="images/mbour-pointe-sarene.jpg" alt="Pointe Sarène" loading="lazy">
+        <div class="lieu-visual-badge" style="color:var(--blue-mid)"><i class="fa-solid fa-water"></i> Nature</div>
+        <div class="lieu-visual-caption">«  Une portion du littoral encore relativement préservée »</div>
+      </div>
+      <div class="lieu-text">
+        <h2>Pointe Sarène <em>— entre nature et littoral</em></h2>
+        <div class="lieu-loc"><i class="fa-solid fa-location-dot"></i> Département de Mbour · au sud de Nianing</div>
+        <p><strong>Pointe Sarène est une portion du littoral encore relativement peu urbanisée par rapport aux stations balnéaires historiques de la Petite Côte.</strong> Longtemps restée sauvage, cette pointe côtière attire pour ses grandes plages encore vierges et son atmosphère paisible, loin de l'agitation des stations balnéaires.</p>
+        <p>Quelques hôtels haut de gamme (dont de grandes chaînes internationales) se sont installés récemment, offrant un tourisme balnéaire de standing dans un cadre naturel préservé. La zone abrite une <em>faune variée</em>, notamment des oiseaux et des reptiles.</p>
+        <div class="lieu-facts">
+          <div class="lieu-fact"><i class="fa-solid fa-umbrella-beach"></i><b>Sauvage</b><small>Plage</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-hotel"></i><b>En dev.</b><small>Projets haut de gamme</small></div>
+          <div class="lieu-fact"><i class="fa-solid fa-binoculars"></i><b>Faune</b><small>Préservée</small></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="conseils" class="section-pale-sand">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Conseils pratiques</span>
+        <h2 class="section-title">Profiter de <em>la côte</em></h2>
+        <p class="section-lead">Quelques principes simples pour un séjour balnéaire serein et respectueux de l'environnement et des populations locales.</p>
+      </div>
+    </div>
+    <div class="conseils-grid">
+      <div class="conseil-card reveal">
+        <div class="conseil-icon" style="background:linear-gradient(135deg,#0D3B66,#1B6CA8)"><i class="fa-solid fa-sun"></i></div>
+        <h4>Meilleure saison</h4>
+        <p>La saison sèche (novembre à mai) offre un ciel dégagé et des températures douces. Évitez les plages non surveillées pendant l'hivernage (juillet-septembre).</p>
+      </div>
+      <div class="conseil-card reveal">
+        <div class="conseil-icon" style="background:linear-gradient(135deg,#E8C766,#F4D58D);color:#0D3512"><i class="fa-solid fa-hotel"></i></div>
+        <h4>Réserver à l'avance</h4>
+        <p>En haute saison (décembre-février), les hébergements de Saly et Ngaparou sont très demandés. Réservez plusieurs semaines avant votre arrivée.</p>
+      </div>
+      <div class="conseil-card reveal">
+        <div class="conseil-icon" style="background:linear-gradient(135deg,#2E86AB,#5DADE2)"><i class="fa-solid fa-leaf"></i></div>
+        <h4>Respect de l'environnement</h4>
+        <p>Ne laissez aucun déchet sur la plage. Les lagunes et réserves naturelles sont fragiles : restez sur les sentiers et ne dérangez pas la faune.</p>
+      </div>
+      <div class="conseil-card reveal">
+        <div class="conseil-icon" style="background:linear-gradient(135deg,#1B5E20,#2E7D32)"><i class="fa-solid fa-fish"></i></div>
+        <h4>Gastronomie locale</h4>
+        <p>Goûtez aux poissons grillés, aux fruits de mer et aux plats traditionnels dans les restaurants de bord de mer. Privilégiez les établissements locaux.</p>
+      </div>
+      <div class="conseil-card reveal">
+        <div class="conseil-icon" style="background:linear-gradient(135deg,#7B4A2A,#A67C52)"><i class="fa-solid fa-hand-holding-heart"></i></div>
+        <h4>Tourisme responsable</h4>
+        <p>Achetez directement aux artisans, respectez les zones de pêche, demandez l'autorisation avant de photographier les habitants. Voyagez avec humilité.</p>
+      </div>
+      <div class="conseil-card reveal">
+        <div class="conseil-icon" style="background:linear-gradient(135deg,#1C2B39,#0F1923)"><i class="fa-solid fa-shield-halved"></i></div>
+        <h4>Sécurité</h4>
+        <p>Baignez-vous dans les zones surveillées : les courants peuvent être forts. Faites attention à vos effets personnels sur les plages fréquentées.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="cta-box reveal">
+    <h2>Prêt à parcourir la <em>Petite Côte</em> ?</h2>
+    <p>Explorez les étapes du circuit sur le géoportail, préparez votre itinéraire, ou découvrez plus en détail Mbour et sa région.</p>
+    <div class="cta-btns">
+      <a href="carte.html" class="btn btn-blue"><i class="fa-solid fa-map-location-dot"></i> Ouvrir le Géoportail</a>
+      <a href="mbour.html" class="btn btn-sand"><i class="fa-solid fa-umbrella-beach"></i> Découvrir Mbour</a>
+      <a href="n_index.html" class="btn btn-outline"><i class="fa-solid fa-house"></i> Page d'accueil</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h4>Circuit balnéaire — La Petite Côte</h4>
+      <p>Plus de 100 km de côte, 12 étapes, une seule promesse : le Sénégal balnéaire dans toute sa diversité.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Les étapes</h5>
+      <a href="#saly">Saly Portudal</a>
+      <a href="#ngaparou">Ngaparou</a>
+      <a href="#somone">Lagune de la Somone</a>
+      <a href="#nianing">Nianing</a>
+      <a href="#warang">Warang</a>
+      <a href="#mbour-port">Port de Mbour</a>
+      <a href="#joal">Joal-Fadiouth</a>
+      <a href="#bandia">Réserve de Bandia</a>
+      <a href="#popenguine">Popenguine</a>
+      <a href="#toubab">Toubab Dialaw</a>
+      <a href="#pointe-sarene">Pointe Sarène</a>
+    </div>
+    <div class="footer-col">
+      <h5>Départements</h5>
+      <a href="thies.html">Thiès</a>
+      <a href="mbour.html">Mbour</a>
+      <a href="tivaouane.html">Tivaouane</a>
+      <a href="carte.html">Géoportail</a>
+    </div>
+    <div class="footer-col">
+      <h5>Ressources</h5>
+      <a href="#conseils">Conseils</a>
+      <a href="n_index.html">Vue d'ensemble</a>
+      <a href="n_index.html#contact">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Tourisme Région de Thiès — Tous droits réservés.</span>
+    <span>Coordonnées SIG : <strong>14.42°N · 16.96°W</strong> · Sénégal</span>
+  </div>
+</footer>
+
+<button id="back-top" aria-label="Retour en haut"><i class="fa-solid fa-chevron-up"></i></button>
+
+<script>
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => { navbar.classList.toggle('solid', window.scrollY > 100); }, { passive: true });
+
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i % 6) * 0.06 + 's'; revealObs.observe(el); });
+
+const sommaireLinks = document.querySelectorAll('.sommaire-links a');
+const sommaireProgress = document.getElementById('sommaireProgress');
+const sectionIds = ['intro','saly','ngaparou','somone','nianing','warang','mbour-port','joal','bandia','popenguine','toubab','pointe-sarene','conseils'];
+const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+function updateSommaire() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  sommaireProgress.style.width = Math.min(100, (scrollTop / docHeight) * 100) + '%';
+  let current = null;
+  sections.forEach(sec => { const rect = sec.getBoundingClientRect(); if (rect.top <= 180 && rect.bottom > 180) current = sec.id; });
+  sommaireLinks.forEach(a => { a.classList.toggle('active', a.dataset.target === current); });
+}
+window.addEventListener('scroll', updateSommaire, { passive: true });
+updateSommaire();
+
+const backTop = document.getElementById('back-top');
+window.addEventListener('scroll', () => { backTop.classList.toggle('show', window.scrollY > 600); }, { passive: true });
+backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', (e) => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); const y = target.getBoundingClientRect().top + window.scrollY - 120; window.scrollTo({ top: y, behavior: 'smooth' }); }
+  });
+});
+
+(function heroEnvelopeEffect() {
+  const hero = document.querySelector('.hero-mini');
+  if (!hero) return;
+  const bg = hero.querySelector('.hero-mini-bg');
+  if (!bg) return;
+  let ticking = false;
+  function update() {
+    const progress = Math.min(1, window.scrollY / hero.offsetHeight);
+    bg.style.transform = `scale(${1.05 - progress * 0.08})`;
+    bg.style.filter = `brightness(${1 - progress * 0.35})`;
+    ticking = false;
+  }
+  window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, { passive: true });
+  update();
+})();
+</script>
+
+</body>
+</html>

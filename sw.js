@@ -5,7 +5,7 @@
    - GeoJSON : network-first avec fallback cache
    - Tuiles OSM/Esri : cache-first avec limite
    ============================================================ */
-   const VERSION = 'v1.5.7';
+   const VERSION = 'v1.5.8';
    const APP_CACHE = `geo-app-${VERSION}`;
    const TILE_CACHE = `geo-tiles-${VERSION}`;
    const DATA_CACHE = `geo-data-${VERSION}`;

@@ -11,5 +11,6 @@ urlpatterns = [
     re_path(r"^transports/?$", views.TransportsView.as_view()),
     re_path(r"^applis-transport/?$", views.ApplisTransportView.as_view()),
     re_path(r"^contact/?$", views.ContactView.as_view()),
+    re_path(r"^avis/?$", views.AvisView.as_view()),
     re_path(r"^.*$", views.route_inconnue),                 # toute autre adresse /api/… : erreur JSON, jamais une page HTML
 ]

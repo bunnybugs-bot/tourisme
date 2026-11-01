@@ -3,8 +3,9 @@ from datetime import date
 
 from django.contrib import admin as dj_admin
 from django.contrib.gis import admin
+from django.utils import timezone
 
-from .models import (ApplicationTransport, Commune, Departement, Hebergement, Lieu, MessageContact,
+from .models import (ApplicationTransport, AvisVisiteur, Commune, Departement, Hebergement, Lieu, MessageContact,
                      Prestataire, Restaurant, ServiceTransport)
 
 dj_admin.site.site_header = "Géoportail touristique — Région de Thiès"
@@ -93,3 +94,28 @@ class MessageContactAdmin(dj_admin.ModelAdmin):
     @dj_admin.action(description="Marquer comme traité")
     def marquer_traite(self, request, queryset):
         self.message_user(request, f"{queryset.update(traite=True)} message(s) marqué(s) comme traité(s).")
+
+
+@admin.register(AvisVisiteur)
+class AvisVisiteurAdmin(admin.ModelAdmin):
+    """Modération des avis : un avis n'apparaît sur le site qu'une fois coché « publié »."""
+    list_display = ("created_at", "page", "nom", "note", "extrait", "approuve")
+    list_filter = ("approuve", "page", "note")
+    search_fields = ("nom", "commentaire")
+    readonly_fields = ("created_at", "date_moderation")
+    list_per_page = 50
+    actions = ["publier", "retirer"]
+
+    @admin.display(description="commentaire")
+    def extrait(self, obj):
+        return obj.commentaire if len(obj.commentaire) <= 90 else obj.commentaire[:90] + "…"
+
+    @admin.action(description="Publier les avis sélectionnés")
+    def publier(self, request, queryset):
+        n = queryset.update(approuve=True, date_moderation=timezone.now())
+        self.message_user(request, f"{n} avis publié(s).")
+
+    @admin.action(description="Retirer de la publication")
+    def retirer(self, request, queryset):
+        n = queryset.update(approuve=False, date_moderation=timezone.now())
+        self.message_user(request, f"{n} avis retiré(s).")

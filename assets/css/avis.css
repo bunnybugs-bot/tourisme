@@ -1,0 +1,51 @@
+/* Avis des visiteurs — widget autonome, prévu pour une section sombre */
+.av-widget { --av-accent: #E0A458; max-width: 980px; margin: 3rem auto 0; color: #fff; font-size: .95rem; }
+.av-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 1.5rem;
+  border-top: 1px solid rgba(255,255,255,.15); padding-top: 2rem; margin-bottom: 1.2rem; }
+.av-head h3 { margin: 0; font-family: 'Playfair Display', Georgia, serif; font-size: 1.45rem; font-weight: 600; color: #fff; }
+.av-head h3 i { color: var(--av-accent); margin-right: .4rem; }
+.av-resume { margin: 0; color: rgba(255,255,255,.75); }
+.av-moy { font-size: 1.4rem; font-weight: 700; color: #fff; }
+.av-etoiles { color: var(--av-accent); letter-spacing: 1px; white-space: nowrap; font-size: 1.05rem; }
+.av-etoiles .av-vide { color: rgba(255,255,255,.28); }
+.av-liste { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1.2rem; }
+.av-carte { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); border-radius: 14px; padding: 1.1rem 1.2rem; }
+.av-carte p { margin: .7rem 0 0; line-height: 1.6; color: rgba(255,255,255,.88); white-space: pre-line; overflow-wrap: anywhere; }
+.av-carte-tete { display: flex; align-items: center; gap: .7rem; }
+.av-carte-tete div { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.av-carte-tete small { color: rgba(255,255,255,.55); font-size: .78rem; }
+.av-avatar { flex: 0 0 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  background: var(--av-accent); color: #1d2733; font-weight: 700; }
+.av-ouvrir, .av-envoyer { background: var(--av-accent); color: #1d2733; border: 0; border-radius: 999px; padding: .75rem 1.5rem;
+  font: inherit; font-weight: 700; cursor: pointer; }
+.av-ouvrir:hover, .av-envoyer:hover { filter: brightness(1.08); }
+.av-envoyer[disabled] { opacity: .6; cursor: wait; }
+.av-annuler { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.35); border-radius: 999px;
+  padding: .75rem 1.3rem; font: inherit; cursor: pointer; }
+.av-form { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); border-radius: 16px; padding: 1.4rem;
+  display: grid; gap: 1rem; }
+.av-form[hidden], .av-ouvrir[hidden] { display: none; }
+.av-form label { display: grid; gap: .35rem; color: rgba(255,255,255,.85); font-weight: 600; font-size: .88rem; }
+.av-form input[name="nom"], .av-form textarea { font: inherit; font-weight: 400; color: #1d2733; background: #fff;
+  border: 1px solid #d8d0c2; border-radius: 10px; padding: .65rem .8rem; width: 100%; box-sizing: border-box; }
+.av-form textarea { resize: vertical; min-height: 110px; }
+.av-form input:focus-visible, .av-form textarea:focus-visible, .av-note label:focus-within { outline: 2px solid var(--av-accent); outline-offset: 2px; }
+.av-ligne { display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: end; }
+.av-compteur { justify-self: end; font-weight: 400; color: rgba(255,255,255,.5); }
+/* notation : étoiles de droite à gauche pour colorer toutes celles qui précèdent la sélection */
+.av-note { border: 0; margin: 0; padding: 0; min-width: 0; }
+.av-note legend { padding: 0; margin-bottom: .35rem; font-weight: 600; font-size: .88rem; color: rgba(255,255,255,.85); }
+.av-choix { display: inline-flex; flex-direction: row-reverse; justify-content: flex-end; gap: .15rem; }
+.av-note input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.av-note label { display: inline-block; font-size: 1.9rem; line-height: 1; color: rgba(255,255,255,.3); cursor: pointer; padding: 0 .1rem; }
+.av-note input:checked ~ label, .av-note label:hover, .av-note label:hover ~ label { color: var(--av-accent); }
+.av-note input:focus-visible + label { outline: 2px solid var(--av-accent); border-radius: 4px; }
+.av-piege { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.av-form .av-accord { display: flex; gap: .6rem; align-items: flex-start; font-weight: 400; line-height: 1.5; }
+.av-accord input { margin-top: .25rem; accent-color: var(--av-accent); }
+.av-actions { display: flex; gap: .7rem; flex-wrap: wrap; }
+.av-mention { margin: 0; font-size: .8rem; color: rgba(255,255,255,.6); }
+.av-message { margin: 0; min-height: 1.2em; }
+.av-message.av-ok { color: #9be3b0; }
+.av-message.av-erreur { color: #ffb4a8; }
+@media (max-width: 600px) { .av-ligne { grid-template-columns: 1fr; } .av-widget { margin-top: 2rem; } }

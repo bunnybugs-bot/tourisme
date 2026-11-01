@@ -6,7 +6,8 @@
    ============================================================ */
 
    const OSRM_URL = 'https://router.project-osrm.org/route/v1/driving/';
-   const CIRCUIT_STORAGE_KEY = 'geoportail-thies-circuit-v1';
+   const CIRCUIT_STORAGE_KEY = 'geoportail-thies-circuit-v1';          // ancien format (un seul circuit), lu pour migration
+   const CIRCUITS_STORAGE_KEY = 'geoportail-thies-circuits-v2';        // plusieurs circuits : { actif, liste }
    
    function fmtDuree(s) {
      const min = Math.round(s / 60);
@@ -24,6 +25,8 @@
      geometrie: null,     // [[lat, lon], …] tracé routier (OSRM) ou null
      layer: null,
      seq: 0,
+     circuits: [],        // [{ id, nom, depart, steps, boucle }] — le circuit actif est recopié dans depart / steps / boucle
+     actifId: null,
    
      // ---------- initialisation ----------
      init() {
@@ -48,6 +51,7 @@
          document.querySelector('.gp-tab[data-tab="itineraire"]').click();
          document.getElementById('gpSidebar').classList.add('open');
        });
+       this.injecterBarre();
        this.restore();
        this.render();
        if (this.steps.length) this.tracer();
@@ -89,8 +93,96 @@
        this.steps = []; this.depart = null; this.boucle = false; this.loopEl.checked = false;
        this.changed(); showToast('Circuit vidé');
      },
+     // ---------- plusieurs circuits ----------
+     circuitActif() { return this.circuits.find(c => c.id === this.actifId) || null; },
+     /** Recopie l'état de travail (depart, steps, boucle) dans le circuit actif. */
+     syncActif() {
+       const c = this.circuitActif();
+       if (c) { c.depart = this.depart; c.steps = this.steps; c.boucle = this.boucle; }
+     },
+     nomLibre() {
+       let n = this.circuits.length + 1;
+       while (this.circuits.some(c => c.nom === `Circuit ${n}`)) n++;
+       return `Circuit ${n}`;
+     },
+     creerCircuit(nom) {
+       const c = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 5), nom: nom || this.nomLibre(), depart: null, steps: [], boucle: false };
+       this.circuits.push(c);
+       return c;
+     },
+     /** Charge un circuit dans l'état de travail. */
+     charger(c) {
+       this.actifId = c.id;
+       this.depart = c.depart || null; this.steps = c.steps || []; this.boucle = !!c.boucle;
+       this.loopEl.checked = this.boucle;
+     },
+     basculer(id) {
+       const c = this.circuits.find(x => x.id === id);
+       if (!c || id === this.actifId) return;
+       this.syncActif();
+       this.charger(c);
+       this.changed();
+       showToast(`Circuit « ${c.nom} »`);
+     },
+     nouveauCircuit(nom) {
+       this.syncActif();
+       const c = this.creerCircuit(nom);
+       this.charger(c);
+       this.changed();
+       showToast(`Nouveau circuit : « ${c.nom} »`);
+       return c;
+     },
+     renommer() {
+       const c = this.circuitActif(); if (!c) return;
+       const nom = (prompt('Nom du circuit :', c.nom) || '').trim().slice(0, 40);
+       if (nom) { c.nom = nom; this.save(); this.render(); }
+     },
+     supprimerCircuit() {
+       const c = this.circuitActif(); if (!c) return;
+       if (!confirm(`Supprimer le circuit « ${c.nom} » ?`)) return;
+       this.circuits = this.circuits.filter(x => x.id !== c.id);
+       if (!this.circuits.length) this.creerCircuit();
+       this.charger(this.circuits[0]);
+       this.changed();
+       showToast('Circuit supprimé');
+     },
+     /** Barre de sélection des circuits, insérée en tête de l'onglet « Mon circuit ». */
+     injecterBarre() {
+       if (!document.getElementById('gpCircStyle')) {
+         const st = document.createElement('style'); st.id = 'gpCircStyle';
+         st.textContent = `.gp-circ-bar{display:flex;gap:6px;align-items:center;margin:0 0 10px}
+           .gp-circ-bar select{flex:1;min-width:0;padding:7px 8px;border:1px solid #d8d0c2;border-radius:8px;font:inherit;font-size:.85rem;background:#fff}
+           .gp-circ-bar button{border:1px solid #d8d0c2;background:#fff;border-radius:8px;padding:7px 9px;cursor:pointer;color:#172431;font:inherit;font-size:.8rem}
+           .gp-circ-bar button:hover{background:#f5f3ee}
+           .gp-circ-bar .gp-circ-new{background:#A16D32;color:#fff;border-color:#A16D32}
+           .gp-circ-bar .gp-circ-new:hover{background:#8a5c29}`;
+         document.head.appendChild(st);
+       }
+       const bar = document.createElement('div');
+       bar.className = 'gp-circ-bar'; bar.id = 'gpCircBar';
+       bar.innerHTML = `<select id="gpCircSelect" aria-label="Choisir un circuit"></select>
+         <button type="button" class="gp-circ-new" id="gpCircNew" title="Créer un nouveau circuit"><i class="fa-solid fa-plus"></i> Nouveau</button>
+         <button type="button" id="gpCircRename" title="Renommer ce circuit"><i class="fa-solid fa-pen"></i></button>
+         <button type="button" id="gpCircDelete" title="Supprimer ce circuit"><i class="fa-solid fa-trash"></i></button>`;
+       this.emptyEl.parentNode.insertBefore(bar, this.emptyEl);
+       this.barEl = bar;
+       bar.querySelector('#gpCircSelect').addEventListener('change', e => this.basculer(e.target.value));
+       bar.querySelector('#gpCircNew').addEventListener('click', () => this.nouveauCircuit());
+       bar.querySelector('#gpCircRename').addEventListener('click', () => this.renommer());
+       bar.querySelector('#gpCircDelete').addEventListener('click', () => this.supprimerCircuit());
+     },
+     renderBarre() {
+       if (!this.barEl) return;
+       const sel = this.barEl.querySelector('#gpCircSelect');
+       sel.innerHTML = this.circuits.map(c => {
+         const n = c.id === this.actifId ? this.steps.length : (c.steps || []).length;
+         return `<option value="${escapeHtml(c.id)}"${c.id === this.actifId ? ' selected' : ''}>${escapeHtml(c.nom)} (${n})</option>`;
+       }).join('');
+     },
      /** Remplace tout le circuit (utilisé par l'assistant « Préparer mon séjour »). */
-     setPlan({ depart, steps, boucle }) {
+     setPlan({ depart, steps, boucle, nom }) {
+       // un séjour composé par l'assistant ne remplace pas un circuit déjà commencé : il ouvre un nouveau circuit
+       if (this.steps.length) { this.syncActif(); const c = this.creerCircuit(nom); this.charger(c); }
        this.depart = depart || null;
        this.steps = [];
        steps.forEach(s => this.add(s, { silent: true }));
@@ -187,6 +279,7 @@
    
      // ---------- affichage du panneau ----------
      render() {
+       this.renderBarre();
        const n = this.steps.length;
        this.badgeEl.style.display = n > 0 ? 'inline-flex' : 'none';
        this.badgeEl.textContent = n;
@@ -245,16 +338,28 @@
    
      // ---------- sauvegarde locale (facultative) ----------
      save() {
-       try { localStorage.setItem(CIRCUIT_STORAGE_KEY, JSON.stringify({ depart: this.depart, steps: this.steps, boucle: this.boucle })); }
-       catch (e) { /* stockage indisponible : le circuit reste en mémoire */ }
+       this.syncActif();
+       try { localStorage.setItem(CIRCUITS_STORAGE_KEY, JSON.stringify({ actif: this.actifId, liste: this.circuits })); }
+       catch (e) { /* stockage indisponible : les circuits restent en mémoire */ }
      },
      restore() {
        try {
-         const d = JSON.parse(localStorage.getItem(CIRCUIT_STORAGE_KEY) || 'null');
-         if (d && Array.isArray(d.steps)) { this.depart = d.depart || null; this.steps = d.steps; this.boucle = !!d.boucle; }
+         const d = JSON.parse(localStorage.getItem(CIRCUITS_STORAGE_KEY) || 'null');
+         if (d && Array.isArray(d.liste) && d.liste.length) {
+           this.circuits = d.liste.filter(c => c && c.id && Array.isArray(c.steps));
+           if (this.circuits.length) this.charger(this.circuits.find(c => c.id === d.actif) || this.circuits[0]);
+         }
        } catch (e) { /* ignoré */ }
+       if (!this.circuits.length) {
+         const c = this.creerCircuit('Circuit 1');
+         try {                                           // migration de l'ancien format (un seul circuit)
+           const o = JSON.parse(localStorage.getItem(CIRCUIT_STORAGE_KEY) || 'null');
+           if (o && Array.isArray(o.steps)) { c.depart = o.depart || null; c.steps = o.steps; c.boucle = !!o.boucle; }
+         } catch (e) { /* ignoré */ }
+         this.charger(c);
+       }
      },
-   
+
      // ---------- export : page imprimable (« Enregistrer au format PDF » dans la boîte d'impression) ----------
      schemaSvg() {
        const pts = this.tous();

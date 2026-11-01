@@ -8,6 +8,7 @@ Stockage en WGS84 (SRID 4326) ; les distances en mètres utilisent le type « ge
 """
 from django.contrib.gis.db import models
 from django.contrib.postgres.fields import ArrayField
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db.models.functions import Lower
 
 
@@ -183,3 +184,30 @@ class MessageContact(models.Model):
 
     def get_sujet(self):
         return self.sujet
+
+
+# ---------------------------------------------------------------- avis laissés par les visiteurs sur les pages des départements
+class AvisVisiteur(models.Model):
+    """Avis déposé depuis le site. Il n'est publié qu'après validation dans l'administration (modération a priori)."""
+    class Page(models.TextChoices):
+        THIES = "thies", "Thiès"
+        MBOUR = "mbour", "Mbour"
+        TIVAOUANE = "tivaouane", "Tivaouane"
+
+    page = models.CharField("page du département", max_length=20, choices=Page.choices)
+    nom = models.CharField("prénom ou pseudonyme", max_length=60)
+    note = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    commentaire = models.TextField(max_length=1000)
+    created_at = models.DateTimeField("déposé le", auto_now_add=True)
+    approuve = models.BooleanField("publié", default=False)
+    date_moderation = models.DateTimeField("modéré le", null=True, blank=True)
+
+    class Meta:
+        verbose_name = "avis de visiteur"
+        verbose_name_plural = "avis des visiteurs"
+        ordering = ["-created_at"]
+        indexes = [models.Index(fields=["page", "approuve"], name="avis_page_approuve_idx")]
+        constraints = [models.CheckConstraint(condition=models.Q(note__gte=1, note__lte=5), name="avis_note_1_a_5")]
+
+    def __str__(self):
+        return f"{self.nom} — {self.get_page_display()} ({self.note}/5)"

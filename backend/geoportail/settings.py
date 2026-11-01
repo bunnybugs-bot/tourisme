@@ -97,11 +97,11 @@ STATIC_ROOT = BASE_DIR / "staticfiles"                     # destination de « c
 
 # ---- API REST -------------------------------------------------------------
 REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],   # API publique, en lecture seule (sauf /api/contact)
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],   # API publique, en lecture seule (sauf /api/contact et /api/avis)
     "DEFAULT_AUTHENTICATION_CLASSES": [],                    # pas de session : pas de CSRF à gérer pour les appels publics
     "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
     "DEFAULT_THROTTLE_CLASSES": ["rest_framework.throttling.AnonRateThrottle"],
-    "DEFAULT_THROTTLE_RATES": {"anon": "600/hour", "contact": "10/hour"},
+    "DEFAULT_THROTTLE_RATES": {"anon": "600/hour", "contact": "10/hour", "avis": "5/hour"},
     "EXCEPTION_HANDLER": "portail.api.erreurs.gestionnaire",
     "UNICODE_JSON": True,
 }

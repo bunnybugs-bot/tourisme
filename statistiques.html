@@ -86,6 +86,12 @@
   @media (max-width: 760px) { .st-mapgrid { grid-template-columns: 1fr; } }
   #stMap svg { max-height: 58vh; display: block; margin: 0 auto; }
   #stMap svg path { transition: opacity .15s; cursor: default; } #stMap svg path:hover { opacity: .75; stroke: #172431; stroke-width: 1.5; }
+  .st-fig { margin: 0; }
+  .st-fig a { display: block; }
+  .st-fig img { width: auto; max-width: 100%; max-height: 620px; height: auto; display: block; margin: 0 auto; border-radius: 12px; border: 1px solid #e6e2da; }
+  .st-fig figcaption { font-size: .74rem; color: var(--text-muted); line-height: 1.5; margin-top: .45rem; }
+  .st-list { margin: 0; padding-left: 1.1rem; font-size: .86rem; line-height: 1.7; color: #3a4a5c; }
+  .st-list b { color: var(--charcoal); }
   .st-facts { display: flex; gap: 1.6rem; flex-wrap: wrap; }
   .st-facts div { display: flex; flex-direction: column; } .st-facts b { font-family: 'Playfair Display', serif; font-size: 1.7rem; color: var(--orange); line-height: 1.1; } .st-facts span { font-size: .74rem; color: var(--text-muted); max-width: 150px; }
 </style>
@@ -321,18 +327,33 @@ const pct = (n, d) => d ? Math.round(n / d * 100) : 0;
   const compte = (arr, fn) => { const m = {}; arr.forEach(x => { const k = fn(x); if (k) m[k] = (m[k] || 0) + 1; }); return Object.entries(m).sort((a, b) => b[1] - a[1]); };
   const itemsOf = (entries, couleurs = COUL) => entries.map(([label, v], i) => ({ label, v, color: couleurs[i % couleurs.length] }));
   const urb = nz(heb, f => norm(f.properties.milieu) === 'URBAIN'), rur = nz(heb, f => norm(f.properties.milieu) === 'RURAL');
-  const pisc = nz(heb, f => f.properties.piscine === true), piscRens = nz(heb, f => f.properties.piscine === true || f.properties.piscine === false);
-  const enLigne = [['Site web propre', nz(heb, f => (f.properties.site_web || '').trim())], ['Fiche Booking', nz(heb, f => (f.properties.booking || '').trim())], ['Fiche Tripadvisor', nz(heb, f => (f.properties.tripadvisor || '').trim())],
-    ['Au moins un des trois', nz(heb, f => (f.properties.site_web || '').trim() || (f.properties.booking || '').trim() || (f.properties.tripadvisor || '').trim())]];
+  /* 3 bis. cartes de synthèse (mises en page dans QGIS) */
+  const fig = (src, alt, legende) => `<figure class="st-fig"><a href="${src}" target="_blank" rel="noopener" title="Agrandir la carte"><img src="${src}" alt="${alt}" loading="lazy"></a><figcaption>${legende}</figcaption></figure>`;
+  html += `<section class="st-sec"><h2><i class="fa-solid fa-umbrella-beach"></i> Le littoral sud, cœur de l'offre</h2>
+    <p class="st-lead">L'occupation du sol fait apparaître une bande touristique aménagée le long de la Petite-Côte, de Ngaparou à Saly. C'est là que se regroupent la plupart des hébergements et des restaurants recensés.</p>
+    <div class="st-cols">
+      <div>${fig('images/cartes/occupation-sol-2020.jpg', "Carte de l'occupation du sol de la région de Thiès en 2020",
+        "Occupation du sol en 2020 (ANAT, CSE et ANSD, via GéoSénégal), regroupée en sept catégories. La zone touristique aménagée (Saly Portudal, Ngaparou, Somone, Nguékhokh) a été délimitée par nos soins sur imagerie satellite : c'est une délimitation approximative.")}</div>
+      <div>${fig('images/cartes/offre-petite-cote.jpg', "Carte de l'offre touristique recensée sur la Petite-Côte",
+        "Hébergements, restaurants et sites recensés sur la Petite-Côte (inventaire réalisé de mai à septembre 2026).")}</div>
+    </div></section>`;
+
+  html += `<section class="st-sec"><h2><i class="fa-solid fa-plane-arrival"></i> Depuis l'aéroport Blaise Diagne</h2>
+    <p class="st-lead">L'aéroport international Blaise Diagne se trouve dans la région, à Diass. La carte montre les zones accessibles en voiture en 10, 20 et 30 minutes.</p>
+    <div class="st-cols">
+      <div>${fig('images/cartes/isochrones-aibd.jpg', "Carte des isochrones de 10, 20 et 30 minutes autour de l'AIBD",
+        "Isochrones calculés avec OpenRouteService (profil automobile, septembre 2026) sur le réseau OpenStreetMap.")}</div>
+      <div><p class="st-sub">Moins de 30 minutes</p>
+        <ul class="st-list"><li>La ville de <b>Thiès</b> et <b>Pout</b></li><li><b>Nguékhokh</b> et <b>Ngaparou</b>, au nord de la Petite-Côte</li><li><b>Popenguine</b>, à la limite</li></ul>
+        <p class="st-sub" style="margin-top:1.3rem">Plus de 30 minutes</p>
+        <ul class="st-list"><li><b>Saly Portudal</b> et <b>Mbour</b>, où se concentre l'hébergement</li><li>Nianing, Pointe Sarène et <b>Joal-Fadiouth</b></li><li>Les foyers religieux de <b>Tivaouane</b>, <b>Ndiassane</b>, <b>Pire</b> et <b>Thiénaba</b></li></ul>
+        <p class="st-note">Durées théoriques : elles ne tiennent compte ni de la circulation ni de l'état réel des routes, et dépendent de la complétude du réseau cartographié. À lire comme des ordres de grandeur.</p></div>
+    </div></section>`;
+
   html += `<section class="st-sec"><h2><i class="fa-solid fa-hotel"></i> Où dormir : le profil de l'hébergement</h2>
-    <p class="st-lead">Types d'établissements, milieu d'implantation, capacité et visibilité en ligne : de quoi juger si l'offre répond à différents publics.</p>
-    <div class="st-cols"><div><p class="st-sub">Répartition par type</p>${donutHtml(itemsOf(compte(heb, f => typeHeb(f.properties.type))), { big: nf(heb.length), label: 'hébergements' })}
-        <p class="st-sub" style="margin-top:1.3rem">Milieu d'implantation</p>${donutHtml([{ label: 'Urbain', v: urb, color: C.heb }, { label: 'Rural', v: rur, color: C.site }], { big: pct(rur, urb + rur) + ' %', label: 'en milieu rural' })}</div>
-      <div><p class="st-sub">Visibilité en ligne</p>${barsHtml(enLigne.map(([label, v]) => ({ label, segs: [{ v: pct(v, heb.length), color: C.resto, name: 'Part des hébergements' }] })), { fmt: v => v + ' %' })}
-        <p class="st-note">Part des ${heb.length} hébergements recensés qui ont une présence en ligne : un indicateur de leur capacité à toucher les voyageurs.</p>
-        <p class="st-sub" style="margin-top:1.3rem">Capacité et confort</p>
-        <div class="st-facts"><div><b>${nf(chambres)}</b><span>chambres recensées</span></div><div><b>${pct(pisc, piscRens)} %</b><span>avec piscine (sur ${piscRens} renseignés)</span></div></div>
-        <p class="st-note">La capacité n'est connue que pour ${nbChambresRens} établissements sur ${heb.length} : le total réel est supérieur.</p></div></div></section>`;
+    <p class="st-lead">Types d'établissements et milieu d'implantation : de quoi juger si l'offre répond à différents publics.</p>
+    <div class="st-cols"><div><p class="st-sub">Répartition par type</p>${donutHtml(itemsOf(compte(heb, f => typeHeb(f.properties.type))), { big: nf(heb.length), label: 'hébergements' })}</div>
+      <div><p class="st-sub">Milieu d'implantation</p>${donutHtml([{ label: 'Urbain', v: urb, color: C.heb }, { label: 'Rural', v: rur, color: C.site }], { big: pct(rur, urb + rur) + ' %', label: 'en milieu rural' })}</div></div></section>`;
 
   /* 5. restauration */
   const typeResto = t => { t = (t || '').toLowerCase(); return t.includes('bar') && !t.includes('restaurant') ? 'Bar' : t.includes('café') || t.includes('cafe') ? 'Café' : t.includes('glac') ? 'Glacier' : 'Restaurant'; };
@@ -353,13 +374,6 @@ const pct = (n, d) => d ? Math.round(n / d * 100) : 0;
       <div><p class="st-sub">Excursions &amp; activités par famille</p>${donutHtml(itemsOf(compte(presta, p => FAM[p.famille] || 'Autre'), ['#7A4A2A', '#4B6A8F', '#54476E', '#64748B']), { big: nf(presta.length), label: 'prestataires' })}</div></div>
     ${parCommuneExc.length ? `<p class="st-sub" style="margin-top:1.3rem">Où se trouvent les prestataires</p>${barsHtml(parCommuneExc.slice(0, 8).map(l => ({ label: titre(l.nom), segs: [{ v: l.exc, color: C.gris, name: 'Prestataires' }] })))}
       <p class="st-note">Les excursions recensées se trouvent pour l'instant dans le département de Mbour${Object.keys(dep).some(k => dep[k].exc && k !== 'MBOUR') ? ' et ailleurs' : ''}.</p>` : ''}</section>`;
-
-  /* 7. se déplacer */
-  const zonesT = {}; transp.forEach(t => (t.zones_desservies || t.zones || []).forEach(z => { zonesT[z] = (zonesT[z] || 0) + 1; }));
-  if (Object.keys(zonesT).length) html += `<section class="st-sec"><h2><i class="fa-solid fa-van-shuttle"></i> Se déplacer sans voiture</h2>
-    <p class="st-lead">Nombre de services de transport (VTC, navettes, chauffeurs privés, minibus) qui desservent chaque zone.</p>
-    ${barsHtml(Object.entries(zonesT).sort((a, b) => b[1] - a[1]).map(([z, n]) => ({ label: z, segs: [{ v: n, color: C.heb, name: 'Services' }] })))}
-    <p class="st-note">Une zone avec peu de services est une zone où il est plus difficile de se déplacer sans véhicule personnel.</p></section>`;
 
   body.innerHTML = html;
 

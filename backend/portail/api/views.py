@@ -9,23 +9,25 @@ l'ancienne API Flask : le client JavaScript fonctionne sans modification.
     POST /api/circuit   {"points":[{lat,lon},…],"boucle":false}   ordre de visite optimisé
     GET  /api/transports | /api/applis-transport          services et applications de transport par zone
     POST /api/contact   {"sujet","nom","email","message"} message ou signalement d'erreur
+    GET  /api/avis?page=thies|mbour|tivaouane            avis publiés (après modération) et note moyenne
+    POST /api/avis      {"page","nom","note","commentaire"} dépôt d'un avis, publié après validation
 """
 import json
 
 from django.contrib.gis.db.models.functions import AsGeoJSON
 from django.db import connection
-from django.db.models import Count
+from django.db.models import Avg, Count
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.throttling import ScopedRateThrottle
 from rest_framework.views import APIView
 
 from .. import circuit as moteur_circuit
-from ..models import ApplicationTransport, Commune, Departement, Lieu, ServiceTransport
+from ..models import ApplicationTransport, AvisVisiteur, Commune, Departement, Lieu, ServiceTransport
 from .erreurs import ErreurParametre
 from .outils import (DEPARTEMENTS, dans_le_rayon, distance_m, feature, lieux_avec_details, liste_categories, nombre,
                      reglage)
-from .serializers import ContactSerializer
+from .serializers import AvisPublicSerializer, AvisSerializer, ContactSerializer
 
 
 class HealthView(APIView):
@@ -165,6 +167,35 @@ class ContactView(APIView):
         s.is_valid(raise_exception=True)
         s.save()
         return Response({"status": "ok"}, status=status.HTTP_201_CREATED)
+
+
+class AvisView(APIView):
+    """Avis des visiteurs d'une page de département. Seuls les avis validés dans l'administration sont renvoyés."""
+    NB_MAX = 30
+
+    def get_throttles(self):
+        if self.request.method == "POST":               # limite le dépôt d'avis, pas leur lecture
+            self.throttle_scope = "avis"
+            return [ScopedRateThrottle()]
+        return super().get_throttles()
+
+    def get(self, request):
+        page = (request.query_params.get("page") or "").lower()
+        if page not in AvisVisiteur.Page.values:
+            raise ErreurParametre("paramètre « page » attendu : " + ", ".join(AvisVisiteur.Page.values))
+        publies = AvisVisiteur.objects.filter(page=page, approuve=True)
+        stats = publies.aggregate(nombre=Count("id"), moyenne=Avg("note"))
+        return Response({
+            "page": page, "nombre": stats["nombre"],
+            "moyenne": round(stats["moyenne"], 1) if stats["moyenne"] is not None else None,
+            "avis": AvisPublicSerializer(publies.order_by("-created_at")[:self.NB_MAX], many=True).data,
+        })
+
+    def post(self, request):
+        s = AvisSerializer(data=request.data)
+        s.is_valid(raise_exception=True)
+        s.save()
+        return Response({"status": "en attente de modération"}, status=status.HTTP_201_CREATED)
 
 
 def route_inconnue(request, *args, **kwargs):

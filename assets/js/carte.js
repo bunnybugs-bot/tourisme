@@ -1108,6 +1108,18 @@ function enableMeasure(mode) {
     document.querySelectorAll('#gpMeasureDist, #gpMeasureArea').forEach(b => b.classList.remove('active'));
   });
 }
+// Aire d'un polygone sur l'ellipsoïde approchée par une sphère de rayon WGS84 (formule de l'excès sphérique,
+// celle de Leaflet.draw). Leaflet-Geoman ne fournit pas L.GeometryUtil : sans cette fonction, l'aire valait 0.
+function aireGeodesique(latlngs) {
+  const R = 6378137, rad = Math.PI / 180, n = latlngs.length;
+  if (n < 3) return 0;
+  let a = 0;
+  for (let i = 0; i < n; i++) {
+    const p1 = latlngs[i], p2 = latlngs[(i + 1) % n];
+    a += (p2.lng - p1.lng) * rad * (2 + Math.sin(p1.lat * rad) + Math.sin(p2.lat * rad));
+  }
+  return Math.abs(a * R * R / 2);
+}
 function updateMeasureTooltip(layer, mode) {
   let html = '';
   if (mode === 'distance') {
@@ -1118,8 +1130,9 @@ function updateMeasureTooltip(layer, mode) {
     html = total > 1000 ? `${(total/1000).toFixed(2)} km` : `${total.toFixed(0)} m`;
   } else {
     const latlngs = layer.getLatLngs()[0];
-    const area = L.GeometryUtil ? L.GeometryUtil.geodesicArea(latlngs) : 0;
-    html = area > 1e6 ? `${(area/1e6).toFixed(2)} km²` : `${area.toFixed(0)} m²`;
+    const area = aireGeodesique(latlngs);
+    html = area > 1e6 ? `${(area/1e6).toLocaleString('fr-FR', { maximumFractionDigits: 2 })} km²`
+                      : `${Math.round(area).toLocaleString('fr-FR')} m²`;
   }
   layer.bindTooltip(html, { permanent: true, direction: 'center', className: 'gp-measure-tip' }).openTooltip();
 }
